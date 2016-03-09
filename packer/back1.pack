@@ -1,0 +1,19 @@
+
+back1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+tiles2
+  rotate: false
+  xy: 0, 64
+  size: 256, 192
+  orig: 256, 192
+  offset: 0, 0
+  index: -1
+tiles
+  rotate: false
+  xy: 0, 0
+  size: 128, 64
+  orig: 128, 64
+  offset: 0, 0
+  index: -1

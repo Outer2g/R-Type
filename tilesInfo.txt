@@ -1,0 +1,2 @@
+tiles -> 128 * 64 (4 * 2 tiles)
+tiles2 -> 256 * 192 (8 * 6 tiles)

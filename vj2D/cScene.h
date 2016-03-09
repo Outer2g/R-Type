@@ -21,7 +21,9 @@ public:
 
 	bool LoadLevel(int level);
 	void Draw(int tex_id);
+	void DrawBackground(int tex_id);
 	int *GetMap();
+	int BACK_HEIGHT, BACK_WIDTH_DRAW;
 
 private:
 	int map[SCENE_WIDTH * SCENE_HEIGHT];	//scene

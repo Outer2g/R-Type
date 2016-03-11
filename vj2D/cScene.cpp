@@ -50,7 +50,7 @@ bool cScene::LoadLevel(int level)
 						map[(j*SCENE_WIDTH)+i] = tile;
 						coordy_tile = tile < tilesFila ? 0.0f : 0.5f;
 						
-						coordx_tile = ((tile-1) % (tilesFila)) * 0.125;
+						coordx_tile = ((tile-1) % (tilesFila)) * 0.125f;
 
 						/*if (tile == 1) {
 							coordx_tile = 0.0f;

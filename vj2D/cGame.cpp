@@ -33,7 +33,7 @@ bool cGame::Init()
 	if (!res) return false;
 
 
-	res = Scene.LoadLevel(3);
+	res = Scene.LoadLevel(4);
 	if(!res) return false;
 
 	Scene.BACK_HEIGHT = 512;

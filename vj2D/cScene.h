@@ -24,6 +24,7 @@ public:
 	void DrawBackground(int tex_id);
 	int *GetMap();
 	int BACK_HEIGHT, BACK_WIDTH_DRAW;
+	int tilesFila;
 
 private:
 	int map[SCENE_WIDTH * SCENE_HEIGHT];	//scene

@@ -33,6 +33,7 @@ bool cGame::Init()
 	if (!res) return false;
 
 
+	Scene.tilesFila = 8; //porque el texture mide 512 y caben 8 tiles de 64
 	res = Scene.LoadLevel(5);
 	if(!res) return false;
 

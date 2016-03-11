@@ -30,7 +30,7 @@ bool cScene::LoadLevel(int level)
 	glNewList(id_DL,GL_COMPILE);
 		glBegin(GL_QUADS);
 	
-			for(j=SCENE_HEIGHT-2;j>=-1;j--)
+			for(j=SCENE_HEIGHT-1;j>=0;j--)
 			{
 				px=SCENE_Xo;
 				py=SCENE_Yo+(j*TILE_SIZE);
@@ -48,14 +48,18 @@ bool cScene::LoadLevel(int level)
 					{
 						//Tiles = 1,2,3,...
 						map[(j*SCENE_WIDTH)+i] = tile;
-						if (tile == 1) {
+						coordy_tile = tile < tilesFila ? 0.0f : 0.5f;
+						
+						coordx_tile = ((tile-1) % (tilesFila)) * 0.125;
+
+						/*if (tile == 1) {
 							coordx_tile = 0.0f;
 							coordy_tile = 0.0f;
 						}
 						else if (tile == 2) {
 							coordx_tile = 0.125f;
 							coordy_tile = 0.0f;
-						}
+						}*/
 						
 
 						/*

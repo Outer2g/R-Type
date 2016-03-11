@@ -32,3 +32,8 @@ void cPlayer::Draw(int tex_id)
 
 	DrawRect(tex_id,xo,yo,xf,yf);
 }
+
+void cPlayer::Logic(int * map)
+{
+	this->MoveHalfRight(map);
+}

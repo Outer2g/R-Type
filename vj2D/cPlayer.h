@@ -12,4 +12,5 @@ public:
 	~cPlayer();
 
 	void Draw(int tex_id);
+	virtual void Logic(int *map);
 };

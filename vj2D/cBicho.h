@@ -47,10 +47,12 @@ public:
 	void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
 
 	void MoveRight(int *map);
+	void MoveHalfRight(int *map);
 	void MoveLeft(int *map);
+	void MoveDown(int *map);
 	void Jump(int *map);
 	void Stop();
-	void Logic(int *map);
+	virtual void Logic(int *map);
 
 	int  GetState();
 	void SetState(int s);

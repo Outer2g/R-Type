@@ -163,6 +163,35 @@ void cBicho::MoveLeft(int *map)
 		}
 	}
 }
+void cBicho::MoveDown(int * map)
+{
+	//copy paste from move jump(copypasted from moveLeft) swapping from x to y
+	int xaux;
+
+	//Whats next tile?
+	if ((y % TILE_SIZE) == 0)
+	{
+		xaux = y;
+		y -= STEP_LENGTH;
+
+		if (CollidesMapWall(map, false))
+		{
+			y = xaux;
+			state = STATE_CENTER;
+		}
+	}
+	//Advance, no problem
+	else
+	{
+		y -= STEP_LENGTH;
+		if (state != STATE_CENTER)
+		{
+			state = STATE_CENTER;
+			seq = 0;
+			delay = 0;
+		}
+	}
+}
 void cBicho::MoveRight(int *map)
 {
 	int xaux;
@@ -192,6 +221,35 @@ void cBicho::MoveRight(int *map)
 		}
 	}
 }
+void cBicho::MoveHalfRight(int * map)
+{
+	int xaux;
+
+	//Whats next tile?
+	if ((x % TILE_SIZE) == 0)
+	{
+		xaux = x;
+		x += STEP_LENGTH/2;
+
+		if (CollidesMapWall(map, true))
+		{
+			x = xaux;
+			state = STATE_CENTER;
+		}
+	}
+	//Advance, no problem
+	else
+	{
+		x += STEP_LENGTH/2;
+
+		if (state != STATE_CENTER)
+		{
+			state = STATE_CENTER;
+			seq = 0;
+			delay = 0;
+		}
+	}
+}
 void cBicho::Stop()
 {
 	switch(state)
@@ -203,6 +261,33 @@ void cBicho::Stop()
 }
 void cBicho::Jump(int *map)
 {
+	//copy paste from move LEFT swapping from x to y
+	int xaux;
+
+	//Whats next tile?
+	if ((y % TILE_SIZE) == 0)
+	{
+		xaux = y;
+		y += STEP_LENGTH;
+
+		if (CollidesMapWall(map, false))
+		{
+			y = xaux;
+			state = STATE_CENTER;
+		}
+	}
+	//Advance, no problem
+	else
+	{
+		y += STEP_LENGTH;
+		if (state != STATE_CENTER)
+		{
+			state = STATE_CENTER;
+			seq = 0;
+			delay = 0;
+		}
+	}
+	/*
 	if(!jumping)
 	{
 		if(CollidesMapFloor(map))
@@ -213,7 +298,7 @@ void cBicho::Jump(int *map)
 
 			state = STATE_UP_FAST; //tendria que haber transicion
 		}
-	}
+	}*/
 }
 void cBicho::Logic(int *map)
 {
@@ -242,9 +327,9 @@ void cBicho::Logic(int *map)
 	}
 	else
 	{
-		//Over floor?
+		/*Over floor? <- mentiras; apply gravity boi <- verdades
 		if(!CollidesMapFloor(map))
-			y -= (2*STEP_LENGTH);
+			y -= (2*STEP_LENGTH);*/
 	}
 }
 void cBicho::NextFrame(int max)

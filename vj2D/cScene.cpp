@@ -30,7 +30,7 @@ bool cScene::LoadLevel(int level)
 	glNewList(id_DL,GL_COMPILE);
 		glBegin(GL_QUADS);
 	
-			for(j=SCENE_HEIGHT-1;j>=0;j--)
+			for(j=SCENE_HEIGHT-2;j>=-1;j--)
 			{
 				px=SCENE_Xo;
 				py=SCENE_Yo+(j*TILE_SIZE);

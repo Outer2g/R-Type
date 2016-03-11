@@ -1,0 +1,40 @@
+
+naves.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+abajo1
+  rotate: false
+  xy: 0, 0
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+abajo2
+  rotate: false
+  xy: 64, 0
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+arriba1
+  rotate: false
+  xy: 128, 0
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+arriba2
+  rotate: false
+  xy: 192, 0
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+centro
+  rotate: false
+  xy: 256, 0
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1

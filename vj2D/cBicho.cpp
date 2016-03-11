@@ -148,16 +148,16 @@ void cBicho::MoveLeft(int *map)
 		if(CollidesMapWall(map,false))
 		{
 			x = xaux;
-			state = STATE_LOOKLEFT;
+			state = STATE_CENTER;
 		}
 	}
 	//Advance, no problem
 	else
 	{
 		x -= STEP_LENGTH;
-		if(state != STATE_WALKLEFT)
+		if(state != STATE_CENTER)
 		{
-			state = STATE_WALKLEFT;
+			state = STATE_CENTER;
 			seq = 0;
 			delay = 0;
 		}
@@ -176,7 +176,7 @@ void cBicho::MoveRight(int *map)
 		if(CollidesMapWall(map,true))
 		{
 			x = xaux;
-			state = STATE_LOOKRIGHT;
+			state = STATE_CENTER;
 		}
 	}
 	//Advance, no problem
@@ -184,9 +184,9 @@ void cBicho::MoveRight(int *map)
 	{
 		x += STEP_LENGTH;
 
-		if(state != STATE_WALKRIGHT)
+		if(state != STATE_CENTER)
 		{
-			state = STATE_WALKRIGHT;
+			state = STATE_CENTER;
 			seq = 0;
 			delay = 0;
 		}
@@ -196,8 +196,9 @@ void cBicho::Stop()
 {
 	switch(state)
 	{
-		case STATE_WALKLEFT:	state = STATE_LOOKLEFT;		break;
-		case STATE_WALKRIGHT:	state = STATE_LOOKRIGHT;	break;
+		case STATE_CENTER:	state = STATE_CENTER;		break; //xk si queremos que tire fuego, aqui djara de tirarlo
+		default:	state = STATE_CENTER;	break; //aqui en realidad no tendria k ir al centro directamente, tendria k haber
+			//una transicion
 	}
 }
 void cBicho::Jump(int *map)
@@ -209,6 +210,8 @@ void cBicho::Jump(int *map)
 			jumping = true;
 			jump_alfa = 0;
 			jump_y = y;
+
+			state = STATE_UP_FAST; //tendria que haber transicion
 		}
 	}
 }

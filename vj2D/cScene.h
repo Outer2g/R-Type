@@ -4,14 +4,14 @@
 
 #define SCENE_Xo		0//(2*TILE_SIZE)
 #define SCENE_Yo		0//TILE_SIZE
-#define SCENE_WIDTH		10 //640 width / 64 tamano 
-#define SCENE_HEIGHT	8
+#define SCENE_WIDTH		80 //640 width / 64 tamano //TODO ACTUALIZAR SIZE
+#define SCENE_HEIGHT	16
 
 #define FILENAME		"level"
 #define FILENAME_EXT	".txt"
 
-#define TILE_SIZE		64
-#define BLOCK_SIZE		64
+#define TILE_SIZE		32 
+#define BLOCK_SIZE		32
 
 class cScene
 {
@@ -29,4 +29,5 @@ public:
 private:
 	int map[SCENE_WIDTH * SCENE_HEIGHT];	//scene
 	int id_DL;								//actual level display list
+	//int SCENE_WIDTH;
 };

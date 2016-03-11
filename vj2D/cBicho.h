@@ -8,10 +8,16 @@
 #define JUMP_HEIGHT		96
 #define JUMP_STEP		4
 
-#define STATE_LOOKLEFT		0
+/*#define STATE_LOOKLEFT		0
 #define STATE_LOOKRIGHT		1
 #define STATE_WALKLEFT		2
-#define STATE_WALKRIGHT		3
+#define STATE_WALKRIGHT		3*/
+
+#define STATE_DOWN_SLOW		0
+#define STATE_DOWN_FAST		1
+#define STATE_UP_SLOW		2
+#define STATE_UP_FAST		3
+#define STATE_CENTER		4
 
 class cRect
 {

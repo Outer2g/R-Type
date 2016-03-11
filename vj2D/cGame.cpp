@@ -34,18 +34,18 @@ bool cGame::Init()
 	if (!res) return false;
 
 
-	Scene.tilesFila = 8; //porque el texture mide 512 y caben 8 tiles de 64
-	res = Scene.LoadLevel(6);
+	Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
+	res = Scene.LoadLevel(10);
 	if(!res) return false;
 
 	Scene.BACK_HEIGHT = 512;
 	Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
 	//Player initialization
-	res = Data.LoadImage(IMG_PLAYER,"bub.png",GL_RGBA);
+	res = Data.LoadImage(IMG_PLAYER,"naves.png",GL_RGBA);
 	if(!res) return false;
-	Player.SetWidthHeight(32,32);
-	Player.SetTile(4,1);
-	Player.SetState(STATE_LOOKRIGHT);
+	Player.SetWidthHeight(64,32);
+	Player.SetTile(1,8);
+	Player.SetState(STATE_CENTER);
 
 	return res;
 }
@@ -92,6 +92,7 @@ bool cGame::Process()
 	if(keys[27])	res=false;
 	
 	if(keys[GLUT_KEY_UP])			Player.Jump(Scene.GetMap());
+	else if (keys[GLUT_KEY_DOWN])	Player.Jump(Scene.GetMap());
 	if(keys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap());
 	else if(keys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());
 	else Player.Stop();

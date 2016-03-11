@@ -33,12 +33,11 @@ bool cGame::Init()
 	if (!res) return false;
 
 
-	res = Scene.LoadLevel(3);
-	res = Scene.LoadLevel(4);
+	res = Scene.LoadLevel(5);
 	if(!res) return false;
 
 	Scene.BACK_HEIGHT = 512;
-	Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
+	Scene.BACK_WIDTH_DRAW = 640; //tamano en horizontal dl background
 	//Player initialization
 	res = Data.LoadImage(IMG_PLAYER,"bub.png",GL_RGBA);
 	if(!res) return false;

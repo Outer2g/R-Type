@@ -15,7 +15,7 @@ bool cScene::LoadLevel(int level)
 	FILE *fd;
 	char file[16];
 	int i,j,px,py;
-	char tile;
+	int tile;
 	float coordx_tile, coordy_tile;
 
 	res=true;
@@ -38,35 +38,42 @@ bool cScene::LoadLevel(int level)
 				for(i=0;i<SCENE_WIDTH;i++)
 				{
 					fscanf(fd,"%d",&tile);
-					
+					if (tile == 0)
+					{
+						//fscanf(fd, "%c", &tile);
+						//Tiles must be != 0 !!!
+						map[(j*SCENE_WIDTH)+i]=0;
+					}
+					else
+					{
 						//Tiles = 1,2,3,...
 						map[(j*SCENE_WIDTH)+i] = tile;
-						//BLOCK_SIZE = 64, FILE_SIZE = 64
 						if (tile == 1) {
-							float off_set_x = 0.125f;
-							float off_set_y = 0.5f;
-							glTexCoord2f(0.0f, off_set_y);
-							glTexCoord2f(off_set_x, off_set_y);
-							glTexCoord2f(off_set_x, 0.0f);
-							glTexCoord2f(0.0f,0.0f);
+							coordx_tile = 0.0f;
+							coordy_tile = 0.0f;
 						}
+						else if (tile == 2) {
+							coordx_tile = 0.125f;
+							coordy_tile = 0.0f;
+						}
+						
+
 						/*
 						if(map[(j*SCENE_WIDTH)+i]%2) coordx_tile = 0.0f;
-						else						 coordx_tile = 0.5f;
+						else						 coordx_tile = 0.125f;
 						if(map[(j*SCENE_WIDTH)+i]<3) coordy_tile = 0.0f;
-						else						 coordy_tile = 0.5f;
+						else						 coordy_tile = 0.5f;*/
 
 						//BLOCK_SIZE = 24, FILE_SIZE = 64
 						// 24 / 64 = 0.375
-						glTexCoord2f(coordx_tile       ,coordy_tile+0.375f);	glVertex2i(px           ,py           );
-						glTexCoord2f(coordx_tile+0.375f,coordy_tile+0.375f);	glVertex2i(px+BLOCK_SIZE,py           );
-						glTexCoord2f(coordx_tile+0.375f,coordy_tile       );	glVertex2i(px+BLOCK_SIZE,py+BLOCK_SIZE);
+						glTexCoord2f(coordx_tile       ,coordy_tile+0.5f);	glVertex2i(px           ,py           );
+						glTexCoord2f(coordx_tile+0.125f,coordy_tile+0.5f);	glVertex2i(px+BLOCK_SIZE,py           );
+						glTexCoord2f(coordx_tile+0.125f,coordy_tile       );	glVertex2i(px+BLOCK_SIZE,py+BLOCK_SIZE);
 						glTexCoord2f(coordx_tile       ,coordy_tile       );	glVertex2i(px           ,py+BLOCK_SIZE);
-						*/
-					
+					}
 					px+=TILE_SIZE;
 				}
-				fscanf(fd,"%d",&tile); //pass enter
+				//fscanf(fd,"%c",&tile); //pass enter
 			}
 
 		glEnd();

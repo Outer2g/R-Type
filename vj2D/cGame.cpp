@@ -4,6 +4,7 @@
 
 cGame::cGame(void)
 {
+	offsetCamera = 0;
 }
 
 cGame::~cGame(void)
@@ -44,7 +45,6 @@ bool cGame::Init()
 	if(!res) return false;
 	Player.SetWidthHeight(32,32);
 	Player.SetTile(4,1);
-	Player.SetWidthHeight(32,32);
 	Player.SetState(STATE_LOOKRIGHT);
 
 	return res;
@@ -56,7 +56,8 @@ bool cGame::Loop()
 	double t1, t2;
 
 	t1 = glutGet(GLUT_ELAPSED_TIME);
-
+	++offsetCamera;
+	
 	res = Process();
 	if(res) Render();
 
@@ -106,8 +107,10 @@ bool cGame::Process()
 void cGame::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
+	glOrtho(offsetCamera, GAME_WIDTH + offsetCamera, 0, GAME_HEIGHT, 0, 1);
+	glMatrixMode(GL_MODELVIEW);
 
 	Scene.DrawBackground(Data.GetID(IMG_BACK));
 	Scene.Draw(Data.GetID(IMG_PARED));

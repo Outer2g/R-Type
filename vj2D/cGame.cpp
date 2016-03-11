@@ -27,9 +27,9 @@ bool cGame::Init()
 	//Scene initialization
 	res = Data.LoadImage(IMG_BLOCKS,"blocks.png",GL_RGBA);
 	if(!res) return false;
-	res = Data.LoadImage(IMG_Pared, "backTiles1.png", GL_RGBA);
+	res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
 	if (!res) return false;
-	res = Data.LoadImage(IMG_Back, "back1.png", GL_RGBA);
+	res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
 	if (!res) return false;
 
 
@@ -52,9 +52,17 @@ bool cGame::Init()
 bool cGame::Loop()
 {
 	bool res=true;
+	double t1, t2;
+
+	t1 = glutGet(GLUT_ELAPSED_TIME);
 
 	res = Process();
 	if(res) Render();
+
+	//1000/20 = 50fps
+	do {
+		t2 = glutGet(GLUT_ELAPSED_TIME);
+	} while (t2 - t1 < 20);
 
 	return res;
 }
@@ -100,7 +108,7 @@ void cGame::Render()
 	
 	glLoadIdentity();
 
-	Scene.DrawBackground(Data.GetID(IMG_Back));
+	Scene.DrawBackground(Data.GetID(IMG_BACK));
 	Scene.Draw(Data.GetID(IMG_BLOCKS));
 	Player.Draw(Data.GetID(IMG_PLAYER));
 

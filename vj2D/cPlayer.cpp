@@ -25,6 +25,7 @@ void cPlayer::Draw(int tex_id)
 								NextFrame(3);
 								break;
 	}
+	//coord textur: xo,yo
 	xf = xo + 0.25f;
 	yf = yo - 0.25f;
 

@@ -60,8 +60,8 @@ bool cBicho::CollidesMapWall(int *map,bool right)
 
 	tile_x = x / TILE_SIZE;
 	tile_y = y / TILE_SIZE;
-	width_tiles  = w / TILE_SIZE +1;
-	height_tiles = h / TILE_SIZE +1;
+	width_tiles  = w / TILE_SIZE;
+	height_tiles = h / TILE_SIZE;
 
 	if(right)	tile_x += width_tiles;
 	
@@ -106,6 +106,13 @@ bool cBicho::CollidesMapFloor(int *map)
 		i++;
 	}
 	return on_base;
+}
+
+bool cBicho::CollidesWithTerrains(int * map)
+{
+	int tileX, tileY;
+	this->GetTile(&tileX, &tileY);
+	return false;
 }
 
 void cBicho::GetArea(cRect *rc)

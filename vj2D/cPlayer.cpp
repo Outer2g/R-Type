@@ -80,7 +80,7 @@ void cPlayer::MoveLeft(int *map)
 		xaux = x;
 		x -= STEP_LENGTH + STEP_LENGTH;
 
-		if (CollidesMapWall(map, false))
+		if (CollidesMapWall(map, true))
 		{
 			x = xaux;
 		}
@@ -137,7 +137,7 @@ void cPlayer::Jump(int *map)
 		xaux = y;
 		y += STEP_LENGTH + STEP_LENGTH/2;
 
-		if (CollidesMapWall(map, false))
+		if (CollidesMapWall(map,false))
 		{
 			y = xaux;
 			state = STATE_CENTER;

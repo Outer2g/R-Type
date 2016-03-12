@@ -79,7 +79,8 @@ void cPlayer::MoveLeft(int *map)
 	if ((x % TILE_SIZE) <= 1)
 	{
 		xaux = x;
-		x -= STEP_LENGTH + STEP_LENGTH;
+		if (!endLevel) x -= STEP_LENGTH + STEP_LENGTH;
+		else x -= STEP_LENGTH;
 
 		if (CollidesMapWall(map, true))
 		{
@@ -89,7 +90,8 @@ void cPlayer::MoveLeft(int *map)
 	//Advance, no problem
 	else
 	{
-		x -= STEP_LENGTH + STEP_LENGTH;
+		if (!endLevel) x -= STEP_LENGTH + STEP_LENGTH;
+		else x -= STEP_LENGTH;
 		if (!moving) state = STATE_CENTER;
 		if (state != STATE_CENTER)
 		{

@@ -165,7 +165,7 @@ void cPlayer::Stop()
 }
 void cPlayer::Logic(int * map)
 {
-	 this->MoveHalfRight(map);
+	if (!endLevel) this->MoveHalfRight(map);
 }
 
 void cPlayer::setMoving(bool b)
@@ -175,5 +175,5 @@ void cPlayer::setMoving(bool b)
 
 bool cPlayer::getMoving()
 {
-	if (!endLevel) return this->moving;
+	return this->moving;
 }

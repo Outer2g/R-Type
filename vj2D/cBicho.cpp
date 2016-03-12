@@ -140,7 +140,7 @@ void cBicho::MoveLeft(int *map)
 	int xaux;
 	
 	//Whats next tile?
-	if( (x % TILE_SIZE) == 0)
+	if( (x % TILE_SIZE) <= 1)
 	{
 		xaux = x;
 		x -= STEP_LENGTH;
@@ -154,7 +154,7 @@ void cBicho::MoveLeft(int *map)
 	//Advance, no problem
 	else
 	{
-		x -= STEP_LENGTH;
+		x -= STEP_LENGTH - STEP_LENGTH;
 		if(state != STATE_CENTER)
 		{
 			state = STATE_CENTER;
@@ -169,7 +169,7 @@ void cBicho::MoveDown(int * map)
 	int xaux;
 
 	//Whats next tile?
-	if ((y % TILE_SIZE) == 0)
+	if ((y % TILE_SIZE) <= 1)
 	{
 		xaux = y;
 		y -= STEP_LENGTH;
@@ -197,7 +197,7 @@ void cBicho::MoveRight(int *map)
 	int xaux;
 
 	//Whats next tile?
-	if( (x % TILE_SIZE) == 0)
+	if( (x % TILE_SIZE) <= 1)
 	{
 		xaux = x;
 		x += STEP_LENGTH;

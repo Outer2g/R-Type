@@ -44,7 +44,7 @@ void cPlayer::MoveDown(int * map)
 	int xaux;
 
 	//Whats next tile?
-	if ((y % TILE_SIZE) == 0)
+	if ((y % TILE_SIZE) <= 1)
 	{
 		xaux = y;
 		y -= STEP_LENGTH;
@@ -58,7 +58,7 @@ void cPlayer::MoveDown(int * map)
 	//Advance, no problem
 	else
 	{
-		y -= STEP_LENGTH;
+		y -= STEP_LENGTH + STEP_LENGTH/2;
 		state = STATE_DOWN_FAST;
 		if (state != STATE_CENTER)
 		{
@@ -73,10 +73,10 @@ void cPlayer::MoveLeft(int *map)
 	int xaux;
 
 	//Whats next tile?
-	if ((x % TILE_SIZE) == 0)
+	if ((x % TILE_SIZE) <= 1)
 	{
 		xaux = x;
-		x -= STEP_LENGTH;
+		x -= STEP_LENGTH + STEP_LENGTH;
 
 		if (CollidesMapWall(map, false))
 		{
@@ -86,7 +86,7 @@ void cPlayer::MoveLeft(int *map)
 	//Advance, no problem
 	else
 	{
-		x -= STEP_LENGTH;
+		x -= STEP_LENGTH + STEP_LENGTH;
 		if (state != STATE_CENTER)
 		{
 			seq = 0;
@@ -100,7 +100,7 @@ void cPlayer::MoveRight(int *map)
 	int xaux;
 
 	//Whats next tile?
-	if ((x % TILE_SIZE) == 0)
+	if ((x % TILE_SIZE) <= 1)
 	{
 		xaux = x;
 		x += STEP_LENGTH;
@@ -132,7 +132,7 @@ void cPlayer::Jump(int *map)
 	if ((y % TILE_SIZE) == 0)
 	{
 		xaux = y;
-		y += STEP_LENGTH;
+		y += STEP_LENGTH + STEP_LENGTH/2;
 
 		if (CollidesMapWall(map, false))
 		{
@@ -143,7 +143,7 @@ void cPlayer::Jump(int *map)
 	//Advance, no problem
 	else
 	{
-		y += STEP_LENGTH;
+		y += STEP_LENGTH + STEP_LENGTH / 2;
 		state = STATE_UP_FAST;
 		if (state != STATE_CENTER)
 		{
@@ -151,18 +151,7 @@ void cPlayer::Jump(int *map)
 			delay = 0;
 		}
 	}
-	/*
-	if(!jumping)
-	{
-	if(CollidesMapFloor(map))
-	{
-	jumping = true;
-	jump_alfa = 0;
-	jump_y = y;
 
-	state = STATE_UP_FAST; //tendria que haber transicion
-	}
-	}*/
 }
 void cPlayer::Logic(int * map)
 {

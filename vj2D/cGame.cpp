@@ -25,21 +25,35 @@ bool cGame::Init()
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
 
+	int level = 1; //nos lo pasaran desde el menu de escoger partida
+
 	//Scene initialization
-	res = Data.LoadImage(IMG_BLOCKS,"blocks.png",GL_RGBA);
+	//res = Data.LoadImage(IMG_BLOCKS,"blocks.png",GL_RGBA);
+	//if(!res) return false;
+	if (level == 1) {
+		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
+		if (!res) return false;
+		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
+		Scene.BACK_HEIGHT = 512;
+		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
+	}
+	else if (level != 1) {
+		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
+		if (!res) return false;
+		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
+		Scene.BACK_HEIGHT = 512;
+		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
+	}
+
+
+	res = Scene.LoadLevel(level);
 	if(!res) return false;
-	res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
-	if (!res) return false;
-	res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
-	if (!res) return false;
 
-
-	Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
-	res = Scene.LoadLevel(10);
-	if(!res) return false;
-
-	Scene.BACK_HEIGHT = 512;
-	Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
+	
 	//Player initialization
 	res = Data.LoadImage(IMG_PLAYER,"naves.png",GL_RGBA);
 	if(!res) return false;
@@ -97,9 +111,11 @@ bool cGame::Process()
 	else if(keys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());
 	//Si no hay nada aparetado, para el player
 	if (!keys[GLUT_KEY_UP]
+		&& !keys[GLUT_KEY_DOWN]) Player.Stop();
+	/*if (!keys[GLUT_KEY_UP]
 		&& !keys[GLUT_KEY_DOWN] 
 		&&!keys[GLUT_KEY_LEFT] 
-		&&!keys[GLUT_KEY_RIGHT]) Player.Stop();
+		&&!keys[GLUT_KEY_RIGHT]) Player.Stop();*/
 	
 	
 	//Game Logic

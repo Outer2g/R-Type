@@ -40,37 +40,18 @@ bool cScene::LoadLevel(int level)
 					fscanf(fd,"%d",&tile);
 					if (tile == 0)
 					{
-						//fscanf(fd, "%c", &tile);
-						//Tiles must be != 0 !!!
 						map[(j*SCENE_WIDTH)+i]=0;
 					}
 					else
 					{
+						//PODRIAMOS COMPROBAR ALGUNA TILE EN CONCRETO SI QUEREMOS QUE CIERTOS ID TENGAN ANIMACION
+						//TODO
 						//Tiles = 1,2,3,...
 						map[(j*SCENE_WIDTH)+i] = tile;
-						//coordy_tile = tile < tilesFila ? 0.0f : 0.5f;
 						coordy_tile = (tile - 1) / tilesFila * 0.25f;
 						
 						coordx_tile = ((tile-1) % (tilesFila)) * (float)(1.0f / (float)tilesFila);
 
-						/*if (tile == 1) {
-							coordx_tile = 0.0f;
-							coordy_tile = 0.0f;
-						}
-						else if (tile == 2) {
-							coordx_tile = 0.125f;
-							coordy_tile = 0.0f;
-						}*/
-						
-
-						/*
-						if(map[(j*SCENE_WIDTH)+i]%2) coordx_tile = 0.0f;
-						else						 coordx_tile = 0.125f;
-						if(map[(j*SCENE_WIDTH)+i]<3) coordy_tile = 0.0f;
-						else						 coordy_tile = 0.5f;*/
-
-						//BLOCK_SIZE = 24, FILE_SIZE = 64
-						// 24 / 64 = 0.375
 						glTexCoord2f(coordx_tile       ,coordy_tile+0.25f);	glVertex2i(px           ,py           );
 						glTexCoord2f(coordx_tile+ (1.0f/(float)tilesFila),coordy_tile+0.25f);	glVertex2i(px+BLOCK_SIZE,py           );
 						glTexCoord2f(coordx_tile+ (1.0f / (float)tilesFila),coordy_tile       );	glVertex2i(px+BLOCK_SIZE,py+BLOCK_SIZE);
@@ -78,7 +59,6 @@ bool cScene::LoadLevel(int level)
 					}
 					px+=TILE_SIZE;
 				}
-				//fscanf(fd,"%c",&tile); //pass enter
 			}
 
 		glEnd();

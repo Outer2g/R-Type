@@ -24,6 +24,10 @@ public:
 	virtual void MoveLeft(int *map);
 	virtual void MoveDown(int *map);
 	virtual void Jump(int *map);
-	//virtual void Stop();
+	virtual void Stop();
 	virtual void Logic(int *map);
+	void setMoving(bool b);
+	bool getMoving();
+private:
+	bool moving;
 };

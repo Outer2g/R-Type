@@ -3,6 +3,7 @@
 #include "cScene.h"
 
 cPlayer::cPlayer() {
+	moving = false;
 }
 cPlayer::~cPlayer(){}
 
@@ -60,6 +61,7 @@ void cPlayer::MoveDown(int * map)
 	{
 		y -= STEP_LENGTH + STEP_LENGTH/2;
 		state = STATE_DOWN_FAST;
+		moving = true;
 		if (state != STATE_CENTER)
 		{
 			state = STATE_DOWN_FAST;
@@ -87,6 +89,7 @@ void cPlayer::MoveLeft(int *map)
 	else
 	{
 		x -= STEP_LENGTH + STEP_LENGTH;
+		if (!moving) state = STATE_CENTER;
 		if (state != STATE_CENTER)
 		{
 			seq = 0;
@@ -115,7 +118,7 @@ void cPlayer::MoveRight(int *map)
 	else
 	{
 		x += STEP_LENGTH;
-
+		if(!moving) state = STATE_CENTER;
 		if (state != STATE_CENTER)
 		{
 			seq = 0;
@@ -145,6 +148,7 @@ void cPlayer::Jump(int *map)
 	{
 		y += STEP_LENGTH + STEP_LENGTH / 2;
 		state = STATE_UP_FAST;
+		moving = true;
 		if (state != STATE_CENTER)
 		{
 			seq = 0;
@@ -153,7 +157,22 @@ void cPlayer::Jump(int *map)
 	}
 
 }
+void cPlayer::Stop()
+{
+	moving = false;
+	state = STATE_CENTER;
+}
 void cPlayer::Logic(int * map)
 {
 	 this->MoveHalfRight(map);
+}
+
+void cPlayer::setMoving(bool b)
+{
+	this->moving = b;
+}
+
+bool cPlayer::getMoving()
+{
+	return this->moving;
 }

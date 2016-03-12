@@ -4,6 +4,7 @@
 
 cPlayer::cPlayer() {
 	moving = false;
+	endLevel = false;
 }
 cPlayer::~cPlayer(){}
 
@@ -174,5 +175,5 @@ void cPlayer::setMoving(bool b)
 
 bool cPlayer::getMoving()
 {
-	return this->moving;
+	if (!endLevel) return this->moving;
 }

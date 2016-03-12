@@ -28,6 +28,7 @@ public:
 	virtual void Logic(int *map);
 	void setMoving(bool b);
 	bool getMoving();
+	bool endLevel;
 private:
 	bool moving;
 };

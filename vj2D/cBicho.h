@@ -56,13 +56,10 @@ public:
 
 	void NextFrame(int max);
 	int  GetFrame();
-	
+	virtual void Draw(int tex_id);
 private:
 	int w,h;
 
-	bool jumping;
-	int jump_alfa;
-	int jump_y;
 
 protected:
 	int x, y;

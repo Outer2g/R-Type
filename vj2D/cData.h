@@ -11,7 +11,7 @@
 #define IMG_PLAYER	1
 #define IMG_PARED	2
 #define IMG_BACK	3
-#define IMG_ENEMY1	4
+#define IMG_MARIP	4
 #define IMG_ENEMY2	5
 #define IMG_SHOOT	6
 /*

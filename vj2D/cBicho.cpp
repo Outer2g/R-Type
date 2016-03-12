@@ -7,7 +7,6 @@ cBicho::cBicho(void)
 	seq=0;
 	delay=0;
 
-	jumping = false;
 }
 cBicho::~cBicho(void){}
 
@@ -18,6 +17,9 @@ cBicho::cBicho(int posx,int posy,int width,int height)
 	w = width;
 	h = height;
 }
+
+void cBicho::Draw(int tex_id) {}
+
 void cBicho::SetPosition(int posx,int posy)
 {
 	x = posx;
@@ -292,50 +294,10 @@ void cBicho::Jump(int *map)
 			delay = 0;
 		}
 	}
-	/*
-	if(!jumping)
-	{
-		if(CollidesMapFloor(map))
-		{
-			jumping = true;
-			jump_alfa = 0;
-			jump_y = y;
 
-			state = STATE_UP_FAST; //tendria que haber transicion
-		}
-	}*/
 }
 void cBicho::Logic(int *map)
 {
-	float alfa;
-
-	if(jumping)
-	{
-		jump_alfa += JUMP_STEP;
-		
-		if(jump_alfa == 180)
-		{
-			jumping = false;
-			y = jump_y;
-		}
-		else
-		{
-			alfa = ((float)jump_alfa) * 0.017453f;
-			y = jump_y + (int)( ((float)JUMP_HEIGHT) * sin(alfa) );
-		
-			if(jump_alfa > 90)
-			{
-				//Over floor?
-				jumping = !CollidesMapFloor(map);
-			}
-		}
-	}
-	else
-	{
-		/*Over floor? <- mentiras; apply gravity boi <- verdades
-		if(!CollidesMapFloor(map))
-			y -= (2*STEP_LENGTH);*/
-	}
 }
 void cBicho::NextFrame(int max)
 {

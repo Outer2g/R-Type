@@ -17,7 +17,7 @@ public:
 	cPlayer();
 	~cPlayer();
 
-	void Draw(int tex_id);
+	virtual void Draw(int tex_id);
 
 	virtual void MoveRight(int *map);
 	//virtual void MoveHalfRight(int *map);

@@ -3,9 +3,11 @@
 #include "cScene.h"
 #include "cPlayer.h"
 #include "cData.h"
+#include <vector>
 
 #define GAME_WIDTH	640
 #define GAME_HEIGHT 512
+using namespace std;
 
 class cGame
 {
@@ -30,5 +32,7 @@ private:
 	cScene Scene;
 	cPlayer Player;
 	cData Data;
+	vector<vector<int> > rafagasBichos; //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
 	long int offsetCamera;
+	vector<cBicho> bichos;
 };

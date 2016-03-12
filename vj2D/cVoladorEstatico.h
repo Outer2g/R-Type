@@ -15,27 +15,13 @@
 class cVoladorEstatico : public cVolador
 {
 public:
-	cVoladorEstatico(void);
-	cVoladorEstatico(int x,int y,int w,int h);
-	~cVoladorEstatico(void);
+	cVoladorEstatico();
+	~cVoladorEstatico();
 
 	virtual void Stop();
 	virtual void Logic(int *map);
 
-	int  GetState();
-	void SetState(int s);
-
-	void NextFrame(int max);
-	int  GetFrame();
-	virtual void Draw(int texId);
+	virtual void Draw(int tex_id);
 	
 private:
-	int w,h;
-
-
-protected:
-	int x, y;
-	int state;
-
-	int seq, delay;
 };

@@ -3,6 +3,7 @@
 #include "cScene.h"
 #include "cPlayer.h"
 #include "cData.h"
+#include "cBicho.h"
 #include <vector>
 
 #define GAME_WIDTH	640
@@ -34,5 +35,5 @@ private:
 	cData Data;
 	vector<vector<int> > rafagasBichos; //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
 	long int offsetCamera;
-	vector<cBicho> bichos;
+	vector<cBicho*> bichos;
 };

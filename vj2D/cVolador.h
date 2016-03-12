@@ -12,9 +12,8 @@
 class cVolador : public cBicho
 {
 public:
-	cVolador(void);
-	cVolador(int x,int y,int w,int h);
-	~cVolador(void);
+	cVolador();
+	~cVolador();
 
 	virtual void MoveRight(int *map);
 	virtual void MoveLeft(int *map);
@@ -23,20 +22,5 @@ public:
 	virtual void Stop();
 	virtual void Logic(int *map);
 
-	int  GetState();
-	void SetState(int s);
-
-	void NextFrame(int max);
-	int  GetFrame();
-	virtual void Draw(int texId);
-	
-private:
-	int w,h;
-
-
-protected:
-	int x, y;
-	int state;
-
-	int seq, delay;
+	virtual void Draw(int tex_id);
 };

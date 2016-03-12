@@ -2,23 +2,21 @@
 #include "cScene.h"
 #include "Globals.h"
 
-cVolador::cVolador(void)
+cVolador::cVolador()
 {
-	seq=0;
-	delay=0;
-
 }
-cVolador::~cVolador(void){}
+cVolador::~cVolador(){}
 
-cVolador::cVolador(int posx,int posy,int width,int height)
-{
-	x = posx;
-	y = posy;
-	w = width;
-	h = height;
+void cVolador::Draw(int tex_id){
+	float xo, yo, xf, yf;
+	xo = 0.125 * 3;
+	yo = 1.f;
+
+	xf = xo + 0.125f;//1/8 da el 0.125
+	yf = yo - 1.f; //xk la nave ocupa toda la altura d la textura
+
+	DrawRect(tex_id, xo, yo, xf, yf);
 }
-
-void cVolador::Draw(int texId){}
 
 void cVolador::MoveLeft(int *map)
 {
@@ -148,26 +146,4 @@ void cVolador::Jump(int *map)
 }
 void cVolador::Logic(int *map)
 {
-}
-void cVolador::NextFrame(int max)
-{
-	delay++;
-	if(delay == FRAME_DELAY)
-	{
-		seq++;
-		seq%=max;
-		delay = 0;
-	}
-}
-int cVolador::GetFrame()
-{
-	return seq;
-}
-int cVolador::GetState()
-{
-	return state;
-}
-void cVolador::SetState(int s)
-{
-	state = s;
 }

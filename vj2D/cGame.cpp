@@ -41,9 +41,10 @@ bool cGame::Init()
 		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
-		bichos.push_back(cVoladorEstatico());
-		bichos[0].SetWidthHeight(46, 50);
-		bichos[0].SetTile(3, 8);
+		cBicho* p = new cVoladorEstatico();
+		bichos.push_back(p);
+		bichos[0]->SetWidthHeight(46, 50);
+		bichos[0]->SetTile(6, 8);
 	}
 	else if (level != 1) {
 		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
@@ -154,8 +155,8 @@ void cGame::Render()
 
 	Scene.DrawBackground(Data.GetID(IMG_BACK));
 	Scene.Draw(Data.GetID(IMG_PARED));
+	bichos[0]->Draw(Data.GetID(IMG_MARIP));
 	Player.Draw(Data.GetID(IMG_PLAYER));
-	bichos[0].Draw(Data.GetID(IMG_MARIP));
 
 	glutSwapBuffers();
 }

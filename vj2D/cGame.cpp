@@ -95,11 +95,27 @@ bool cGame::Process()
 	else if (keys[GLUT_KEY_DOWN])	Player.MoveDown(Scene.GetMap());
 	if(keys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap());
 	else if(keys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());
-	else Player.Stop();
+	//Si no hay nada aparetado, para el player
+	if (!keys[GLUT_KEY_UP]
+		&& !keys[GLUT_KEY_DOWN] 
+		&&!keys[GLUT_KEY_LEFT] 
+		&&!keys[GLUT_KEY_RIGHT]) Player.Stop();
 	
 	
 	//Game Logic
-	Player.Logic(Scene.GetMap());
+	//Move with the camera boi
+	int playerTileX, playerTileY;
+	Player.GetTile(&playerTileX, &playerTileY);
+	int cameraTile = offsetCamera / TILE_SIZE;
+	int windowTile = (GAME_WIDTH + offsetCamera) / TILE_SIZE;
+	if (cameraTile >= playerTileX) {
+		Player.MoveRight(Scene.GetMap());
+		Player.MoveHalfRight(Scene.GetMap());
+	}
+	else if (windowTile-2 <= playerTileX) {
+		Player.MoveLeft(Scene.GetMap());
+	}
+	else Player.Logic(Scene.GetMap());
 
 	return res;
 }

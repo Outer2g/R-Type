@@ -13,10 +13,6 @@
 #define STATE_WALKLEFT		2
 #define STATE_WALKRIGHT		3*/
 
-#define STATE_DOWN_SLOW		0
-#define STATE_DOWN_FAST		1
-#define STATE_UP_SLOW		2
-#define STATE_UP_FAST		3
 #define STATE_CENTER		4
 
 class cRect
@@ -46,12 +42,12 @@ public:
 	void GetArea(cRect *rc);
 	void DrawRect(int tex_id,float xo,float yo,float xf,float yf);
 
-	void MoveRight(int *map);
-	void MoveHalfRight(int *map);
-	void MoveLeft(int *map);
-	void MoveDown(int *map);
-	void Jump(int *map);
-	void Stop();
+	virtual void MoveRight(int *map);
+	virtual void MoveHalfRight(int *map);
+	virtual void MoveLeft(int *map);
+	virtual void MoveDown(int *map);
+	virtual void Jump(int *map);
+	virtual void Stop();
 	virtual void Logic(int *map);
 
 	int  GetState();
@@ -61,13 +57,15 @@ public:
 	int  GetFrame();
 	
 private:
-	int x,y;
 	int w,h;
-	int state;
 
 	bool jumping;
 	int jump_alfa;
 	int jump_y;
 
-	int seq,delay;
+protected:
+	int x, y;
+	int state;
+
+	int seq, delay;
 };

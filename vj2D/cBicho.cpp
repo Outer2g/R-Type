@@ -234,7 +234,6 @@ void cBicho::MoveHalfRight(int * map)
 		if (CollidesMapWall(map, true))
 		{
 			x = xaux;
-			state = STATE_CENTER;
 		}
 	}
 	//Advance, no problem
@@ -244,7 +243,6 @@ void cBicho::MoveHalfRight(int * map)
 
 		if (state != STATE_CENTER)
 		{
-			state = STATE_CENTER;
 			seq = 0;
 			delay = 0;
 		}

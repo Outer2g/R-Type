@@ -1,7 +1,9 @@
 
 #include "cPlayer.h"
+#include "cScene.h"
 
-cPlayer::cPlayer() {}
+cPlayer::cPlayer() {
+}
 cPlayer::~cPlayer(){}
 
 void cPlayer::Draw(int tex_id)
@@ -12,8 +14,9 @@ void cPlayer::Draw(int tex_id)
 	/*switch(GetState())
 	{
 		//1
-		case STATE_CENTER:		xo = 0.0f;	yo = 1.f; //SI METEMOS ANIMACION A LA NAVE, LA PONEMOS DEBAJO Y CAMBIAMOS EL 1
+		case STATE_CENTER:		xo = 0.5f; //SI METEMOS ANIMACION A LA NAVE, LA PONEMOS DEBAJO Y CAMBIAMOS EL 1
 								break;
+		case STATE_DOWN_FAST: xo = 0.125f; break;
 		//4
 		case STATE_LOOKRIGHT:	xo = 0.25f;	yo = 1.f;
 								break;
@@ -33,7 +36,135 @@ void cPlayer::Draw(int tex_id)
 	DrawRect(tex_id,xo,yo,xf,yf);
 }
 
+
+
+void cPlayer::MoveDown(int * map)
+{
+	//copy paste from move jump(copypasted from moveLeft) swapping from x to y
+	int xaux;
+
+	//Whats next tile?
+	if ((y % TILE_SIZE) == 0)
+	{
+		xaux = y;
+		y -= STEP_LENGTH;
+
+		if (CollidesMapWall(map, false))
+		{
+			y = xaux;
+			state = STATE_CENTER;
+		}
+	}
+	//Advance, no problem
+	else
+	{
+		y -= STEP_LENGTH;
+		state = STATE_DOWN_FAST;
+		if (state != STATE_CENTER)
+		{
+			state = STATE_DOWN_FAST;
+			seq = 0;
+			delay = 5;
+		}
+	}
+}
+void cPlayer::MoveLeft(int *map)
+{
+	int xaux;
+
+	//Whats next tile?
+	if ((x % TILE_SIZE) == 0)
+	{
+		xaux = x;
+		x -= STEP_LENGTH;
+
+		if (CollidesMapWall(map, false))
+		{
+			x = xaux;
+		}
+	}
+	//Advance, no problem
+	else
+	{
+		x -= STEP_LENGTH;
+		if (state != STATE_CENTER)
+		{
+			seq = 0;
+			delay = 0;
+		}
+	}
+}
+
+void cPlayer::MoveRight(int *map)
+{
+	int xaux;
+
+	//Whats next tile?
+	if ((x % TILE_SIZE) == 0)
+	{
+		xaux = x;
+		x += STEP_LENGTH;
+
+		if (CollidesMapWall(map, true))
+		{
+			x = xaux;
+			state = STATE_CENTER;
+		}
+	}
+	//Advance, no problem
+	else
+	{
+		x += STEP_LENGTH;
+
+		if (state != STATE_CENTER)
+		{
+			seq = 0;
+			delay = 0;
+		}
+	}
+}
+void cPlayer::Jump(int *map)
+{
+	//copy paste from move LEFT swapping from x to y
+	int xaux;
+
+	//Whats next tile?
+	if ((y % TILE_SIZE) == 0)
+	{
+		xaux = y;
+		y += STEP_LENGTH;
+
+		if (CollidesMapWall(map, false))
+		{
+			y = xaux;
+			state = STATE_CENTER;
+		}
+	}
+	//Advance, no problem
+	else
+	{
+		y += STEP_LENGTH;
+		state = STATE_UP_FAST;
+		if (state != STATE_CENTER)
+		{
+			seq = 0;
+			delay = 0;
+		}
+	}
+	/*
+	if(!jumping)
+	{
+	if(CollidesMapFloor(map))
+	{
+	jumping = true;
+	jump_alfa = 0;
+	jump_y = y;
+
+	state = STATE_UP_FAST; //tendria que haber transicion
+	}
+	}*/
+}
 void cPlayer::Logic(int * map)
 {
-	this->MoveHalfRight(map);
+	 this->MoveHalfRight(map);
 }

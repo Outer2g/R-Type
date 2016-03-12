@@ -125,6 +125,7 @@ bool cGame::Process()
 	int windowTile = (GAME_WIDTH + offsetCamera) / TILE_SIZE;
 	if (cameraTile >= playerTileX) {
 		Player.MoveRight(Scene.GetMap());
+		Player.MoveRight(Scene.GetMap());
 		Player.MoveHalfRight(Scene.GetMap());
 	}
 	else if (windowTile-2 <= playerTileX) {

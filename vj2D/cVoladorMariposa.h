@@ -20,6 +20,6 @@ public:
 
 	virtual void Stop();
 	virtual void Logic(int *map);
-	virtual void Draw(int texId);
+	virtual void Draw(cData *dat);
 	
 };

@@ -2,6 +2,7 @@
 
 #include "cTexture.h"
 #include "Globals.h"
+#include "cData.h"
 
 #define FRAME_DELAY		8
 #define STEP_LENGTH		2
@@ -56,7 +57,7 @@ public:
 
 	void NextFrame(int max);
 	int  GetFrame();
-	virtual void Draw(int tex_id);
+	virtual void Draw(cData *dat);
 private:
 	int w,h;
 

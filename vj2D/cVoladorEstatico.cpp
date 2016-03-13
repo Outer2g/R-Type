@@ -9,7 +9,7 @@ cVoladorEstatico::~cVoladorEstatico(void){}
 
 
 
-void cVoladorEstatico::Draw(int texId) {
+void cVoladorEstatico::Draw(cData * dat) {
 	float xo, yo, xf, yf;
 	xo = 0.1796875f * GetFrame(); //cada uno son 46*50 y la imagen es de 256*64
 	yo = 0.78125f;
@@ -18,7 +18,7 @@ void cVoladorEstatico::Draw(int texId) {
 	xf = xo + 0.1796875f;//1/8 da el 0.125
 	yf = 0.f; //xk la nave ocupa toda la altura d la textura
 
-	DrawRect(texId, xo, yo, xf, yf);
+	DrawRect(dat->GetID(IMG_ESTATIC), xo, yo, xf, yf);
 }
 
 

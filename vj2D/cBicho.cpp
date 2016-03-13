@@ -18,7 +18,7 @@ cBicho::cBicho(int posx,int posy,int width,int height)
 	h = height;
 }
 
-void cBicho::Draw(int tex_id) {}
+void cBicho::Draw(cData *dat) {}
 
 void cBicho::SetPosition(int posx,int posy)
 {

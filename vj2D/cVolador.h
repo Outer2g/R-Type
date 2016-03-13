@@ -22,5 +22,5 @@ public:
 	virtual void Stop();
 	virtual void Logic(int *map);
 
-	virtual void Draw(int tex_id);
+	//virtual void Draw();
 };

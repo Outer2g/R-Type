@@ -36,15 +36,27 @@ bool cGame::Init()
 		if (!res) return false;
 		res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
 		if (!res) return false;
-		res = Data.LoadImage(IMG_MARIP, "enemy1.png", GL_RGBA);
+		res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
 		if (!res) return false;
 		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
-		cBicho* p = new cVoladorEstatico();
+		//[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
+		numRafagas = 3;
+		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
+		rafagasBichos[0] = { 10, 10, 0, 2 }; //primera rafaga
+		rafagasBichos[1] = { 20, 10, 0, 2 }; //2a rafaga
+		rafagasBichos[2] = { 30, 10, 0, 2 }; //3 rafaga
+
+		/*cBicho* p = new cVoladorEstatico();
 		bichos.push_back(p);
 		bichos[0]->SetWidthHeight(46, 50);
-		bichos[0]->SetTile(6, 8);
+		bichos[0]->SetTile(6, 8);*/
+		/*
+		foo = new (nothrow) int [5];
+		if (foo == nullptr) {
+		  // error assigning memory. Take measures.
+		}*/
 	}
 	else if (level != 1) {
 		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
@@ -125,6 +137,16 @@ bool cGame::Process()
 		&&!keys[GLUT_KEY_RIGHT]) Player.Stop();
 	
 	
+
+	//logic to add monsters
+	if ((rafagaQueToca < numRafagas) && ((offsetCamera + GAME_WIDTH) / TILE_SIZE > rafagasBichos[rafagaQueToca][0])) {
+		bichos.push_back(new cVoladorEstatico());
+		bichos.back()->SetWidthHeight(46, 50);
+		bichos.back()->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
+		rafagaQueToca++;
+	}
+
+
 	//Game Logic
 	//Move with the camera boi
 	int playerTileX, playerTileY;
@@ -155,7 +177,8 @@ void cGame::Render()
 
 	Scene.DrawBackground(Data.GetID(IMG_BACK));
 	Scene.Draw(Data.GetID(IMG_PARED));
-	bichos[0]->Draw(Data.GetID(IMG_MARIP));
+	for (cBicho* b : bichos) b->Draw(&Data);
+	//bichos[0]->Draw(&Data);
 	Player.Draw(Data.GetID(IMG_PLAYER));
 
 	glutSwapBuffers();

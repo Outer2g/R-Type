@@ -36,4 +36,6 @@ public:
 	bool endLevel;
 private:
 	bool moving;
+	double delayShoot;
+	int shootingSpeed;
 };

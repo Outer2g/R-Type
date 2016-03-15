@@ -6,6 +6,7 @@ using namespace std;
 cPlayer::cPlayer() {
 	moving = false;
 	endLevel = false;
+	this->shootingSpeed = 30;
 }
 cPlayer::~cPlayer(){}
 
@@ -173,13 +174,22 @@ void cPlayer::Logic(int * map)
 
 void cPlayer::shoot(set<cProyectil*> & pewpews)
 {
-	cProyectil* pewpew = new cProyectil;
-	pewpew->SetWidthHeight(15, 15);
-	int tx, ty;
-	this->GetTile(&tx, &ty);
-	pewpew->SetTile(tx, ty);
-	pewpew->setSpeed(10, 0);
-	pewpews.insert(pewpew);
+	double t1;
+	if (this->delayShoot == NULL) {
+		this->delayShoot = glutGet(GLUT_ELAPSED_TIME);
+		t1 = this->delayShoot * 20 + 1;
+	}
+	else t1 = glutGet(GLUT_ELAPSED_TIME);
+	if (t1 - this->delayShoot > 20*this->shootingSpeed) {
+		this->delayShoot = glutGet(GLUT_ELAPSED_TIME);
+		cProyectil* pewpew = new cProyectil;
+		pewpew->SetWidthHeight(15, 15);
+		int tx, ty;
+		this->GetTile(&tx, &ty);
+		pewpew->SetTile(tx+2, ty);
+		pewpew->setSpeed(10, 0);
+		pewpews.insert(pewpew);
+	}
 }
 
 void cPlayer::setMoving(bool b)

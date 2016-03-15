@@ -138,8 +138,22 @@ bool cGame::Process()
 	if (keys[GLUT_KEY_F1]) Player.shoot(this->pewpews);
 	
 
-	//Logica proyectiles
-	for (cProyectil* pewpew : this->pewpews) pewpew->Logic(Scene.GetMap());
+	//Logica proyectiles + colisiones Proyectiles
+	set<void*> toDelete;
+	for (cProyectil* pewpew : this->pewpews) {
+		pewpew->Logic(Scene.GetMap());
+		for (cBicho* monster : this->bichos) {
+			if (pewpew->CollidesBicho(monster)) {
+				//luz fuego destruccion
+				toDelete.insert(pewpew);
+			};
+		}
+	}
+	for (void* x : toDelete) {
+		pewpews.erase((cProyectil*)x);
+		delete x;
+	}
+
 
 	//logic to add monsters
 	if ((rafagaQueToca < numRafagas) && ((offsetCamera + GAME_WIDTH) / TILE_SIZE > rafagasBichos[rafagaQueToca][0])) {

@@ -37,5 +37,5 @@ public:
 private:
 	bool moving;
 	double delayShoot;
-	int shootingSpeed;
+	int shootingDelay;
 };

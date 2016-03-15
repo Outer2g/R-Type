@@ -66,6 +66,7 @@ private:
 protected:
 	int x, y;
 	int state;
+	int health;
 
 	int seq, delay;
 };

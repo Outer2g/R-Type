@@ -6,7 +6,7 @@ cBicho::cBicho(void)
 {
 	seq=0;
 	delay=0;
-
+	health = 100;
 }
 cBicho::~cBicho(void){}
 

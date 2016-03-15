@@ -12,6 +12,13 @@ cProyectil::~cProyectil()
 {
 }
 
+bool cProyectil::CollidesBicho(cBicho * bicho)
+{
+	cRect r;
+	bicho->GetArea(&r);
+	return this->Collides(&r);
+}
+
 void cProyectil::Logic(int * map)
 {
 	//Whats next tile?

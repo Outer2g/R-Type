@@ -135,8 +135,11 @@ bool cGame::Process()
 		&& !keys[GLUT_KEY_DOWN] 
 		&&!keys[GLUT_KEY_LEFT] 
 		&&!keys[GLUT_KEY_RIGHT]) Player.Stop();
+	if (keys[GLUT_KEY_F1]) Player.shoot(this->pewpews);
 	
-	
+
+	//Logica proyectiles
+	for (cProyectil* pewpew : this->pewpews) pewpew->Logic(Scene.GetMap());
 
 	//logic to add monsters
 	if ((rafagaQueToca < numRafagas) && ((offsetCamera + GAME_WIDTH) / TILE_SIZE > rafagasBichos[rafagaQueToca][0])) {
@@ -163,6 +166,7 @@ bool cGame::Process()
 	}
 	else Player.Logic(Scene.GetMap());
 
+
 	return res;
 }
 
@@ -180,6 +184,7 @@ void cGame::Render()
 	for (cBicho* b : bichos) b->Draw(&Data);
 	//bichos[0]->Draw(&Data);
 	Player.Draw(Data.GetID(IMG_PLAYER));
-
+	//Proyectiles
+	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
 	glutSwapBuffers();
 }

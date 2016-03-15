@@ -16,11 +16,12 @@
 
 #define STATE_CENTER		4
 
+
 class cRect
 {
 public:
-	int left,top,
-		right,bottom;
+	int left, top,
+		right, bottom;
 };
 
 class cBicho

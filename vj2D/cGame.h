@@ -5,6 +5,7 @@
 #include "cData.h"
 #include "cBicho.h"
 #include <vector>
+#include <set>
 
 #define GAME_WIDTH	640
 #define GAME_HEIGHT 512
@@ -36,5 +37,6 @@ private:
 	vector<vector<int> > rafagasBichos; //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
 	long int offsetCamera;
 	vector<cBicho*> bichos;
+	set<cProyectil*>  pewpews;
 	int rafagaQueToca = 0, numRafagas;
 };

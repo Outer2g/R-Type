@@ -1,6 +1,8 @@
 #pragma once
 
 #include "cBicho.h"
+#include "cProyectil.h"
+#include <set>
 
 #define PLAYER_START_CX		3
 #define PLAYER_START_CY		2
@@ -11,6 +13,8 @@
 #define STATE_UP_SLOW		2
 #define STATE_UP_FAST		3
 
+
+using namespace std;
 class cPlayer: public cBicho
 {
 public:
@@ -26,6 +30,7 @@ public:
 	virtual void Jump(int *map);
 	virtual void Stop();
 	virtual void Logic(int *map);
+	void shoot(set<cProyectil*> & pewpews);
 	void setMoving(bool b);
 	bool getMoving();
 	bool endLevel;

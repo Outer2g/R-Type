@@ -1,6 +1,7 @@
 
 #include "cPlayer.h"
 #include "cScene.h"
+using namespace std;
 
 cPlayer::cPlayer() {
 	moving = false;
@@ -168,6 +169,17 @@ void cPlayer::Stop()
 void cPlayer::Logic(int * map)
 {
 	if (!endLevel) this->MoveHalfRight(map);
+}
+
+void cPlayer::shoot(set<cProyectil*> & pewpews)
+{
+	cProyectil* pewpew = new cProyectil;
+	pewpew->SetWidthHeight(15, 15);
+	int tx, ty;
+	this->GetTile(&tx, &ty);
+	pewpew->SetTile(tx, ty);
+	pewpew->setSpeed(10, 0);
+	pewpews.insert(pewpew);
 }
 
 void cPlayer::setMoving(bool b)

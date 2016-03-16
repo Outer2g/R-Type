@@ -20,6 +20,16 @@ cBicho::cBicho(int posx,int posy,int width,int height)
 
 void cBicho::Draw(cData *dat) {}
 
+void cBicho::dealDamage(int dmg)
+{
+	this->health -= dmg;
+}
+
+int cBicho::getHealth()
+{
+	return this->health;
+}
+
 void cBicho::SetPosition(int posx,int posy)
 {
 	x = posx;

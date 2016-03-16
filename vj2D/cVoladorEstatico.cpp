@@ -2,10 +2,11 @@
 #include "cScene.h"
 #include "Globals.h"
 
-cVoladorEstatico::cVoladorEstatico(void)
+cVoladorEstatico::cVoladorEstatico()
 {
+	this->health = 100;
 }
-cVoladorEstatico::~cVoladorEstatico(void){}
+cVoladorEstatico::~cVoladorEstatico(){}
 
 
 

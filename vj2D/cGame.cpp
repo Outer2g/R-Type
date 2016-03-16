@@ -148,21 +148,31 @@ bool cGame::Process()
 			if (pewpew->CollidesBicho(monster)) {
 				//luz fuego destruccion
 				toDelete.insert(pewpew);
+				monster->dealDamage(pewpew->getDamage());
+				if (monster->getHealth() <= 0) toDelete.insert(monster);
 			};
 		}
 	}
 	for (void* x : toDelete) {
 		pewpews.erase((cProyectil*)x);
+		bichos.erase((cBicho*)x);
 		delete x;
 	}
 
 
 	//logic to add monsters
 	if ((rafagaQueToca < numRafagas) && ((offsetCamera + GAME_WIDTH) / TILE_SIZE > rafagasBichos[rafagaQueToca][0])) {
+		/*
 		bichos.push_back(new cVoladorEstatico());
 		bichos.back()->SetWidthHeight(46, 50);
 		bichos.back()->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
-		rafagaQueToca++;
+		rafagaQueToca++;*/
+
+		cBicho* bicho = new cVoladorEstatico();
+		bicho->SetWidthHeight(46, 50);
+		bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
+		bichos.insert(bicho);
+		++rafagaQueToca;
 	}
 
 

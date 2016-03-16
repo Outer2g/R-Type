@@ -59,6 +59,9 @@ public:
 	void NextFrame(int max);
 	int  GetFrame();
 	virtual void Draw(cData *dat);
+
+	void dealDamage(int dmg);
+	int getHealth();
 private:
 	
 

@@ -36,7 +36,8 @@ private:
 	cData Data;
 	vector<vector<int> > rafagasBichos; //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
 	long int offsetCamera;
-	vector<cBicho*> bichos;
+	//vector<cBicho*> bichos;
+	set<cBicho*> bichos;
 	set<cProyectil*>  pewpews;
 	int rafagaQueToca = 0, numRafagas;
 };

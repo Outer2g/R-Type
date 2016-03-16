@@ -15,8 +15,9 @@ public:
 
 	void setSpeed(int x, int y);
 	void getSpeed(int* x, int* y);
+	int getDamage();
 private:
-	float dmg;
+	int dmg;
 	int speedX, speedY;
 };
 

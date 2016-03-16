@@ -9,36 +9,43 @@ cPlayer::cPlayer() {
 	//cuanto menos, mas
 	this->shootingDelay = 30;
 	this->bulletType = BULLET_SIMPLE;
+	this->godMode = false;
+	this->invis = false;
 }
 cPlayer::~cPlayer(){}
 
 void cPlayer::Draw(int tex_id)
-{	
-	float xo,yo,xf,yf;
-	xo = 0.125 * GetState();
-	yo = 1.f;
-	/*switch(GetState())
-	{
-		//1
-		case STATE_CENTER:		xo = 0.5f; //SI METEMOS ANIMACION A LA NAVE, LA PONEMOS DEBAJO Y CAMBIAMOS EL 1
-								break;
-		case STATE_DOWN_FAST: xo = 0.125f; break;
-		//4
-		case STATE_LOOKRIGHT:	xo = 0.25f;	yo = 1.f;
-								break;
-		//1..3
-		case STATE_WALKLEFT:	xo = 0.0f;	yo = 1.f; // PARA ANIMACION: + (GetFrame()*0.25f);
-								//NextFrame(3);
-								break;
-		//4..6
-		case STATE_WALKRIGHT:	xo = 0.25f; yo = 1.f;// +(GetFrame()*0.25f);
-								//NextFrame(3);
-								break;
-	}*/
-	//coord textur: xo,yo
-	xf = xo + 0.125f;//1/8 da el 0.125
-	yf = yo - 1.f; //xk la nave ocupa toda la altura d la textura
-
+{
+	float xo, yo, xf, yf;
+	if (!this->godMode) {
+		xo = 0.125 * GetState();
+		yo = 1.f;
+		//coord textur: xo,yo
+		xf = xo + 0.125f;//1/8 da el 0.125
+		yf = yo - 1.f; //xk la nave ocupa toda la altura d la textura
+	}
+	else {
+		//delta time management boy estaran 0.5segs en cada estado
+		if (this->delayInvis == NULL) this->delayInvis = glutGet(GLUT_ELAPSED_TIME);
+		if (invis) {
+			xo = 0.125 * 6; //aka espacio blanco
+			yo = 1.f;
+			xf = xo + 0.125f;
+			yf = yo - 1.f;
+			double t1 = glutGet(GLUT_ELAPSED_TIME);
+			//4frames invis
+			if (t1 - delayInvis > 25 * 20) { this->invis = false; this->delayInvis = NULL; }
+		}
+		else{
+			xo = 0.125 * GetState();
+			yo = 1.f;
+			xf = xo + 0.125f;
+			yf = yo - 1.f;
+			double t1 = glutGet(GLUT_ELAPSED_TIME);
+			//4frames invis
+			if (t1 - delayInvis > 25 * 20) { this->invis = true; this->delayInvis = NULL; }
+		}
+	}
 	DrawRect(tex_id,xo,yo,xf,yf);
 }
 
@@ -212,6 +219,18 @@ void cPlayer::setMoving(bool b)
 bool cPlayer::getMoving()
 {
 	return this->moving;
+}
+
+void cPlayer::enableGod()
+{
+	this->godMode = true;
+	this->invis = true;
+}
+
+void cPlayer::disableGod()
+{
+	this->godMode = false;
+	this->invis = false;
 }
 
 void cPlayer::proyectSimple(set<cProyectil*>& pewpews)

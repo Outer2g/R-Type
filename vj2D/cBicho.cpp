@@ -20,6 +20,12 @@ cBicho::cBicho(int posx,int posy,int width,int height)
 
 void cBicho::Draw(cData *dat) {}
 
+bool cBicho::CollidesBicho(cBicho * bicho)
+{
+	cRect r;
+	bicho->GetArea(&r);
+	return this->Collides(&r);
+}
 void cBicho::dealDamage(int dmg)
 {
 	this->health -= dmg;
@@ -120,12 +126,7 @@ bool cBicho::CollidesMapFloor(int *map)
 	return on_base;
 }
 
-bool cBicho::CollidesWithTerrains(int * map)
-{
-	int tileX, tileY;
-	this->GetTile(&tileX, &tileY);
-	return false;
-}
+
 
 void cBicho::GetArea(cRect *rc)
 {

@@ -1,16 +1,16 @@
 Player:
-	Proyectiles player 
+	Proyectiles player .-.
 	power ups
-	disparar proyectiles con tecla
+	disparar proyectiles con tecla .-.
 	colisiones con proyectiles, pared y bichos
 	immunidad (cuando muere)
 	vidas (reencarnaciones)
 
 Enemigos:
 	Proyectiles bicho
-	Spawn bichos
+	Spawn bichos .-.
 	animacion enemigo
-	subclases volador y terrestre + forma de poner los waypoints k sigan
+	subclases volador y terrestre .-. + forma de poner los waypoints k sigan
 
 mapa:
 	subir mapa otra vez para vidas

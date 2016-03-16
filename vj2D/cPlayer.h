@@ -36,12 +36,14 @@ public:
 	int getBullet();
 	void setMoving(bool b);
 	bool getMoving();
+	void enableGod();
+	void disableGod();
 	bool endLevel;
 private:
 	//Proyectiles
 	void proyectSimple(set<cProyectil*> & pewpews);
 	void proyectDoble(set<cProyectil*> & pewpews);
-	bool moving;
-	double delayShoot;
+	bool moving,godMode,invis;
+	double delayShoot,delayInvis;
 	int shootingDelay,bulletType;
 };

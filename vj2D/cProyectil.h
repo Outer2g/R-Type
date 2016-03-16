@@ -11,7 +11,6 @@ public:
 	cProyectil();
 	~cProyectil();
 
-	bool CollidesBicho(cBicho* bicho);
 	virtual void Logic(int *map);
 
 	virtual void Draw(cData *dat);

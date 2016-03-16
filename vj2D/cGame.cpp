@@ -138,23 +138,27 @@ bool cGame::Process()
 	// Q
 	if (keys[113])
 		Player.shoot(this->pewpews);
-	//TESTING BUTTON
+	//TESTING BUTTONS
 	if (keys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
 	if(keys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
+	if (keys[GLUT_KEY_F3]) Player.enableGod();
 	
 
 	//Logica proyectiles + colisiones Proyectiles
 	set<void*> toDelete;
-	for (cProyectil* pewpew : this->pewpews) {
-		pewpew->Logic(Scene.GetMap());
-		for (cBicho* monster : this->bichos) {
+	for (cBicho* monster : this->bichos) {
+		for (cProyectil* pewpew : this->pewpews) {
+			pewpew->Logic(Scene.GetMap());
 			if (pewpew->CollidesBicho(monster)) {
 				//luz fuego destruccion
 				toDelete.insert(pewpew);
 				monster->dealDamage(pewpew->getDamage());
 				if (monster->getHealth() <= 0) toDelete.insert(monster);
-			};
+				//Comprobacion si nave choca con monstruo para hacerlo mas eficiente(aka sidoso)
+			}
 		}
+		if (this->Player.CollidesBicho(monster) ) 
+			Player.enableGod();
 	}
 	for (void* x : toDelete) {
 		pewpews.erase((cProyectil*)x);
@@ -179,7 +183,7 @@ bool cGame::Process()
 	}
 
 
-	//Game Logic
+	//Nave Logic + colisiones
 	//Move with the camera boi
 	int playerTileX, playerTileY;
 	Player.GetTile(&playerTileX, &playerTileY);
@@ -194,7 +198,7 @@ bool cGame::Process()
 		Player.MoveLeft(Scene.GetMap());
 	}
 	else Player.Logic(Scene.GetMap());
-
+	//si choca con enemigo hazte pupa por eficiencia, esta con los proyectiles
 
 	return res;
 }

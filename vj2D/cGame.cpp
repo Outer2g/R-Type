@@ -135,7 +135,9 @@ bool cGame::Process()
 		&& !keys[GLUT_KEY_DOWN] 
 		&&!keys[GLUT_KEY_LEFT] 
 		&&!keys[GLUT_KEY_RIGHT]) Player.Stop();
-	if (keys[GLUT_KEY_F1]) Player.shoot(this->pewpews);
+	// Q
+	if (keys[113])
+		Player.shoot(this->pewpews);
 	
 
 	//Logica proyectiles + colisiones Proyectiles

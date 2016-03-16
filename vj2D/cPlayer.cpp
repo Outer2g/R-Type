@@ -187,7 +187,7 @@ void cPlayer::shoot(set<cProyectil*> & pewpews)
 		pewpew->SetWidthHeight(15, 15);
 		int tx, ty;
 		this->GetPosition(&tx, &ty);
-		pewpew->SetPosition(tx+2, ty);
+		pewpew->SetPosition(tx+this->w, ty);
 		pewpew->setSpeed(10, 0);
 		pewpews.insert(pewpew);
 	}

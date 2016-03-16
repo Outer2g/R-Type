@@ -60,10 +60,10 @@ public:
 	int  GetFrame();
 	virtual void Draw(cData *dat);
 private:
-	int w,h;
-
+	
 
 protected:
+	int w, h;
 	int x, y;
 	int state;
 	int health;

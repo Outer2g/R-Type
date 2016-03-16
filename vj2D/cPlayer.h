@@ -30,12 +30,18 @@ public:
 	virtual void Jump(int *map);
 	virtual void Stop();
 	virtual void Logic(int *map);
+
 	void shoot(set<cProyectil*> & pewpews);
+	void setBullet(int bullet);
+	int getBullet();
 	void setMoving(bool b);
 	bool getMoving();
 	bool endLevel;
 private:
+	//Proyectiles
+	void proyectSimple(set<cProyectil*> & pewpews);
+	void proyectDoble(set<cProyectil*> & pewpews);
 	bool moving;
 	double delayShoot;
-	int shootingDelay;
+	int shootingDelay,bulletType;
 };

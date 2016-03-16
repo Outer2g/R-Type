@@ -2,6 +2,9 @@
 #include "cBicho.h"
 #include "Globals.h"
 
+//tipos proyectil
+#define BULLET_SIMPLE 1
+#define BULLET_DOBLE 2
 class cProyectil :	public cBicho
 {
 public:

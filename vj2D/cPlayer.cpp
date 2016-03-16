@@ -6,7 +6,9 @@ using namespace std;
 cPlayer::cPlayer() {
 	moving = false;
 	endLevel = false;
+	//cuanto menos, mas
 	this->shootingDelay = 30;
+	this->bulletType = BULLET_SIMPLE;
 }
 cPlayer::~cPlayer(){}
 
@@ -182,15 +184,24 @@ void cPlayer::shoot(set<cProyectil*> & pewpews)
 	else t1 = glutGet(GLUT_ELAPSED_TIME);
 	if (t1 - this->delayShoot > 20*this->shootingDelay) {
 		this->delayShoot = glutGet(GLUT_ELAPSED_TIME);
-
-		cProyectil* pewpew = new cProyectil;
-		pewpew->SetWidthHeight(15, 15);
-		int tx, ty;
-		this->GetPosition(&tx, &ty);
-		pewpew->SetPosition(tx+this->w, ty);
-		pewpew->setSpeed(10, 0);
-		pewpews.insert(pewpew);
+		switch (this->bulletType) {
+		case BULLET_SIMPLE:
+			proyectSimple(pewpews);
+			break;
+		case BULLET_DOBLE:
+			proyectDoble(pewpews);
+		}
 	}
+}
+
+void cPlayer::setBullet(int bullet)
+{
+	this->bulletType = bullet;
+}
+
+int cPlayer::getBullet()
+{
+	return this->bulletType;
 }
 
 void cPlayer::setMoving(bool b)
@@ -201,4 +212,32 @@ void cPlayer::setMoving(bool b)
 bool cPlayer::getMoving()
 {
 	return this->moving;
+}
+
+void cPlayer::proyectSimple(set<cProyectil*>& pewpews)
+{
+ 	cProyectil* pewpew = new cProyectil;
+	pewpew->SetWidthHeight(15, 15);
+	int tx, ty;
+	this->GetPosition(&tx, &ty);
+	pewpew->SetPosition(tx + this->w, ty);
+	pewpew->setSpeed(10, 0);
+	pewpews.insert(pewpew);
+}
+
+void cPlayer::proyectDoble(set<cProyectil*>& pewpews)
+{
+	cProyectil* pewpew = new cProyectil;
+	pewpew->SetWidthHeight(15, 15);
+	int tx, ty;
+	this->GetPosition(&tx, &ty);
+	int h2 = this->h / 2;
+	pewpew->SetPosition(tx + this->w, ty+h2);
+	pewpew->setSpeed(10, 0);
+	pewpews.insert(pewpew);
+	pewpew = new cProyectil;
+	pewpew->SetWidthHeight(15, 15);
+	pewpew->SetPosition(tx + this->w, ty-h2);
+	pewpew->setSpeed(10, 0);
+	pewpews.insert(pewpew);
 }

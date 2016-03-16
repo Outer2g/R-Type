@@ -138,6 +138,9 @@ bool cGame::Process()
 	// Q
 	if (keys[113])
 		Player.shoot(this->pewpews);
+	//TESTING BUTTON
+	if (keys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
+	if(keys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
 	
 
 	//Logica proyectiles + colisiones Proyectiles

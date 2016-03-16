@@ -221,16 +221,21 @@ bool cPlayer::getMoving()
 	return this->moving;
 }
 
-void cPlayer::enableGod()
+void cPlayer::enableGodMode()
 {
 	this->godMode = true;
 	this->invis = true;
 }
 
-void cPlayer::disableGod()
+void cPlayer::disableGodMode()
 {
 	this->godMode = false;
 	this->invis = false;
+}
+
+bool cPlayer::getMode()
+{
+	return godMode;
 }
 
 void cPlayer::proyectSimple(set<cProyectil*>& pewpews)

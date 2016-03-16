@@ -36,8 +36,9 @@ public:
 	int getBullet();
 	void setMoving(bool b);
 	bool getMoving();
-	void enableGod();
-	void disableGod();
+	void enableGodMode();
+	void disableGodMode();
+	bool getMode();
 	bool endLevel;
 private:
 	//Proyectiles

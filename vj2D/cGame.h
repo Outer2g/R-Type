@@ -40,4 +40,5 @@ private:
 	set<cBicho*> bichos;
 	set<cProyectil*>  pewpews;
 	int rafagaQueToca = 0, numRafagas;
+	double godModeTimer;
 };

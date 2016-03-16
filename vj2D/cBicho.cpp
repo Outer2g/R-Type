@@ -68,7 +68,11 @@ void cBicho::GetWidthHeight(int *width,int *height)
 }
 bool cBicho::Collides(cRect *rc)
 {
-	return ((x>rc->left) && (x+w<rc->right) && (y>rc->bottom) && (y+h<rc->top));
+	//return ((x>rc->left) && (x+w<rc->right) && (y>rc->bottom) && (y+h<rc->top));
+	return (x < rc->right &&
+		x + w > rc->left &&
+		y < rc->top &&
+		y + h > rc->bottom);
 }
 bool cBicho::CollidesMapWall(int *map,bool right)
 {

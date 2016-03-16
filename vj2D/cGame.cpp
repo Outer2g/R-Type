@@ -141,7 +141,7 @@ bool cGame::Process()
 	//TESTING BUTTONS
 	if (keys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
 	if(keys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
-	if (keys[GLUT_KEY_F3]) Player.enableGod();
+	if (keys[GLUT_KEY_F3]) Player.enableGodMode();
 	
 
 	//Logica proyectiles + colisiones Proyectiles
@@ -157,8 +157,14 @@ bool cGame::Process()
 				//Comprobacion si nave choca con monstruo para hacerlo mas eficiente(aka sidoso)
 			}
 		}
-		if (this->Player.CollidesBicho(monster) ) 
-			Player.enableGod();
+		bool b = monster->CollidesBicho(&Player);
+		if (b && !Player.getMode()) {
+			Player.enableGodMode();
+			godModeTimer = glutGet(GLUT_ELAPSED_TIME);
+		}
+		double t1 = glutGet(GLUT_ELAPSED_TIME);
+		//si ha pasado 200 frames, desactiva el godmode
+		if (t1 - godModeTimer > 200 * 20) Player.disableGodMode();
 	}
 	for (void* x : toDelete) {
 		pewpews.erase((cProyectil*)x);

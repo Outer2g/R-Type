@@ -154,7 +154,14 @@ bool cGame::Process()
 				//luz fuego destruccion
 				toDelete.insert(pewpew);
 				monster->dealDamage(pewpew->getDamage());
-				if (monster->getHealth() <= 0) toDelete.insert(monster);
+				if (monster->getHealth() <= 0) {
+					toDelete.insert(monster);
+					cPowerUp* powah = new cPowerUp(BULLET_DOBLE);
+					int tx, ty; monster->GetTile(&tx, &ty);
+					powah->SetTile(tx, ty);
+					powah->SetWidthHeight(32,32);
+					this->powerUps.insert(powah);
+				}
 				//Comprobacion si nave choca con monstruo para hacerlo mas eficiente(aka sidoso)
 			}
 		}
@@ -167,9 +174,18 @@ bool cGame::Process()
 	double t1 = glutGet(GLUT_ELAPSED_TIME);
 	//si ha pasado 200 frames, desactiva el godmode
 	if (t1 - godModeTimer > 200 * 20) Player.disableGodMode();
+	//Gestion powers
+	for (cPowerUp* powah : this->powerUps) {
+		if (Player.CollidesBicho((cBicho*)powah)) {
+			toDelete.insert(powah);
+			int bType = powah->getType();
+			Player.setBullet(bType);
+		}
+	}
 	for (void* x : toDelete) {
 		pewpews.erase((cProyectil*)x);
 		bichos.erase((cBicho*)x);
+		powerUps.erase((cPowerUp*) x);
 		delete x;
 	}
 
@@ -226,5 +242,7 @@ void cGame::Render()
 	Player.Draw(Data.GetID(IMG_PLAYER));
 	//Proyectiles
 	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
+	//PowerUps
+	for (cPowerUp* powah : this->powerUps) powah->Draw(&Data);
 	glutSwapBuffers();
 }

@@ -4,6 +4,7 @@
 #include "cPlayer.h"
 #include "cData.h"
 #include "cBicho.h"
+#include "cPowerUp.h"
 #include <vector>
 #include <set>
 
@@ -39,6 +40,7 @@ private:
 	//vector<cBicho*> bichos;
 	set<cBicho*> bichos;
 	set<cProyectil*>  pewpews;
+	set<cPowerUp*> powerUps;
 	int rafagaQueToca = 0, numRafagas;
 	double godModeTimer;
 };

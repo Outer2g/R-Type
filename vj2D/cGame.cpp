@@ -146,9 +146,10 @@ bool cGame::Process()
 
 	//Logica proyectiles + colisiones Proyectiles
 	set<void*> toDelete;
+	for(cProyectil* pewpew: this->pewpews)
+		pewpew->Logic(Scene.GetMap());
 	for (cBicho* monster : this->bichos) {
 		for (cProyectil* pewpew : this->pewpews) {
-			pewpew->Logic(Scene.GetMap());
 			if (pewpew->CollidesBicho(monster)) {
 				//luz fuego destruccion
 				toDelete.insert(pewpew);
@@ -162,10 +163,10 @@ bool cGame::Process()
 			Player.enableGodMode();
 			godModeTimer = glutGet(GLUT_ELAPSED_TIME);
 		}
-		double t1 = glutGet(GLUT_ELAPSED_TIME);
-		//si ha pasado 200 frames, desactiva el godmode
-		if (t1 - godModeTimer > 200 * 20) Player.disableGodMode();
 	}
+	double t1 = glutGet(GLUT_ELAPSED_TIME);
+	//si ha pasado 200 frames, desactiva el godmode
+	if (t1 - godModeTimer > 200 * 20) Player.disableGodMode();
 	for (void* x : toDelete) {
 		pewpews.erase((cProyectil*)x);
 		bichos.erase((cBicho*)x);

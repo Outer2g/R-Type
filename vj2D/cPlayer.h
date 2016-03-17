@@ -46,5 +46,5 @@ private:
 	void proyectDoble(set<cProyectil*> & pewpews);
 	bool moving,godMode,invis;
 	double delayShoot,delayInvis;
-	int shootingDelay,bulletType;
+	int shootingDelay,bulletType,idPlayer;
 };

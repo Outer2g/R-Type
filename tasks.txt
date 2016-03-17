@@ -3,7 +3,7 @@ Player:
 	power ups
 	disparar proyectiles con tecla .-.
 	colisiones con proyectiles, pared y bichos
-	immunidad (cuando muere)
+	immunidad (cuando es hiteado).-.
 	vidas (reencarnaciones)
 
 Enemigos:

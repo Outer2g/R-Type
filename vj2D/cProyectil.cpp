@@ -8,6 +8,12 @@ cProyectil::cProyectil()
 	this->dmg = 100;
 }
 
+cProyectil::cProyectil(int id)
+{
+	this->id = id;
+	this->dmg = 100;
+}
+
 
 cProyectil::~cProyectil()
 {
@@ -57,6 +63,16 @@ void cProyectil::getSpeed(int * x, int * y)
 {
 	*x = this->speedX;
 	*y = this->speedY;
+}
+
+void cProyectil::setId(int id)
+{
+	this->id = id;
+}
+
+int cProyectil::getId()
+{
+	return this->id;
 }
 
 int cProyectil::getDamage()

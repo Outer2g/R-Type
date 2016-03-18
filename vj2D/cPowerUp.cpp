@@ -26,7 +26,7 @@ void cPowerUp::Draw(cData * dat)
 		xf = xo + 0.25f;//1/8 da el 0.125
 		yf = yo + 0.25f; //xk la nave ocupa toda la altura d la textura
 
-		DrawRect(dat->GetID(IMG_BLOCKS), xo, yo, xf, yf);
+		DrawRect(dat->GetID(IMG_BUB), xo, yo, xf, yf);
 }
 
 void cPowerUp::setType(int type)

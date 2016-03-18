@@ -1,21 +1,28 @@
 Player:
 	Proyectiles player .-.
-	power ups
+	power ups .-.
 	disparar proyectiles con tecla .-.
-	colisiones con proyectiles, pared y bichos
+	mejorar colisiones con proyectiles, pared y bichos
 	immunidad (cuando es hiteado).-.
 	vidas (reencarnaciones)
+	2o player
+	añadir animaciones nave (?)
 
 Enemigos:
 	Proyectiles bicho
 	Spawn bichos .-.
-	animacion enemigo
+	animacion enemigo .-.
 	subclases volador y terrestre .-. + forma de poner los waypoints k sigan
 
 mapa:
 	subir mapa otra vez para vidas
-	Power ups + barra de carga de disparo
+	Power ups .-. + barra de carga de disparo
 	inicializar vector rafagas segun nivel
+	si te matan resetea
 
 Sonidos
 2 jugadores
+
+Preguntar:
+Entrega?
+Guardar progreso?

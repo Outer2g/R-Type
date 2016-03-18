@@ -38,6 +38,8 @@ bool cGame::Init()
 		if (!res) return false;
 		res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
 		if (!res) return false;
+		res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
+		if (!res) return false;
 		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background

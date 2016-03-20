@@ -93,7 +93,7 @@ bool cGame::Loop()
 
 	t1 = glutGet(GLUT_ELAPSED_TIME);
 	if (offsetCamera < Scene.BACK_WIDTH_DRAW - GAME_WIDTH) ++offsetCamera;
-	else Player.endLevel = true;
+	else { Player.endLevel = true; Player2.endLevel = true; }
 	
 	res = Process();
 	if(res) Render();

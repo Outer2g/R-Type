@@ -57,8 +57,8 @@ bool cGame::Init()
 		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
 		rafagasBichos[0] = { 10, 10, 0, 2 }; //primera rafaga
 		rafagasBichos[1] = { 15, 10, 1, 2 }; //3 rafaga
-		rafagasBichos[2] = { 20, 10, 0, 2 }; //2a rafaga
-		rafagasBichos[3] = { 30, 10, 0, 2 }; //3 rafaga
+		rafagasBichos[2] = { 30, 10, 0, 2 }; //2a rafaga
+		rafagasBichos[3] = { 50, 10, 0, 2 }; //3 rafaga
 	}
 	else if (level != 1) {
 		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
@@ -145,46 +145,8 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 //Process
 bool cGame::Process()
 {
-	bool res=true;
-	
-	//Process Input
-	if(sKeys[27])	res=false;
-	
-	if(sKeys[GLUT_KEY_UP])			Player.Jump(Scene.GetMap());
-	else if (sKeys[GLUT_KEY_DOWN])	Player.MoveDown(Scene.GetMap());
-	else Player.setMoving(false);
-	if(sKeys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap());
-	else if(sKeys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());
-	//Si no hay nada aparetado, para el player
-	if (!sKeys[GLUT_KEY_UP]
-		&& !sKeys[GLUT_KEY_DOWN] 
-		&&!sKeys[GLUT_KEY_LEFT] 
-		&&!sKeys[GLUT_KEY_RIGHT]) Player.Stop();
-	// enter = 13, shooting for player 1
-	if (keys[13])
-		Player.shoot(this->pewpews);
-	//Player 2 controls
-	//w = 119, a = 97, s = 115, d= 100, D =68, q= 113
-	if (keys[KEY_W])			Player2.Jump(Scene.GetMap());
-	else if (keys[KEY_S])	Player2.MoveDown(Scene.GetMap());
-	else Player2.setMoving(false);
-	if (keys[KEY_A])			Player2.MoveLeft(Scene.GetMap());
-	else if (keys[KEY_D])	Player2.MoveRight(Scene.GetMap());
-	//Si no hay nada aparetado, para el player
-	if (!keys[KEY_W]
-		&& !keys[KEY_S]
-		&& !keys[KEY_A]
-		&& !keys[KEY_D]) Player2.Stop();
-	// enter = 13, shooting for player 1
-	if (keys[KEY_Q])
-		Player2.shoot(this->pewpews);
-	//TESTING BUTTONS
-	if (sKeys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
-	if(sKeys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
-	if (sKeys[GLUT_KEY_F3]) Player.enableGodMode();
-	if (sKeys[GLUT_KEY_F4]) reset();
-	
-
+	bool res = true;
+	res = tratarKeys();
 	//Logica proyectiles + colisiones Proyectiles
 	set<void*> toDelete;
 	for(cProyectil* pewpew: this->pewpews)
@@ -243,26 +205,7 @@ bool cGame::Process()
 	}
 
 
-	//logic to add monsters
-	if ((rafagaQueToca < numRafagas) && ((offsetCamera + GAME_WIDTH) / TILE_SIZE > rafagasBichos[rafagaQueToca][0])) {
-		cBicho* bicho;
-		switch (rafagasBichos[rafagaQueToca][2]) {
-			case 0:
-				bicho = new cVoladorEstatico();
-				bicho->SetWidthHeight(46, 50);
-				bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
-				bichos.insert(bicho);
-				break;
-			case 1:
-				bicho = new cVoladorMariposa();
-				bicho->SetWidthHeight(46, 50);
-				bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
-				bichos.insert(bicho);
-				break;
-		}
-		
-		++rafagaQueToca;
-	}
+	logicToAddMonsters();
 
 
 	//Nave Logic + colisiones
@@ -317,4 +260,75 @@ void cGame::Render()
 	//PowerUps
 	for (cPowerUp* powah : this->powerUps) powah->Draw(&Data);
 	glutSwapBuffers();
+}
+
+inline bool cGame::tratarKeys()
+{
+	bool res = true;
+	/////////////////////////////////////////////
+	//Process Input
+	if (sKeys[27])	res = false;
+	if (sKeys[GLUT_KEY_UP])			Player.Jump(Scene.GetMap());
+	else if (sKeys[GLUT_KEY_DOWN])	Player.MoveDown(Scene.GetMap());
+	else Player.setMoving(false);
+	if (sKeys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap());
+	else if (sKeys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());
+	//Si no hay nada aparetado, para el player
+	if (!sKeys[GLUT_KEY_UP]
+		&& !sKeys[GLUT_KEY_DOWN]
+		&& !sKeys[GLUT_KEY_LEFT]
+		&& !sKeys[GLUT_KEY_RIGHT]) Player.Stop();
+	// enter = 13, shooting for player 1
+	if (keys[13])
+		Player.shoot(this->pewpews);
+	//Player 2 controls
+	//w = 119, a = 97, s = 115, d= 100, D =68, q= 113
+	if (keys[KEY_W])			Player2.Jump(Scene.GetMap());
+	else if (keys[KEY_S])	Player2.MoveDown(Scene.GetMap());
+	else Player2.setMoving(false);
+	if (keys[KEY_A])			Player2.MoveLeft(Scene.GetMap());
+	else if (keys[KEY_D])	Player2.MoveRight(Scene.GetMap());
+	//Si no hay nada aparetado, para el player
+	if (!keys[KEY_W]
+		&& !keys[KEY_S]
+		&& !keys[KEY_A]
+		&& !keys[KEY_D]) Player2.Stop();
+	// enter = 13, shooting for player 1
+	if (keys[KEY_Q])
+		Player2.shoot(this->pewpews);
+	//TESTING BUTTONS
+	if (sKeys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
+	if (sKeys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
+	if (sKeys[GLUT_KEY_F3]) Player.enableGodMode();
+	if (sKeys[GLUT_KEY_F4]) reset();
+
+	return res;
+}
+
+
+inline void cGame::logicToAddMonsters() {
+	//logic to add monsters
+	if ((rafagaQueToca < numRafagas) && ((offsetCamera + GAME_WIDTH + TILE_SIZE) / TILE_SIZE > rafagasBichos[rafagaQueToca][0])) {
+		cBicho* bicho;
+		switch (rafagasBichos[rafagaQueToca][2]) {
+		case 0:
+			for (int i = 0; i < rafagasBichos[rafagaQueToca][3]; i++) {
+				bicho = new cVoladorEstatico();
+				bicho->SetWidthHeight(46, 50);
+				bicho->SetTile(rafagasBichos[rafagaQueToca][0] + i*2, rafagasBichos[rafagaQueToca][1]-i);
+				bichos.insert(bicho);
+			}
+			break;
+		case 1:
+			for (int i = 0; i < rafagasBichos[rafagaQueToca][3]; i++) {
+				bicho = new cVoladorMariposa();
+				bicho->SetWidthHeight(46, 50);
+				bicho->SetTile(rafagasBichos[rafagaQueToca][0] + i, rafagasBichos[rafagaQueToca][1]);
+				bichos.insert(bicho);
+			}
+			break;
+		}
+
+		++rafagaQueToca;
+	}
 }

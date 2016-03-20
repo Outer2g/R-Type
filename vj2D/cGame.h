@@ -37,6 +37,8 @@ public:
 	bool Process();
 	//Output
 	void Render();
+	bool tratarKeys();
+	void logicToAddMonsters();
 
 private:
 	unsigned char keys[256];

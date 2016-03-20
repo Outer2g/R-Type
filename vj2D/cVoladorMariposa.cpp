@@ -7,19 +7,21 @@ cVoladorMariposa::cVoladorMariposa(void)
 	this->health = 100;
 	this->speed = 7;
 	moveDelay = glutGet(GLUT_ELAPSED_TIME);
+	angle = 0;
 }
 cVoladorMariposa::~cVoladorMariposa() {}
 
 
 void cVoladorMariposa::Draw(cData *dat) {
 	float xo, yo, xf, yf;
-	xo = 0.125 * GetState();
-	yo = 1.f;
+	xo = 0.1796875f * GetFrame(); //cada uno son 46*50 y la imagen es de 256*64
+	yo = 0.78125f;
+	NextFrame(4);
 	//coord textur: xo,yo
-	xf = xo + 0.125f;//1/8 da el 0.125
-	yf = yo - 1.f; //xk la nave ocupa toda la altura d la textura
+	xf = xo + 0.1796875f;//1/8 da el 0.125
+	yf = 0.f; //xk la nave ocupa toda la altura d la textura
 
-	DrawRect(dat->GetID(IMG_MARIP), xo, yo, xf, yf);
+	DrawRect(dat->GetID(IMG_ESTATIC), xo, yo, xf, yf);
 }
 
 
@@ -38,7 +40,9 @@ void cVoladorMariposa::Logic(int *map)
 	double t1 = glutGet(GLUT_ELAPSED_TIME);
 	if (t1 - moveDelay > 20) {
 		int aux = y;
-		y = sin(30*PI / 180);//30 grados
+		y += sin(angle) * 4;//30 grados
+		angle += 0.1;
+		x -= STEP_LENGTH+1;
 
 		//Whats next tile?
 		if ((y % TILE_SIZE) <= 1)

@@ -1,6 +1,7 @@
 #include "cGame.h"
 #include "Globals.h"
 #include "cVoladorEstatico.h"
+#include "cVoladorMariposa.h"
 
 
 cGame::cGame(void)
@@ -39,17 +40,21 @@ bool cGame::Init()
 		if (!res) return false;
 		res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
 		if (!res) return false;
+		res = Data.LoadImage(IMG_MARIP, "enemyEstatico.png", GL_RGBA);
+		if (!res) return false;
+
 		res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
 		if (!res) return false;
 		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
 		//[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
-		numRafagas = 3;
+		numRafagas = 4;
 		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
 		rafagasBichos[0] = { 10, 10, 0, 2 }; //primera rafaga
-		rafagasBichos[1] = { 20, 10, 0, 2 }; //2a rafaga
-		rafagasBichos[2] = { 30, 10, 0, 2 }; //3 rafaga
+		rafagasBichos[1] = { 15, 10, 1, 2 }; //3 rafaga
+		rafagasBichos[2] = { 20, 10, 0, 2 }; //2a rafaga
+		rafagasBichos[3] = { 30, 10, 0, 2 }; //3 rafaga
 
 		/*cBicho* p = new cVoladorEstatico();
 		bichos.push_back(p);
@@ -217,16 +222,22 @@ bool cGame::Process()
 
 	//logic to add monsters
 	if ((rafagaQueToca < numRafagas) && ((offsetCamera + GAME_WIDTH) / TILE_SIZE > rafagasBichos[rafagaQueToca][0])) {
-		/*
-		bichos.push_back(new cVoladorEstatico());
-		bichos.back()->SetWidthHeight(46, 50);
-		bichos.back()->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
-		rafagaQueToca++;*/
-
-		cBicho* bicho = new cVoladorEstatico();
-		bicho->SetWidthHeight(46, 50);
-		bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
-		bichos.insert(bicho);
+		cBicho* bicho;
+		switch (rafagasBichos[rafagaQueToca][2]) {
+			case 0:
+				bicho = new cVoladorEstatico();
+				bicho->SetWidthHeight(46, 50);
+				bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
+				bichos.insert(bicho);
+				break;
+			case 1:
+				bicho = new cVoladorMariposa();
+				bicho->SetWidthHeight(46, 50);
+				bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
+				bichos.insert(bicho);
+				break;
+		}
+		
 		++rafagaQueToca;
 	}
 

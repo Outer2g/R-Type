@@ -6,7 +6,6 @@
 
 
 #define FRAME_DELAY		8
-#define STEP_LENGTH		2
 
 
 #define STATE_CENTER		4
@@ -24,5 +23,5 @@ public:
 
 private:
 	int speed;
-	
+	double angle;
 };

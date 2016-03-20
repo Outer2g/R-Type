@@ -250,7 +250,7 @@ int cPlayer::getID()
 
 void cPlayer::proyectSimple(set<cProyectil*>& pewpews)
 {
- 	cProyectil* pewpew = new cProyectil(this->idPlayer);
+ 	cProyectil* pewpew = new cProyectil(this->idPlayer,0);
 	pewpew->SetWidthHeight(15, 15);
 	int tx, ty;
 	this->GetPosition(&tx, &ty);
@@ -261,7 +261,7 @@ void cPlayer::proyectSimple(set<cProyectil*>& pewpews)
 
 void cPlayer::proyectDoble(set<cProyectil*>& pewpews)
 {
-	cProyectil* pewpew = new cProyectil(this->idPlayer);
+	cProyectil* pewpew = new cProyectil(this->idPlayer,0);
 	pewpew->SetWidthHeight(15, 15);
 	int tx, ty;
 	this->GetPosition(&tx, &ty);
@@ -269,7 +269,7 @@ void cPlayer::proyectDoble(set<cProyectil*>& pewpews)
 	pewpew->SetPosition(tx + this->w, ty+h2);
 	pewpew->setSpeed(10, 0);
 	pewpews.insert(pewpew);
-	pewpew = new cProyectil(this->idPlayer);
+	pewpew = new cProyectil(this->idPlayer,0);
 	pewpew->SetWidthHeight(15, 15);
 	pewpew->SetPosition(tx + this->w, ty-h2);
 	pewpew->setSpeed(10, 0);

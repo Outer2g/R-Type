@@ -57,13 +57,12 @@ void cProyectil::Draw(cData * dat)
 		break;
 
 	case 1:
-		xo = 0.1796875f * GetFrame(); //cada uno son 46*50 y la imagen es de 256*64
-		yo = 0.78125f;
+		xo = 0.203125f * GetFrame(); //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
+		yo = 1.f;
 		NextFrame(4);
 		//coord textur: xo,yo
-		xf = xo + 0.1796875f;//1/8 da el 0.125
+		xf = xo + 0.203125f;//1/8 da el 0.125
 		yf = 0.f; //xk la nave ocupa toda la altura d la textura
-
 		DrawRect(dat->GetID(IMG_BULLET_VOLADOR), xo, yo, xf, yf);
 		break;
 	}

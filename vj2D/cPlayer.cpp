@@ -250,7 +250,7 @@ int cPlayer::getID()
 
 void cPlayer::proyectSimple(set<cProyectil*>& pewpews)
 {
- 	cProyectil* pewpew = new cProyectil(this->idPlayer,0);
+ 	cProyectil* pewpew = new cProyectil(this->idPlayer,1);
 	pewpew->SetWidthHeight(15, 15);
 	int tx, ty;
 	this->GetPosition(&tx, &ty);

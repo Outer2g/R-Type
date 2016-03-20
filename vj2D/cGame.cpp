@@ -7,6 +7,8 @@
 cGame::cGame(void)
 {
 	offsetCamera = 0;
+	Player.setID(1);
+	Player2.setID(2);
 }
 
 cGame::~cGame(void)

@@ -238,6 +238,16 @@ bool cPlayer::getMode()
 	return godMode;
 }
 
+void cPlayer::setID(int id)
+{
+	this->idPlayer = id;
+}
+
+int cPlayer::getID()
+{
+	return this->idPlayer;
+}
+
 void cPlayer::proyectSimple(set<cProyectil*>& pewpews)
 {
  	cProyectil* pewpew = new cProyectil(this->idPlayer);

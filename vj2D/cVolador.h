@@ -23,4 +23,6 @@ public:
 	virtual void Logic(int *map);
 
 	//virtual void Draw();
+protected:
+	double moveDelay;
 };

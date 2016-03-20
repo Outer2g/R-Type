@@ -5,6 +5,11 @@
 cVoladorEstatico::cVoladorEstatico()
 {
 	this->health = 100;
+	this->speed = 7;
+	srand(time(0)); // use current time as seed for random generator
+	moveDelay = glutGet(GLUT_ELAPSED_TIME);
+	moveDelaySteering = glutGet(GLUT_ELAPSED_TIME);
+	// = std::rand();
 }
 cVoladorEstatico::~cVoladorEstatico(){}
 
@@ -35,4 +40,32 @@ void cVoladorEstatico::Stop()
 
 void cVoladorEstatico::Logic(int *map)
 {
+	
+	double t1 = glutGet(GLUT_ELAPSED_TIME);
+	if (t1 - moveDelaySteering > 20 * 20) {
+		random_variable = rand();
+		moveDelaySteering = t1;
+	}
+	if (t1 - moveDelay > 20) {
+		int aux = y;
+		y += random_variable%speed - 3;
+		
+		//Whats next tile?
+		if ((y % TILE_SIZE) <= 1)
+		{
+
+			/*y += speedY;
+			x += speedX;*/
+			//si choca con tile, se autodestruye muy fuerte
+			if (CollidesMapWall(map, false)) y = aux; //delete this;
+		}
+		//Advance, no problem
+		else
+		{
+			/*y += speedY;
+			x += speedX;*/
+			//TODO: si choca, hace magia
+		}
+		moveDelay = t1;
+	}
 }

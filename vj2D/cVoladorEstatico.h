@@ -3,6 +3,8 @@
 #include "cTexture.h"
 #include "Globals.h"
 #include "cVolador.h"
+#include <cstdlib>
+#include <ctime>
 
 #define FRAME_DELAY		8
 #define STEP_LENGTH		2
@@ -24,4 +26,7 @@ public:
 	virtual void Draw(cData * dat);
 	
 private:
+	int speed;
+	int random_variable;
+	double moveDelaySteering;
 };

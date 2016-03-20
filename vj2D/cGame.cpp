@@ -156,6 +156,7 @@ bool cGame::Process()
 	for(cProyectil* pewpew: this->pewpews)
 		pewpew->Logic(Scene.GetMap());
 	for (cBicho* monster : this->bichos) {
+		monster->Logic(Scene.GetMap());
 		for (cProyectil* pewpew : this->pewpews) {
 			if (pewpew->CollidesBicho(monster)) {
 				//luz fuego destruccion

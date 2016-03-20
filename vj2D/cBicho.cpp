@@ -7,6 +7,7 @@ cBicho::cBicho(void)
 	seq=0;
 	delay=0;
 	health = 100;
+	shoot = false;
 }
 cBicho::~cBicho(void){}
 
@@ -25,6 +26,9 @@ bool cBicho::CollidesBicho(cBicho * bicho)
 	cRect r;
 	bicho->GetArea(&r);
 	return this->Collides(&r);
+}
+void cBicho::shootBoi(void* &pewpews, int posx, int)
+{
 }
 void cBicho::dealDamage(int dmg)
 {

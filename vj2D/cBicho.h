@@ -3,6 +3,7 @@
 #include "cTexture.h"
 #include "Globals.h"
 #include "cData.h"
+#include <set>
 
 #define FRAME_DELAY		8
 #define STEP_LENGTH		2
@@ -15,7 +16,7 @@
 #define STATE_WALKRIGHT		3*/
 
 #define STATE_CENTER		4
-
+using namespace std;
 
 class cRect
 {
@@ -60,10 +61,10 @@ public:
 	int  GetFrame();
 	virtual void Draw(cData *dat);
 
+	virtual void shootBoi(void* &pewpews, int posx, int);
 	void dealDamage(int dmg);
 	int getHealth();
 private:
-	
 
 protected:
 	int w, h;
@@ -72,4 +73,6 @@ protected:
 	int health;
 
 	int seq, delay;
+	bool shoot;
+
 };

@@ -7,8 +7,11 @@ cVoladorEstatico::cVoladorEstatico()
 	this->health = 100;
 	this->speed = 7;
 	srand(time(0)); // use current time as seed for random generator
-	moveDelay = glutGet(GLUT_ELAPSED_TIME);
-	moveDelaySteering = glutGet(GLUT_ELAPSED_TIME);
+	double t = glutGet(GLUT_ELAPSED_TIME);
+	moveDelay = t;
+	moveDelaySteering = t;
+	lastShootDec = t;
+	shootChance = 200;
 	// = std::rand();
 }
 cVoladorEstatico::~cVoladorEstatico(){}
@@ -25,6 +28,16 @@ void cVoladorEstatico::Draw(cData * dat) {
 	yf = 0.f; //xk la nave ocupa toda la altura d la textura
 
 	DrawRect(dat->GetID(IMG_ESTATIC), xo, yo, xf, yf);
+}
+
+void cVoladorEstatico::setShootChance(int shootingChance)
+{
+	this->shootChance = shootingChance;
+}
+
+int cVoladorEstatico::getShootChance()
+{
+	return this->shootChance;
 }
 
 
@@ -68,5 +81,13 @@ void cVoladorEstatico::Logic(int *map)
 			//TODO: si choca, hace magia
 		}
 		moveDelay = t1;
+	}
+	//should i shoot
+	if (t1 - lastShootDec > shootChance*20) {
+		int prob = rand() % 2;
+		if (prob == 0) {
+			shoot = true;
+		}
+		else shoot = false;
 	}
 }

@@ -24,9 +24,11 @@ public:
 	virtual void Logic(int *map);
 
 	virtual void Draw(cData * dat);
+
+	void setShootChance(int shootingChance);
+	int getShootChance();
 	
 private:
-	int speed;
-	int random_variable;
+	int speed, random_variable,shootChance;
 	double moveDelaySteering;
 };

@@ -1,14 +1,16 @@
 #pragma once
 
 #include "cBicho.h"
+#include "cProyectil.h"
 #include <math.h>
+#include <set>
 
 /*#define STATE_LOOKLEFT		0
 #define STATE_LOOKRIGHT		1
 #define STATE_WALKLEFT		2
 #define STATE_WALKRIGHT		3*/
 
-
+using namespace std;
 class cVolador : public cBicho
 {
 public:
@@ -22,7 +24,10 @@ public:
 	virtual void Stop();
 	virtual void Logic(int *map);
 
+	void setShoot(bool b);
+	bool getShoot();
+	void shootBoi(void* &pewpews,int posx,int);
 	//virtual void Draw();
 protected:
-	double moveDelay;
+	double moveDelay,lastShootDec;
 };

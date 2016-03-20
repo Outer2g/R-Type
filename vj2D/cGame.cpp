@@ -115,6 +115,11 @@ void cGame::ReadKeyboard(unsigned char key, int x, int y, bool press)
 	keys[key] = press;
 }
 
+void cGame::ReadKeySpecialBoard(unsigned char key, int x, int y, bool press)
+{
+	sKeys[key] = press;
+}
+
 void cGame::ReadMouse(int button, int state, int x, int y)
 {
 }
@@ -125,25 +130,25 @@ bool cGame::Process()
 	bool res=true;
 	
 	//Process Input
-	if(keys[27])	res=false;
+	if(sKeys[27])	res=false;
 	
-	if(keys[GLUT_KEY_UP])			Player.Jump(Scene.GetMap());
-	else if (keys[GLUT_KEY_DOWN])	Player.MoveDown(Scene.GetMap());
+	if(sKeys[GLUT_KEY_UP])			Player.Jump(Scene.GetMap());
+	else if (sKeys[GLUT_KEY_DOWN])	Player.MoveDown(Scene.GetMap());
 	else Player.setMoving(false);
-	if(keys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap());
-	else if(keys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());
+	if(sKeys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap());
+	else if(sKeys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());
 	//Si no hay nada aparetado, para el player
-	if (!keys[GLUT_KEY_UP]
-		&& !keys[GLUT_KEY_DOWN] 
-		&&!keys[GLUT_KEY_LEFT] 
-		&&!keys[GLUT_KEY_RIGHT]) Player.Stop();
-	// Q
-	if (keys[113])
+	if (!sKeys[GLUT_KEY_UP]
+		&& !sKeys[GLUT_KEY_DOWN] 
+		&&!sKeys[GLUT_KEY_LEFT] 
+		&&!sKeys[GLUT_KEY_RIGHT]) Player.Stop();
+	// enter = 13
+	if (keys[13])
 		Player.shoot(this->pewpews);
 	//TESTING BUTTONS
-	if (keys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
-	if(keys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
-	if (keys[GLUT_KEY_F3]) Player.enableGodMode();
+	if (sKeys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
+	if(sKeys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
+	if (sKeys[GLUT_KEY_F3]) Player.enableGodMode();
 	
 
 	//Logica proyectiles + colisiones Proyectiles

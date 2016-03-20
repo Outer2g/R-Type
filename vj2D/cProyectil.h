@@ -9,12 +9,12 @@ class cProyectil :	public cBicho
 {
 public:
 	cProyectil();
-	cProyectil(int id);
+	cProyectil(int id, int tipo);
 	~cProyectil();
 
 	virtual void Logic(int *map);
 
-	virtual void Draw(cData *dat, int tipo);
+	virtual void Draw(cData *dat);
 
 	void setSpeed(int x, int y);
 	void getSpeed(int* x, int* y);
@@ -26,5 +26,6 @@ private:
 	int speedX, speedY;
 	// id == 1 : player1; id == 2 : player2; id ==3 :enemy
 	int id;
+	int tipo;
 };
 

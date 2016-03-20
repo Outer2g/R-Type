@@ -55,16 +55,6 @@ bool cGame::Init()
 		rafagasBichos[1] = { 15, 10, 1, 2 }; //3 rafaga
 		rafagasBichos[2] = { 20, 10, 0, 2 }; //2a rafaga
 		rafagasBichos[3] = { 30, 10, 0, 2 }; //3 rafaga
-
-		/*cBicho* p = new cVoladorEstatico();
-		bichos.push_back(p);
-		bichos[0]->SetWidthHeight(46, 50);
-		bichos[0]->SetTile(6, 8);*/
-		/*
-		foo = new (nothrow) int [5];
-		if (foo == nullptr) {
-		  // error assigning memory. Take measures.
-		}*/
 	}
 	else if (level != 1) {
 		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
@@ -88,6 +78,9 @@ bool cGame::Init()
 	Player.SetTile(1,8);
 	Player.SetState(STATE_CENTER);
 
+	Player2.SetWidthHeight(64, 32);
+	Player2.SetTile(1, 10);
+	Player2.SetState(STATE_CENTER);
 	return res;
 }
 
@@ -163,9 +156,24 @@ bool cGame::Process()
 		&& !sKeys[GLUT_KEY_DOWN] 
 		&&!sKeys[GLUT_KEY_LEFT] 
 		&&!sKeys[GLUT_KEY_RIGHT]) Player.Stop();
-	// enter = 13
+	// enter = 13, shooting for player 1
 	if (keys[13])
 		Player.shoot(this->pewpews);
+	//Player 2 controls
+	//w = 119, a = 97, s = 115, d= 100, D =68, q= 113
+	if (keys[KEY_W])			Player2.Jump(Scene.GetMap());
+	else if (keys[KEY_S])	Player2.MoveDown(Scene.GetMap());
+	else Player2.setMoving(false);
+	if (keys[KEY_A])			Player2.MoveLeft(Scene.GetMap());
+	else if (keys[KEY_D])	Player2.MoveRight(Scene.GetMap());
+	//Si no hay nada aparetado, para el player
+	if (!keys[KEY_W]
+		&& !keys[KEY_S]
+		&& !keys[KEY_A]
+		&& !keys[KEY_D]) Player2.Stop();
+	// enter = 13, shooting for player 1
+	if (keys[KEY_Q])
+		Player2.shoot(this->pewpews);
 	//TESTING BUTTONS
 	if (sKeys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
 	if(sKeys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
@@ -200,16 +208,27 @@ bool cGame::Process()
 			Player.enableGodMode();
 			godModeTimer = glutGet(GLUT_ELAPSED_TIME);
 		}
+		b = monster->CollidesBicho(&Player2);
+		if (b && !Player2.getMode()) {
+			Player2.enableGodMode();
+			godModeTimer2 = glutGet(GLUT_ELAPSED_TIME);
+		}
 	}
 	double t1 = glutGet(GLUT_ELAPSED_TIME);
 	//si ha pasado 200 frames, desactiva el godmode
 	if (t1 - godModeTimer > 200 * 20) Player.disableGodMode();
+	if (t1 - godModeTimer2 > 200 * 20) Player2.disableGodMode();
 	//Gestion powers
 	for (cPowerUp* powah : this->powerUps) {
 		if (Player.CollidesBicho((cBicho*)powah)) {
 			toDelete.insert(powah);
 			int bType = powah->getType();
 			Player.setBullet(bType);
+		}
+		if (Player2.CollidesBicho((cBicho*)powah)) {
+			toDelete.insert(powah);
+			int bType = powah->getType();
+			Player2.setBullet(bType);
 		}
 	}
 	for (void* x : toDelete) {
@@ -257,6 +276,18 @@ bool cGame::Process()
 		Player.MoveLeft(Scene.GetMap());
 	}
 	else Player.Logic(Scene.GetMap());
+
+	//Logic player2
+	Player2.GetTile(&playerTileX, &playerTileY);
+	if (cameraTile >= playerTileX) {
+		Player2.MoveRight(Scene.GetMap());
+		Player2.MoveRight(Scene.GetMap());
+		Player2.MoveHalfRight(Scene.GetMap());
+	}
+	else if (windowTile - 2 <= playerTileX) {
+		Player2.MoveLeft(Scene.GetMap());
+	}
+	else Player2.Logic(Scene.GetMap());
 	//si choca con enemigo hazte pupa por eficiencia, esta con los proyectiles
 
 	return res;
@@ -276,6 +307,7 @@ void cGame::Render()
 	for (cBicho* b : bichos) b->Draw(&Data);
 	//bichos[0]->Draw(&Data);
 	Player.Draw(Data.GetID(IMG_PLAYER));
+	Player2.Draw(Data.GetID(IMG_PLAYER));
 	//Proyectiles
 	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
 	//PowerUps

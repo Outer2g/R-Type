@@ -10,6 +10,12 @@
 
 #define GAME_WIDTH	640
 #define GAME_HEIGHT 512
+
+#define KEY_W 119
+#define KEY_A 97
+#define KEY_S 115
+#define KEY_D 100
+#define KEY_Q 113
 using namespace std;
 
 class cGame
@@ -36,7 +42,7 @@ private:
 	unsigned char keys[256];
 	unsigned char sKeys[256]; //109 se supone
 	cScene Scene;
-	cPlayer Player;
+	cPlayer Player, Player2;
 	cData Data;
 	vector<vector<int> > rafagasBichos; //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
 	long int offsetCamera;
@@ -45,5 +51,5 @@ private:
 	set<cProyectil*>  pewpews;
 	set<cPowerUp*> powerUps;
 	int rafagaQueToca = 0, numRafagas;
-	double godModeTimer;
+	double godModeTimer,godModeTimer2;
 };

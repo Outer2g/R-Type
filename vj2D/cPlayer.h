@@ -40,6 +40,7 @@ public:
 	void disableGodMode();
 	bool getMode();
 	bool endLevel;
+
 private:
 	//Proyectiles
 	void proyectSimple(set<cProyectil*> & pewpews);

@@ -15,7 +15,8 @@ cGame::~cGame(void)
 bool cGame::Init()
 {
 	bool res=true;
-
+	offsetCamera = 0;
+	rafagaQueToca = 0;
 	//Graphics initialization
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glMatrixMode(GL_PROJECTION);
@@ -107,6 +108,21 @@ bool cGame::Loop()
 
 void cGame::Finalize()
 {
+	//version cutre
+	Player =cPlayer();
+	for (void* x : bichos) delete x;
+	for (void* x : pewpews) delete x;
+	for (void* x : powerUps) delete x;
+
+	bichos = set<cBicho*>();
+	pewpews = set<cProyectil*>();
+	powerUps = set<cPowerUp*>();
+}
+
+void cGame::reset()
+{
+	Finalize();
+	Init();
 }
 
 //Input
@@ -149,6 +165,7 @@ bool cGame::Process()
 	if (sKeys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
 	if(sKeys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
 	if (sKeys[GLUT_KEY_F3]) Player.enableGodMode();
+	if (sKeys[GLUT_KEY_F4]) reset();
 	
 
 	//Logica proyectiles + colisiones Proyectiles

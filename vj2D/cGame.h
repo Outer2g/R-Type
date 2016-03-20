@@ -21,6 +21,7 @@ public:
 	bool Init();
 	bool Loop();
 	void Finalize();
+	void reset();
 
 	//Input
 	void ReadKeyboard(unsigned char key, int x, int y, bool press);

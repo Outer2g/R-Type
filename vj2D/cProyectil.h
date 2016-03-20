@@ -14,7 +14,7 @@ public:
 
 	virtual void Logic(int *map);
 
-	virtual void Draw(cData *dat);
+	virtual void Draw(cData *dat, int tipo);
 
 	void setSpeed(int x, int y);
 	void getSpeed(int* x, int* y);

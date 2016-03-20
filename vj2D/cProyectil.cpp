@@ -39,7 +39,7 @@ void cProyectil::Logic(int * map)
 	}
 }
 
-void cProyectil::Draw(cData * dat)
+void cProyectil::Draw(cData * dat, int tipo)
 {
 
 	float xo, yo, xf, yf;

@@ -5,24 +5,25 @@ Player:
 	mejorar colisiones con proyectiles, pared y bichos
 	immunidad (cuando es hiteado).-.
 	vidas (reencarnaciones)
-	2o player
+	2o player .-.
 	añadir animaciones nave (?)
 
 Enemigos:
 	Proyectiles bicho
 	Spawn bichos .-.
 	animacion enemigo .-.
-	subclases volador y terrestre .-. + forma de poner los waypoints k sigan
+	subclases volador y terrestre .-. + forma de poner los waypoints k sigan .-
+	colisiones enemigo (que no se vayan de la pantalla)
 
 mapa:
 	subir mapa otra vez para vidas
 	Power ups .-. + barra de carga de disparo
-	inicializar vector rafagas segun nivel
-	si te matan resetea
+	inicializar vector rafagas segun nivel .-.
+	si te matan quita vida, si no te quedan, pantalla fin
 
 Sonidos
-2 jugadores
+2 jugadores .-.
 
 Preguntar:
-Entrega?
-Guardar progreso?
+Entrega? dia 7
+Guardar progreso? si lo hacmos mejor

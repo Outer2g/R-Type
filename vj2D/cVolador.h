@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cBicho.h"
-
+#include <math.h>
 
 /*#define STATE_LOOKLEFT		0
 #define STATE_LOOKRIGHT		1

@@ -48,7 +48,8 @@ void cVoladorEstatico::Logic(int *map)
 	}
 	if (t1 - moveDelay > 20) {
 		int aux = y;
-		y += random_variable%speed - 3;
+		y = sin(fmod(moveDelay,30))*speed;//30 grados
+		//y += random_variable%speed - 3;
 		
 		//Whats next tile?
 		if ((y % TILE_SIZE) <= 1)

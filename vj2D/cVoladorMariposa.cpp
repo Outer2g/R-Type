@@ -4,6 +4,9 @@
 
 cVoladorMariposa::cVoladorMariposa(void)
 {
+	this->health = 100;
+	this->speed = 7;
+	moveDelay = glutGet(GLUT_ELAPSED_TIME);
 }
 cVoladorMariposa::~cVoladorMariposa() {}
 
@@ -32,4 +35,27 @@ void cVoladorMariposa::Stop()
 
 void cVoladorMariposa::Logic(int *map)
 {
+	double t1 = glutGet(GLUT_ELAPSED_TIME);
+	if (t1 - moveDelay > 20) {
+		int aux = y;
+		y = sin(30*PI / 180);//30 grados
+
+		//Whats next tile?
+		if ((y % TILE_SIZE) <= 1)
+		{
+
+			/*y += speedY;
+			x += speedX;*/
+			//si choca con tile, se autodestruye muy fuerte
+			if (CollidesMapWall(map, false)) y = aux; //delete this;
+		}
+		//Advance, no problem
+		else
+		{
+			/*y += speedY;
+			x += speedX;*/
+			//TODO: si choca, hace magia
+		}
+		moveDelay = t1;
+	}
 }

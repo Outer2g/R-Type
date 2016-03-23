@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cBicho.h"
+#include "cEnemigo.h"
 #include "cProyectil.h"
 #include <math.h>
 #include <set>
@@ -11,7 +11,7 @@
 #define STATE_WALKRIGHT		3*/
 
 using namespace std;
-class cVolador : public cBicho
+class cVolador : public cEnemigo
 {
 public:
 	cVolador();
@@ -26,7 +26,6 @@ public:
 
 	void setShoot(bool b);
 	bool getShoot();
-	void shootBoi(void* &pewpews,int posx,int);
 	//virtual void Draw();
 protected:
 	double moveDelay,lastShootDec;

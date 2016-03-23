@@ -116,7 +116,7 @@ void cGame::Finalize()
 	for (void* x : pewpews) delete x;
 	for (void* x : powerUps) delete x;
 
-	bichos = set<cBicho*>();
+	bichos = set<cEnemigo*>();
 	pewpews = set<cProyectil*>();
 	powerUps = set<cPowerUp*>();
 }
@@ -151,7 +151,9 @@ bool cGame::Process()
 	set<void*> toDelete;
 	for(cProyectil* pewpew: this->pewpews)
 		pewpew->Logic(Scene.GetMap());
-	for (cBicho* monster : this->bichos) {
+	for (cEnemigo* monster : this->bichos) {
+		int tx, ty; Player.GetPosition(&tx, &ty);
+		monster->shootBoi(pewpews, tx, ty);
 		monster->Logic(Scene.GetMap());
 		for (cProyectil* pewpew : this->pewpews) {
 			if (pewpew->CollidesBicho(monster)) {
@@ -199,7 +201,7 @@ bool cGame::Process()
 	}
 	for (void* x : toDelete) {
 		pewpews.erase((cProyectil*)x);
-		bichos.erase((cBicho*)x);
+		bichos.erase((cEnemigo*)x);
 		powerUps.erase((cPowerUp*) x);
 		delete x;
 	}
@@ -251,7 +253,7 @@ void cGame::Render()
 
 	Scene.DrawBackground(Data.GetID(IMG_BACK));
 	Scene.Draw(Data.GetID(IMG_PARED));
-	for (cBicho* b : bichos) b->Draw(&Data);
+	for (cEnemigo* b : bichos) b->Draw(&Data);
 	//bichos[0]->Draw(&Data);
 	Player.Draw(Data.GetID(IMG_PLAYER));
 	Player2.Draw(Data.GetID(IMG_PLAYER));
@@ -309,7 +311,7 @@ inline bool cGame::tratarKeys()
 inline void cGame::logicToAddMonsters() {
 	//logic to add monsters
 	if ((rafagaQueToca < numRafagas) && ((offsetCamera + GAME_WIDTH + TILE_SIZE) / TILE_SIZE > rafagasBichos[rafagaQueToca][0])) {
-		cBicho* bicho;
+		cEnemigo* bicho;
 		switch (rafagasBichos[rafagaQueToca][2]) {
 		case 0:
 			for (int i = 0; i < rafagasBichos[rafagaQueToca][3]; i++) {

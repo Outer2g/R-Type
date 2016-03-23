@@ -4,6 +4,7 @@
 #include "cPlayer.h"
 #include "cData.h"
 #include "cBicho.h"
+#include "cEnemigo.h"
 #include "cPowerUp.h"
 #include <vector>
 #include <set>
@@ -49,7 +50,7 @@ private:
 	vector<vector<int> > rafagasBichos; //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
 	long int offsetCamera;
 	//vector<cBicho*> bichos;
-	set<cBicho*> bichos;
+	set<cEnemigo*> bichos;
 	set<cProyectil*>  pewpews;
 	set<cPowerUp*> powerUps;
 	int rafagaQueToca = 0, numRafagas;

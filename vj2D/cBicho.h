@@ -61,7 +61,6 @@ public:
 	int  GetFrame();
 	virtual void Draw(cData *dat);
 
-	virtual void shootBoi(void* &pewpews, int posx, int);
 	void dealDamage(int dmg);
 	int getHealth();
 private:

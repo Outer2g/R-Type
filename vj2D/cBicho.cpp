@@ -27,9 +27,6 @@ bool cBicho::CollidesBicho(cBicho * bicho)
 	bicho->GetArea(&r);
 	return this->Collides(&r);
 }
-void cBicho::shootBoi(void* &pewpews, int posx, int)
-{
-}
 void cBicho::dealDamage(int dmg)
 {
 	this->health -= dmg;

@@ -160,15 +160,5 @@ bool cVolador::getShoot()
 	return shoot;
 }
 
-void cVolador::shootBoi(void* &pewpews, int posx, int posy)
-{
-	cProyectil* pewpew = new cProyectil(3, 1);
-	pewpew->SetWidthHeight(13, 12);
-	int speedX = (x - posx + 20);
-	int speedY = (y - posy);
-	pewpew->setSpeed(-speedX, speedY);
-	pewpew->SetPosition(x - this->w, y);
-	pewpews = pewpew;
-}
 
 

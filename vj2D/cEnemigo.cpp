@@ -46,10 +46,10 @@ void cEnemigo::shootBoi(set<cProyectil*>& pewpews, int posxNave, int posyNave)
 		pewpew->SetWidthHeight(13, 12);
 		int Ax = -(x - posxNave);
 		int Ay = y - posyNave;
-		int maxim = max(Ax, Ay);
+		int maxim = max(abs(Ax), abs(Ay));
 		if (maxim > 0) {
 			pewpew->setSpeed((Ax / maxim * 3), (Ay / maxim * 3));
-			pewpew->SetPosition(x - this->w, y);
+			pewpew->SetPosition(x, y+h/2);
 			pewpews.insert(pewpew);
 		}
 		lastShootTime = glutGet(GLUT_ELAPSED_TIME);

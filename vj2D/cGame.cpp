@@ -153,7 +153,7 @@ bool cGame::Process()
 		pewpew->Logic(Scene.GetMap());
 	for (cEnemigo* monster : this->bichos) {
 		int tx, ty; Player.GetPosition(&tx, &ty);
-		monster->shootBoi(pewpews, tx, ty);
+		 monster->shootBoi(pewpews, tx, ty);
 		monster->Logic(Scene.GetMap());
 		for (cProyectil* pewpew : this->pewpews) {
 			if (pewpew->CollidesBicho(monster)) {

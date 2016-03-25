@@ -24,6 +24,9 @@ public:
 	virtual void Stop();
 	virtual void Logic(int *map);
 
+	virtual void setShootChance(int shootingChance);
+	virtual int getShootChance();
+
 	void setShoot(bool b);
 	bool getShoot();
 	//virtual void Draw();

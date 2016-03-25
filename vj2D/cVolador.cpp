@@ -150,6 +150,15 @@ void cVolador::Logic(int *map)
 {
 }
 
+void cVolador::setShootChance(int shootingChance)
+{
+}
+
+int cVolador::getShootChance()
+{
+	return 0;
+}
+
 void cVolador::setShoot(bool b)
 {
 	shoot = b;

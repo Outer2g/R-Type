@@ -1,4 +1,5 @@
 #include "cEnemigo.h"
+#include <math.h>
 
 
 
@@ -37,11 +38,28 @@ void cEnemigo::Logic(int * map)
 
 void cEnemigo::shootBoi(set<cProyectil*>& pewpews, int posx, int posy)
 {
-		cProyectil* pewpew = new cProyectil(3, 1);
+	cProyectil* pewpew = new cProyectil(3,1);
+		/*cProyectil* pewpew = new cProyectil(3, 1);
 		pewpew->SetWidthHeight(13, 12);
-		int speedX = (x - posx + 20);
-		int speedY = (y - posy);
-		pewpew->setSpeed(-3, speedY);
+		int a = x - posx;
+		int z = y - posy;
+		if (z!=0) {
+			double angle = atan(a / z);
+			double angle2 = atan(z / a);
+			pewpew->setSpeed(3*cos(angle2), 3*sin(angle2));
+		}
+		else {
+			pewpew->setSpeed(3, 0);
+		}
 		pewpew->SetPosition(x - this->w, y);
-		pewpews.insert(pewpew);
+		pewpews.insert(pewpew);*/
+}
+
+void cEnemigo::setShootChance(int shootingChance)
+{
+}
+
+int cEnemigo::getShootChance()
+{
+	return 0;
 }

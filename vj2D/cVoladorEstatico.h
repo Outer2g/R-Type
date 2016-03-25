@@ -25,8 +25,8 @@ public:
 
 	virtual void Draw(cData * dat);
 
-	void setShootChance(int shootingChance);
-	int getShootChance();
+	virtual void setShootChance(int shootingChance);
+	virtual int getShootChance();
 	
 private:
 	int speed, random_variable,shootChance;

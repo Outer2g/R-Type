@@ -38,10 +38,11 @@ public:
 	bool Process();
 	//Output
 	void Render();
-	bool tratarKeys();
 	void logicToAddMonsters();
 
 private:
+	bool tratarKeys();
+	void monsterndBulletLogic(set<void*>& toDelete);
 	unsigned char keys[256];
 	unsigned char sKeys[256]; //109 se supone
 	cScene Scene;

@@ -142,21 +142,13 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 {
 }
 
-//Process
-bool cGame::Process()
-{
-	bool res = true;
-	res = tratarKeys();
-	//Logica proyectiles + colisiones Proyectiles
-	set<void*> toDelete;
-	for(cProyectil* pewpew: this->pewpews)
-		pewpew->Logic(Scene.GetMap());
+inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 	for (cEnemigo* monster : this->bichos) {
 		int tx, ty; Player.GetPosition(&tx, &ty);
-		 monster->shootBoi(pewpews, tx, ty);
+		monster->shootBoi(pewpews, tx, ty);
 		monster->Logic(Scene.GetMap());
 		for (cProyectil* pewpew : this->pewpews) {
-			if (pewpew->CollidesBicho(monster)) {
+			if (pewpew->getId != 3 && pewpew->CollidesBicho(monster)) {
 				//luz fuego destruccion
 				toDelete.insert(pewpew);
 				monster->dealDamage(pewpew->getDamage());
@@ -165,12 +157,13 @@ bool cGame::Process()
 					cPowerUp* powah = new cPowerUp(BULLET_DOBLE);
 					int tx, ty; monster->GetTile(&tx, &ty);
 					powah->SetTile(tx, ty);
-					powah->SetWidthHeight(32,32);
+					powah->SetWidthHeight(32, 32);
 					this->powerUps.insert(powah);
 				}
 				//Comprobacion si nave choca con monstruo para hacerlo mas eficiente(aka sidoso)
 			}
 		}
+		//si bicho choca con las naves
 		bool b = monster->CollidesBicho(&Player);
 		if (b && !Player.getMode()) {
 			Player.enableGodMode();
@@ -182,6 +175,19 @@ bool cGame::Process()
 			godModeTimer2 = glutGet(GLUT_ELAPSED_TIME);
 		}
 	}
+}
+//Process
+bool cGame::Process()
+{
+	bool res = true;
+	res = tratarKeys();
+	//Logica proyectiles + colisiones Proyectiles
+	for (cProyectil* pewpew : this->pewpews)
+		pewpew->Logic(Scene.GetMap());
+	set<void*> toDelete;
+	monsterndBulletLogic(toDelete);
+	
+	//gestion godtimers
 	double t1 = glutGet(GLUT_ELAPSED_TIME);
 	//si ha pasado 200 frames, desactiva el godmode
 	if (t1 - godModeTimer > 200 * 20) Player.disableGodMode();

@@ -5,6 +5,8 @@
 
 cEnemigo::cEnemigo()
 {
+	this->lastShootTime = glutGet(GLUT_ELAPSED_TIME);
+	this->delayShoot = 30;
 }
 
 
@@ -38,15 +40,19 @@ void cEnemigo::Logic(int * map)
 
 void cEnemigo::shootBoi(set<cProyectil*>& pewpews, int posxNave, int posyNave)
 {
-	cProyectil* pewpew = new cProyectil(3,1);
-	pewpew->SetWidthHeight(13, 12);
-	int Ax = -(x - posxNave);
-	int Ay = y - posyNave;
-	int maxim = max(Ax, Ay);
-	if (maxim > 0) {
-		pewpew->setSpeed((Ax / maxim * 3), (Ay / maxim * 3));
-		pewpew->SetPosition(x - this->w, y);
-		pewpews.insert(pewpew);
+	double t1 = glutGet(GLUT_ELAPSED_TIME);
+	if (t1 - lastShootTime > 20 * delayShoot) {
+		cProyectil* pewpew = new cProyectil(3, 1);
+		pewpew->SetWidthHeight(13, 12);
+		int Ax = -(x - posxNave);
+		int Ay = y - posyNave;
+		int maxim = max(Ax, Ay);
+		if (maxim > 0) {
+			pewpew->setSpeed((Ax / maxim * 3), (Ay / maxim * 3));
+			pewpew->SetPosition(x - this->w, y);
+			pewpews.insert(pewpew);
+		}
+		lastShootTime = glutGet(GLUT_ELAPSED_TIME);
 	}
 	/*FORMA XULA DE DISPARAR
 	pewpew->SetWidthHeight(13, 12);

@@ -7,7 +7,7 @@ cBicho::cBicho(void)
 	seq=0;
 	delay=0;
 	health = 100;
-	shoot = false;
+	
 }
 cBicho::~cBicho(void){}
 

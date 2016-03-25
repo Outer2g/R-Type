@@ -62,4 +62,10 @@ void cVoladorMariposa::Logic(int *map)
 		}
 		moveDelay = t1;
 	}
+
+	int prob = rand() % 4;
+	if (prob == 0) {
+		shoot = true;
+	}
+	else shoot = false;
 }

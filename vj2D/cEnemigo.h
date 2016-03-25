@@ -21,8 +21,10 @@ public:
 	virtual void shootBoi(set<cProyectil*> &pewpews, int posx, int posy);
 	virtual void setShootChance(int shootingChance);
 	virtual int getShootChance();
+	virtual bool getShootable();
 protected:
 	double lastShootTime;
 	int delayShoot;
+	bool shoot;
 };
 

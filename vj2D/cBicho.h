@@ -72,6 +72,6 @@ protected:
 	int health;
 
 	int seq, delay;
-	bool shoot;
+	
 
 };

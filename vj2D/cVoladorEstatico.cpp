@@ -11,7 +11,7 @@ cVoladorEstatico::cVoladorEstatico()
 	moveDelay = t;
 	moveDelaySteering = t;
 	lastShootDec = t;
-	shootChance = 200;
+	shootChance = 20;
 	// = std::rand();
 }
 cVoladorEstatico::~cVoladorEstatico(){}
@@ -83,11 +83,12 @@ void cVoladorEstatico::Logic(int *map)
 		moveDelay = t1;
 	}
 	//should i shoot
-	if (t1 - lastShootDec > shootChance*20) {
-		int prob = rand() % 2;
-		if (prob == 0) {
-			shoot = true;
-		}
-		else shoot = false;
+	//if (t1 - lastShootDec > shootChance) {
+	int prob = rand();// % 4;
+	prob = fmod(prob,4);
+	if (prob == 0) {
+		shoot = true;
 	}
+	else shoot = false;
+	//}
 }

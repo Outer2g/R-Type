@@ -145,7 +145,7 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 	for (cEnemigo* monster : this->bichos) {
 		int tx, ty; Player.GetPosition(&tx, &ty);
-		if(monster->getShootChance()) monster->shootBoi(pewpews, tx, ty);
+		if(monster->getShootable()) monster->shootBoi(pewpews, tx, ty);
 		monster->Logic(Scene.GetMap());
 		for (cProyectil* pewpew : this->pewpews) {
 			//luz fuego destruccion al irse de la pantalla

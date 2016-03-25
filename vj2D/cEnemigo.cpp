@@ -6,7 +6,8 @@
 cEnemigo::cEnemigo()
 {
 	this->lastShootTime = glutGet(GLUT_ELAPSED_TIME);
-	this->delayShoot = 30;
+	this->delayShoot = 40;
+	shoot = false;
 }
 
 
@@ -44,11 +45,11 @@ void cEnemigo::shootBoi(set<cProyectil*>& pewpews, int posxNave, int posyNave)
 	if (t1 - lastShootTime > 20 * delayShoot) {
 		cProyectil* pewpew = new cProyectil(3, 1);
 		pewpew->SetWidthHeight(13, 12);
-		int Ax = -(x - posxNave);
-		int Ay = y - posyNave;
-		int maxim = max(abs(Ax), abs(Ay));
+		float Ax = -(x - (posxNave+ w * 2));
+		float Ay = -(y - posyNave);
+		float maxim = max(abs(Ax), abs(Ay));
 		if (maxim > 0) {
-			pewpew->setSpeed((Ax / maxim * 3), (Ay / maxim * 3));
+			pewpew->setSpeed((Ax / maxim * 2), (Ay / maxim * 2));
 			pewpew->SetPosition(x, y+h/2);
 			pewpews.insert(pewpew);
 		}
@@ -77,4 +78,9 @@ void cEnemigo::setShootChance(int shootingChance)
 int cEnemigo::getShootChance()
 {
 	return 0;
+}
+
+bool cEnemigo::getShootable()
+{
+	return shoot;
 }

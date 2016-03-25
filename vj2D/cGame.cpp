@@ -148,7 +148,7 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 		monster->shootBoi(pewpews, tx, ty);
 		monster->Logic(Scene.GetMap());
 		for (cProyectil* pewpew : this->pewpews) {
-			if (pewpew->getId != 3 && pewpew->CollidesBicho(monster)) {
+			if (pewpew->getId() != 3 && pewpew->CollidesBicho(monster)) {
 				//luz fuego destruccion
 				toDelete.insert(pewpew);
 				monster->dealDamage(pewpew->getDamage());

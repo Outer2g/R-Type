@@ -2,6 +2,7 @@
 #include "cBicho.h"
 #include "cProyectil.h"
 #include <set>
+#include <ctime>
 using namespace std;
 class cEnemigo :
 	public cBicho
@@ -24,7 +25,7 @@ public:
 	virtual bool getShootable();
 protected:
 	double lastShootTime;
-	int delayShoot;
+	int delayShoot, shootChance;
 	bool shoot;
 };
 

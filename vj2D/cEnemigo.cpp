@@ -41,8 +41,8 @@ void cEnemigo::Logic(int * map)
 
 void cEnemigo::shootBoi(set<cProyectil*>& pewpews, int posxNave, int posyNave)
 {
-	double t1 = glutGet(GLUT_ELAPSED_TIME);
-	if (t1 - lastShootTime > 20 * delayShoot) {
+	//double t1 = glutGet(GLUT_ELAPSED_TIME);
+	//if (t1 - lastShootTime > 20 * delayShoot) {
 		cProyectil* pewpew = new cProyectil(3, 1);
 		pewpew->SetWidthHeight(13, 12);
 		float Ax = -(x - (posxNave+ w * 2));
@@ -53,8 +53,9 @@ void cEnemigo::shootBoi(set<cProyectil*>& pewpews, int posxNave, int posyNave)
 			pewpew->SetPosition(x, y+h/2);
 			pewpews.insert(pewpew);
 		}
-		lastShootTime = glutGet(GLUT_ELAPSED_TIME);
-	}
+		shoot = false;
+		//lastShootTime = glutGet(GLUT_ELAPSED_TIME);
+	//}
 	/*FORMA XULA DE DISPARAR
 	pewpew->SetWidthHeight(13, 12);
 	int a = x - posx;

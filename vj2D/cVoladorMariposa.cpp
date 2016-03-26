@@ -8,6 +8,10 @@ cVoladorMariposa::cVoladorMariposa(void)
 	this->speed = 7;
 	moveDelay = glutGet(GLUT_ELAPSED_TIME);
 	angle = 0;
+	srand(time(0));
+	double t = glutGet(GLUT_ELAPSED_TIME);
+	lastShootDec = t;
+	shootChance = 35;
 }
 cVoladorMariposa::~cVoladorMariposa() {}
 
@@ -63,10 +67,14 @@ void cVoladorMariposa::Logic(int *map)
 		moveDelay = t1;
 	}
 
-	int prob = rand();// % 4;
-	prob = fmod(prob, 4);
-	if (prob == 0) {
-		shoot = true;
+	if (t1 - lastShootDec > shootChance * 50) {
+		int prob = rand();// % 4;
+		prob = fmod(prob, 2);
+		if (prob == 0) {
+			shoot = true;
+		}
+		else shoot = false;
+
+		lastShootDec = t1;
 	}
-	else shoot = false;
 }

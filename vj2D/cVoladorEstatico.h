@@ -4,7 +4,7 @@
 #include "Globals.h"
 #include "cVolador.h"
 #include <cstdlib>
-#include <ctime>
+
 
 #define FRAME_DELAY		8
 #define STEP_LENGTH		2
@@ -29,6 +29,6 @@ public:
 	virtual int getShootChance();
 	
 private:
-	int speed, random_variable,shootChance;
+	int speed, random_variable;
 	double moveDelaySteering;
 };

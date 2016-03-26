@@ -82,6 +82,9 @@ bool cGame::Init()
 	Player.SetTile(1,8);
 	Player.SetState(STATE_CENTER);
 
+
+	res = Data.LoadImage(IMG_PLAYER2, "navesp2.png", GL_RGBA);
+	if (!res) return false;
 	Player2.SetWidthHeight(64, 32);
 	Player2.SetTile(1, 10);
 	Player2.SetState(STATE_CENTER);
@@ -266,7 +269,7 @@ void cGame::Render()
 	for (cEnemigo* b : bichos) b->Draw(&Data);
 	//bichos[0]->Draw(&Data);
 	Player.Draw(Data.GetID(IMG_PLAYER));
-	Player2.Draw(Data.GetID(IMG_PLAYER));
+	Player2.Draw(Data.GetID(IMG_PLAYER2));
 	//Proyectiles
 	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
 	//PowerUps

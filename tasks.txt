@@ -27,3 +27,9 @@ Sonidos
 Preguntar:
 Entrega? dia 7
 Guardar progreso? si lo hacmos mejor
+
+27/03/16 TODOs
+colisiones balas - naves .-.
+puntuacion naves .-.
+vidas naves .-.
+bichos no disparan hacia atras .-.

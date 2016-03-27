@@ -159,7 +159,7 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 			if (aux % 2 == 0) Player.GetPosition(&tx, &ty);
 			else Player2.GetPosition(&tx, &ty);
 			int xBicho, yBicho; monster->GetPosition(&xBicho,&yBicho);
-			if (xBicho >= tx) monster->shootBoi(pewpews, tx, ty);
+			if (xBicho >= tx+TILE_SIZE) monster->shootBoi(pewpews, tx, ty);
 		}
 		monster->Logic(Scene.GetMap());
 		for (cProyectil* pewpew : this->pewpews) {

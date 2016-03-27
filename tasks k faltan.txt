@@ -1,0 +1,24 @@
+Player:
+	mejorar colisiones con proyectiles, pared y bichos
+	añadir animaciones al explotar
+
+Enemigos:
+
+	colisiones enemigo (que no se vayan de la pantalla)
+	crear boss
+	animaciones al matar bicho
+
+mapa:
+	barra de carga de disparo
+	si te matan pierdes powerup, quita vida, si no te quedan, pantalla fin
+	poner recuadros de score y barra k carga para los 2 players
+	pantalla fin nivel + pantalla transicion
+	menu principal
+	crear 2 mapas mas
+	anadir 1 power up (velocidad de disparo o velocidad nave o escudo)
+
+Sonidos
+
+Preguntar:
+Entrega? dia 7
+Guardar progreso? si lo hacmos mejor

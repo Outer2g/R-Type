@@ -12,6 +12,10 @@
 #define GAME_WIDTH	640
 #define GAME_HEIGHT 512
 
+//Score defines
+#define SCORE_HIT 10
+#define SCORE_REKT 50
+
 #define KEY_W 119
 #define KEY_A 97
 #define KEY_S 115
@@ -42,6 +46,8 @@ public:
 
 private:
 	bool tratarKeys();
+	void enterGodMode(cPlayer* p);
+	void modificaScore(int id, int amount);
 	void monsterndBulletLogic(set<void*>& toDelete);
 	unsigned char keys[256];
 	unsigned char sKeys[256]; //109 se supone

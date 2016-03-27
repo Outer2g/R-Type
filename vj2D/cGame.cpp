@@ -9,6 +9,7 @@ cGame::cGame(void)
 	offsetCamera = 0;
 	Player.setID(1);
 	Player2.setID(2);
+	srand(time(0));
 }
 
 cGame::~cGame(void)
@@ -145,42 +146,67 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 {
 }
 
+inline void cGame::modificaScore(int id, int amount) {
+	if (id == 1) Player.modifyScore(amount);
+	else Player.modifyScore(amount);
+}
 inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 	for (cEnemigo* monster : this->bichos) {
-		int tx, ty; Player.GetPosition(&tx, &ty);
-		if(monster->getShootable()) monster->shootBoi(pewpews, tx, ty);
+		
+		if (monster->getShootable()) {
+			int tx, ty; 
+			int aux = rand();
+			if (aux % 2 == 0) Player.GetPosition(&tx, &ty);
+			else Player2.GetPosition(&tx, &ty);
+			int xBicho, yBicho; monster->GetPosition(&xBicho,&yBicho);
+			if (xBicho >= tx) monster->shootBoi(pewpews, tx, ty);
+		}
 		monster->Logic(Scene.GetMap());
 		for (cProyectil* pewpew : this->pewpews) {
 			//luz fuego destruccion al irse de la pantalla
 			int tx, ty; pewpew->GetPosition(&tx, &ty);
 			if (tx < offsetCamera || tx > GAME_WIDTH + offsetCamera) toDelete.insert(pewpew);
 			else if (pewpew->getId() != 3 && pewpew->CollidesBicho(monster)) {
-				//luz fuego destruccion
-				
+				//luz fuego destruccion si un proyectil de nave choca con un monstruo
 				toDelete.insert(pewpew);
 				monster->dealDamage(pewpew->getDamage());
+				modificaScore(pewpew->getId(), SCORE_HIT);
 				if (monster->getHealth() <= 0) {
 					toDelete.insert(monster);
+					modificaScore(pewpew->getId(), SCORE_REKT);
 					cPowerUp* powah = new cPowerUp(BULLET_DOBLE);
 					int tx, ty; monster->GetTile(&tx, &ty);
 					powah->SetTile(tx, ty);
 					powah->SetWidthHeight(32, 32);
 					this->powerUps.insert(powah);
 				}
-				//Comprobacion si nave choca con monstruo para hacerlo mas eficiente(aka sidoso)
+				//si choca con una de las dos naves
+				
+			}
+			else if (pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player)) {
+				//si proyectil enemigo choca con nave 1, se le resta vida, entra en godmode
+				toDelete.insert(pewpew);
+				Player.modifyVidas(-1);
+				enterGodMode(&Player);
+			}
+			else if (pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player2)) {
+				toDelete.insert(pewpew);
+				Player2.modifyVidas(-1);
+				enterGodMode(&Player2);
 			}
 		}
 		//si bicho choca con las naves
 		bool b = monster->CollidesBicho(&Player);
-		if (b && !Player.getMode()) {
-			Player.enableGodMode();
-			godModeTimer = glutGet(GLUT_ELAPSED_TIME);
-		}
+		if (b) enterGodMode(&Player);
 		b = monster->CollidesBicho(&Player2);
-		if (b && !Player2.getMode()) {
-			Player2.enableGodMode();
-			godModeTimer2 = glutGet(GLUT_ELAPSED_TIME);
-		}
+		if (b) enterGodMode(&Player2);
+	}
+}
+inline void cGame::enterGodMode(cPlayer* p) {
+	if (!p->getMode()) {
+		p->enableGodMode();
+		if (p->getID() == 1) godModeTimer = glutGet(GLUT_ELAPSED_TIME);
+		else godModeTimer2 = glutGet(GLUT_ELAPSED_TIME);
 	}
 }
 //Process

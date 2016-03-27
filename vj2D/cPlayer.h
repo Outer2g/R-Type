@@ -42,11 +42,16 @@ public:
 	bool endLevel;
 	void setID(int id);
 	int getID();
+	//A : Positivo o negativo
+	void modifyScore(int A);
+	int getScore();
+	void modifyVidas(int A);
+	int getVidas();
 private:
 	//Proyectiles
 	void proyectSimple(set<cProyectil*> & pewpews);
 	void proyectDoble(set<cProyectil*> & pewpews);
 	bool moving,godMode,invis;
 	double delayShoot,delayInvis;
-	int shootingDelay,bulletType,idPlayer;
+	int shootingDelay,bulletType,idPlayer,score,vidas;
 };

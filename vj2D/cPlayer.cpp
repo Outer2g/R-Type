@@ -11,6 +11,7 @@ cPlayer::cPlayer() {
 	this->bulletType = BULLET_SIMPLE;
 	this->godMode = false;
 	this->invis = false;
+	this->score = 0;
 }
 cPlayer::~cPlayer(){}
 
@@ -246,6 +247,26 @@ void cPlayer::setID(int id)
 int cPlayer::getID()
 {
 	return this->idPlayer;
+}
+
+void cPlayer::modifyScore(int A)
+{
+	score += A;
+}
+
+int cPlayer::getScore()
+{
+	return score;
+}
+
+void cPlayer::modifyVidas(int A)
+{
+	vidas += A;
+}
+
+int cPlayer::getVidas()
+{
+	return vidas;
 }
 
 void cPlayer::proyectSimple(set<cProyectil*>& pewpews)

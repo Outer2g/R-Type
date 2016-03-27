@@ -9,7 +9,7 @@ Player:
 	añadir animaciones nave (?)
 
 Enemigos:
-	Proyectiles bicho
+	Proyectiles bicho .-.
 	Spawn bichos .-.
 	animacion enemigo .-.
 	subclases volador y terrestre .-. + forma de poner los waypoints k sigan .-
@@ -19,7 +19,7 @@ mapa:
 	subir mapa otra vez para vidas
 	Power ups .-. + barra de carga de disparo
 	inicializar vector rafagas segun nivel .-.
-	si te matan quita vida, si no te quedan, pantalla fin
+	si te matan pierdes powerup, quita vida, si no te quedan, pantalla fin
 
 Sonidos
 2 jugadores .-.

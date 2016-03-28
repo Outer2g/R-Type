@@ -21,7 +21,7 @@ public:
 	cPlayer();
 	~cPlayer();
 
-	virtual void Draw(int tex_id);
+	virtual void Draw(cData *dat);
 
 	virtual void MoveRight(int *map);
 	//virtual void MoveHalfRight(int *map);
@@ -32,7 +32,7 @@ public:
 	virtual void Logic(int *map);
 
 	void shoot(set<cProyectil*> & pewpews);
-	void setBullet(int bullet);
+	void setPowerUp(int power);
 	int getBullet();
 	void setMoving(bool b);
 	bool getMoving();
@@ -47,11 +47,18 @@ public:
 	int getScore();
 	void modifyVidas(int A);
 	int getVidas();
+	void losePowers();
+	void setShield(bool b);
+	bool getShield();
+	bool isjustOutShield();
+	void setjustOutShield(bool b);
 private:
+	void drawNormal(cData* dat);
+	void drawShield(cData* dat);
 	//Proyectiles
 	void proyectSimple(set<cProyectil*> & pewpews);
 	void proyectDoble(set<cProyectil*> & pewpews);
-	bool moving,godMode,invis;
+	bool moving,godMode,invis,shield,justOutShield;
 	double delayShoot,delayInvis;
 	int shootingDelay,bulletType,idPlayer,score,vidas;
 };

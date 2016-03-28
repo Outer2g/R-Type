@@ -12,42 +12,15 @@ cPlayer::cPlayer() {
 	this->godMode = false;
 	this->invis = false;
 	this->score = 0;
+	this->shield = false;
+	this->vidas = 2;
 }
 cPlayer::~cPlayer(){}
 
-void cPlayer::Draw(int tex_id)
+void cPlayer::Draw(cData *dat)
 {
-	float xo, yo, xf, yf;
-	if (!this->godMode) {
-		xo = 0.125 * GetState();
-		yo = 1.f;
-		//coord textur: xo,yo
-		xf = xo + 0.125f;//1/8 da el 0.125
-		yf = yo - 1.f; //xk la nave ocupa toda la altura d la textura
-	}
-	else {
-		//delta time management boy estaran 0.5segs en cada estado
-		if (this->delayInvis == NULL) this->delayInvis = glutGet(GLUT_ELAPSED_TIME);
-		if (invis) {
-			xo = 0.125 * 6; //aka espacio blanco
-			yo = 1.f;
-			xf = xo + 0.125f;
-			yf = yo - 1.f;
-			double t1 = glutGet(GLUT_ELAPSED_TIME);
-			//4frames invis
-			if (t1 - delayInvis > 25 * 20) { this->invis = false; this->delayInvis = NULL; }
-		}
-		else{
-			xo = 0.125 * GetState();
-			yo = 1.f;
-			xf = xo + 0.125f;
-			yf = yo - 1.f;
-			double t1 = glutGet(GLUT_ELAPSED_TIME);
-			//4frames invis
-			if (t1 - delayInvis > 25 * 20) { this->invis = true; this->delayInvis = NULL; }
-		}
-	}
-	DrawRect(tex_id,xo,yo,xf,yf);
+	if (shield) drawShield(dat);
+	else drawNormal(dat);	
 }
 
 
@@ -202,9 +175,10 @@ void cPlayer::shoot(set<cProyectil*> & pewpews)
 	}
 }
 
-void cPlayer::setBullet(int bullet)
+void cPlayer::setPowerUp(int power)
 {
-	this->bulletType = bullet;
+	if (power <= 4)	this->bulletType = power;
+	else if (power == POWER_SHIELD) this->shield = true;
 }
 
 int cPlayer::getBullet()
@@ -267,6 +241,79 @@ void cPlayer::modifyVidas(int A)
 int cPlayer::getVidas()
 {
 	return vidas;
+}
+
+void cPlayer::losePowers()
+{
+	bulletType = BULLET_SIMPLE;
+}
+
+void cPlayer::setShield(bool b)
+{
+	shield = b;
+}
+
+bool cPlayer::getShield()
+{
+	return shield;
+}
+
+bool cPlayer::isjustOutShield()
+{
+	return justOutShield;
+}
+
+void cPlayer::setjustOutShield(bool b)
+{
+	justOutShield = b;
+}
+
+inline void cPlayer::drawNormal(cData * dat)
+{
+	float xo, yo, xf, yf;
+	if (!this->godMode) {
+		xo = 0.125 * GetState();
+		yo = 1.f;
+		//coord textur: xo,yo
+		xf = xo + 0.125f;//1/8 da el 0.125
+		yf = yo - 1.f; //xk la nave ocupa toda la altura d la textura
+	}
+	else {
+		//delta time management boy estaran 0.5segs en cada estado
+		if (this->delayInvis == NULL) this->delayInvis = glutGet(GLUT_ELAPSED_TIME);
+		if (invis) {
+			xo = 0.125 * 6; //aka espacio blanco
+			yo = 1.f;
+			xf = xo + 0.125f;
+			yf = yo - 1.f;
+			double t1 = glutGet(GLUT_ELAPSED_TIME);
+			//4frames invis
+			if (t1 - delayInvis > 25 * 20) { this->invis = false; this->delayInvis = NULL; }
+		}
+		else {
+			xo = 0.125 * GetState();
+			yo = 1.f;
+			xf = xo + 0.125f;
+			yf = yo - 1.f;
+			double t1 = glutGet(GLUT_ELAPSED_TIME);
+			//4frames invis
+			if (t1 - delayInvis > 25 * 20) { this->invis = true; this->delayInvis = NULL; }
+		}
+	}
+	if (idPlayer == 1)DrawRect(dat->GetID(IMG_PLAYER), xo, yo, xf, yf);
+	else DrawRect(dat->GetID(IMG_PLAYER2), xo, yo, xf, yf);
+}
+
+inline void cPlayer::drawShield(cData * dat)
+{
+	float xo, yo, xf, yf;
+	xo = 0.25f; //cada uno son 46*50 y la imagen es de 256*64
+	yo = 0.25f * 3;
+	//coord textur: xo,yo
+	xf = xo + 0.25f;//1/8 da el 0.125
+	yf = yo + 0.25f; //xk la nave ocupa toda la altura d la textura
+
+	DrawRect(dat->GetID(IMG_BUB), xo, yo, xf, yf);
 }
 
 void cPlayer::proyectSimple(set<cProyectil*>& pewpews)

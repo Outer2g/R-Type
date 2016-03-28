@@ -2,9 +2,10 @@
 #include "cBicho.h"
 #include "Globals.h"
 
-//tipos proyectil
+//tipos proyectil y powerUps
 #define BULLET_SIMPLE 1
 #define BULLET_DOBLE 2
+#define POWER_SHIELD 5
 class cProyectil :	public cBicho
 {
 public:

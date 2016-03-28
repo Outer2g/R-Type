@@ -174,24 +174,21 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 				if (monster->getHealth() <= 0) {
 					toDelete.insert(monster);
 					modificaScore(pewpew->getId(), SCORE_REKT);
-					cPowerUp* powah = new cPowerUp(BULLET_DOBLE);
+					cPowerUp* powah = new cPowerUp(POWER_SHIELD);
 					int tx, ty; monster->GetTile(&tx, &ty);
 					powah->SetTile(tx, ty);
 					powah->SetWidthHeight(32, 32);
 					this->powerUps.insert(powah);
 				}
-				//si choca con una de las dos naves
-				
 			}
+			//si choca con una de las dos naves
 			else if (pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player)) {
 				//si proyectil enemigo choca con nave 1, se le resta vida, entra en godmode
 				toDelete.insert(pewpew);
-				Player.modifyVidas(-1);
 				enterGodMode(&Player);
 			}
 			else if (pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player2)) {
 				toDelete.insert(pewpew);
-				Player2.modifyVidas(-1);
 				enterGodMode(&Player2);
 			}
 		}
@@ -203,10 +200,21 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 	}
 }
 inline void cGame::enterGodMode(cPlayer* p) {
-	if (!p->getMode()) {
-		p->enableGodMode();
-		if (p->getID() == 1) godModeTimer = glutGet(GLUT_ELAPSED_TIME);
-		else godModeTimer2 = glutGet(GLUT_ELAPSED_TIME);
+	if (!p->isjustOutShield() && !p->getMode()) {
+		if (!p->getShield()) {
+			p->enableGodMode();
+			//si entramos en godmode es porque nos han dado => perdemos vida y boosts
+			p->modifyVidas(-1);
+			p->losePowers();
+			if (p->getID() == 1) godModeTimer = glutGet(GLUT_ELAPSED_TIME);
+			else godModeTimer2 = glutGet(GLUT_ELAPSED_TIME);
+		}
+		else {
+			p->setShield(false); 
+			p->setjustOutShield(true);
+			if (p->getID() == 1) outShieldTimer = glutGet(GLUT_ELAPSED_TIME);
+			else outShieldTimer2 = glutGet(GLUT_ELAPSED_TIME);
+		}
 	}
 }
 //Process
@@ -220,22 +228,24 @@ bool cGame::Process()
 	set<void*> toDelete;
 	monsterndBulletLogic(toDelete);
 	
-	//gestion godtimers
+	//gestion godtimers y outshieldtimers
 	double t1 = glutGet(GLUT_ELAPSED_TIME);
 	//si ha pasado 200 frames, desactiva el godmode
 	if (t1 - godModeTimer > 200 * 20) Player.disableGodMode();
 	if (t1 - godModeTimer2 > 200 * 20) Player2.disableGodMode();
+	if (t1 - outShieldTimer > 100 * 20) Player.setjustOutShield(false);
+	if (t1 - outShieldTimer2 > 100 * 20) Player2.setjustOutShield(false);
 	//Gestion powers
 	for (cPowerUp* powah : this->powerUps) {
 		if (Player.CollidesBicho((cBicho*)powah)) {
 			toDelete.insert(powah);
 			int bType = powah->getType();
-			Player.setBullet(bType);
+			Player.setPowerUp(bType);
 		}
 		if (Player2.CollidesBicho((cBicho*)powah)) {
 			toDelete.insert(powah);
 			int bType = powah->getType();
-			Player2.setBullet(bType);
+			Player2.setPowerUp(bType);
 		}
 	}
 	for (void* x : toDelete) {
@@ -294,8 +304,8 @@ void cGame::Render()
 	Scene.Draw(Data.GetID(IMG_PARED));
 	for (cEnemigo* b : bichos) b->Draw(&Data);
 	//bichos[0]->Draw(&Data);
-	Player.Draw(Data.GetID(IMG_PLAYER));
-	Player2.Draw(Data.GetID(IMG_PLAYER2));
+	Player.Draw(&Data);
+	Player2.Draw(&Data);
 	//Proyectiles
 	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
 	//PowerUps
@@ -338,8 +348,8 @@ inline bool cGame::tratarKeys()
 	if (keys[KEY_Q])
 		Player2.shoot(this->pewpews);
 	//TESTING BUTTONS
-	if (sKeys[GLUT_KEY_F1]) Player.setBullet(BULLET_SIMPLE);
-	if (sKeys[GLUT_KEY_F2]) Player.setBullet(BULLET_DOBLE);
+	if (sKeys[GLUT_KEY_F1]) Player.setPowerUp(BULLET_SIMPLE);
+	if (sKeys[GLUT_KEY_F2]) Player.setPowerUp(BULLET_DOBLE);
 	if (sKeys[GLUT_KEY_F3]) Player.enableGodMode();
 	if (sKeys[GLUT_KEY_F4]) reset();
 

@@ -61,5 +61,5 @@ private:
 	set<cProyectil*>  pewpews;
 	set<cPowerUp*> powerUps;
 	int rafagaQueToca = 0, numRafagas;
-	double godModeTimer,godModeTimer2;
+	double godModeTimer,godModeTimer2,outShieldTimer,outShieldTimer2;
 };

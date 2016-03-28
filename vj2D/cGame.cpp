@@ -16,6 +16,37 @@ cGame::~cGame(void)
 {
 }
 
+
+
+inline void render_string(void* font, const char* string)
+{
+	int i, len = strlen(string);
+	for (i = 0;i<len;i++)
+		glutBitmapCharacter(font, string[i]);
+}
+
+
+inline void render_info()
+{
+	//glEnable(GL_TEXTURE_2D);
+	glDisable(GL_TEXTURE_2D);
+	char *sstring = "HOLA DON PEPITO, HOLA DON JOSE";
+	int j = strlen(sstring);
+
+	glColor3f(0, 1, 1);
+	glRasterPos2f(250, 50); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+	for (int i = 0; i < j; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, sstring[i]);
+	}
+	glColor3f(1, 1, 1);
+	glEnable(GL_TEXTURE_2D);
+	//delete sstring;
+}
+
+
+
+
+
 bool cGame::Init()
 {
 	bool res=true;
@@ -92,6 +123,12 @@ bool cGame::Init()
 	return res;
 }
 
+
+
+
+
+
+
 bool cGame::Loop()
 {
 	bool res=true;
@@ -112,6 +149,11 @@ bool cGame::Loop()
 	return res;
 }
 
+
+
+
+
+
 void cGame::Finalize()
 {
 	//version cutre
@@ -125,11 +167,19 @@ void cGame::Finalize()
 	powerUps = set<cPowerUp*>();
 }
 
+
+
+
+
 void cGame::reset()
 {
 	Finalize();
 	Init();
 }
+
+
+
+
 
 //Input
 void cGame::ReadKeyboard(unsigned char key, int x, int y, bool press)
@@ -137,19 +187,35 @@ void cGame::ReadKeyboard(unsigned char key, int x, int y, bool press)
 	keys[key] = press;
 }
 
+
+
+
+
 void cGame::ReadKeySpecialBoard(unsigned char key, int x, int y, bool press)
 {
 	sKeys[key] = press;
 }
 
+
+
+
+
 void cGame::ReadMouse(int button, int state, int x, int y)
 {
 }
+
+
+
+
 
 inline void cGame::modificaScore(int id, int amount) {
 	if (id == 1) Player.modifyScore(amount);
 	else Player.modifyScore(amount);
 }
+
+
+
+
 inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 	for (cEnemigo* monster : this->bichos) {
 		
@@ -199,6 +265,12 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 		if (b) enterGodMode(&Player2);
 	}
 }
+
+
+
+
+
+
 inline void cGame::enterGodMode(cPlayer* p) {
 	if (!p->isjustOutShield() && !p->getMode()) {
 		if (!p->getShield()) {
@@ -217,6 +289,12 @@ inline void cGame::enterGodMode(cPlayer* p) {
 		}
 	}
 }
+
+
+
+
+
+
 //Process
 bool cGame::Process()
 {
@@ -254,8 +332,6 @@ bool cGame::Process()
 		powerUps.erase((cPowerUp*) x);
 		delete x;
 	}
-
-
 	logicToAddMonsters();
 
 
@@ -291,6 +367,10 @@ bool cGame::Process()
 	return res;
 }
 
+
+
+
+
 //Output
 void cGame::Render()
 {
@@ -298,7 +378,7 @@ void cGame::Render()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glOrtho(offsetCamera, GAME_WIDTH + offsetCamera, 0, GAME_HEIGHT, 0, 1);
-	glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_MODELVIEW);//no s para que sirve pero no hace falta
 
 	Scene.DrawBackground(Data.GetID(IMG_BACK));
 	Scene.Draw(Data.GetID(IMG_PARED));
@@ -310,8 +390,14 @@ void cGame::Render()
 	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
 	//PowerUps
 	for (cPowerUp* powah : this->powerUps) powah->Draw(&Data);
+	render_info();
+
 	glutSwapBuffers();
 }
+
+
+
+
 
 inline bool cGame::tratarKeys()
 {
@@ -355,6 +441,10 @@ inline bool cGame::tratarKeys()
 
 	return res;
 }
+
+
+
+
 
 
 inline void cGame::logicToAddMonsters() {

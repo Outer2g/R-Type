@@ -18,15 +18,7 @@ cGame::~cGame(void)
 
 
 
-inline void render_string(void* font, const char* string)
-{
-	int i, len = strlen(string);
-	for (i = 0;i<len;i++)
-		glutBitmapCharacter(font, string[i]);
-}
-
-
-inline void render_info()
+inline void render_info() //dberiamos pasarle el string
 {
 	//glEnable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_2D);

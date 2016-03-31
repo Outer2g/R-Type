@@ -18,18 +18,35 @@ cGame::~cGame(void)
 
 
 
-inline void render_info() //dberiamos pasarle el string
+inline void render_info(int p1, int p2, int offset) //dberiamos pasarle el string
 {
 	//glEnable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_2D);
-	char *sstring = "HOLA DON PEPITO, HOLA DON JOSE";
-	int j = strlen(sstring);
+
+	std::string pl1 = "";
+	char str[20];
+	pl1 += "PLAYER 1 - ";
+	pl1 += _itoa(p1, str, 10);
+	int j = pl1.length();
+
 
 	glColor3f(0, 1, 1);
-	glRasterPos2f(250, 50); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+	glRasterPos2f(80 + offset, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
 	for (int i = 0; i < j; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, sstring[i]);
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl1[i]);
 	}
+
+	std::string pl2 = "";
+	pl2 += "PLAYER 2 - ";
+	pl2 += _itoa(p2, str, 10);
+	j = pl2.length();
+
+	glColor3f(0, 1, 1);
+	glRasterPos2f(400 + offset, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+	for (int i = 0; i < j; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl2[i]);
+	}
+
 	glColor3f(1, 1, 1);
 	glEnable(GL_TEXTURE_2D);
 	//delete sstring;
@@ -44,6 +61,8 @@ bool cGame::Init()
 	bool res=true;
 	offsetCamera = 0;
 	rafagaQueToca = 0;
+	Player.setID(1);
+	Player2.setID(2);
 	//Graphics initialization
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glMatrixMode(GL_PROJECTION);
@@ -150,6 +169,7 @@ void cGame::Finalize()
 {
 	//version cutre
 	Player =cPlayer();
+	Player2 = cPlayer();
 	for (void* x : bichos) delete x;
 	for (void* x : pewpews) delete x;
 	for (void* x : powerUps) delete x;
@@ -202,7 +222,7 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 
 inline void cGame::modificaScore(int id, int amount) {
 	if (id == 1) Player.modifyScore(amount);
-	else Player.modifyScore(amount);
+	else Player2.modifyScore(amount);
 }
 
 
@@ -382,7 +402,7 @@ void cGame::Render()
 	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
 	//PowerUps
 	for (cPowerUp* powah : this->powerUps) powah->Draw(&Data);
-	render_info();
+	render_info(Player.getScore(), Player2.getScore(), offsetCamera);
 
 	glutSwapBuffers();
 }

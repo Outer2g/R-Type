@@ -31,12 +31,12 @@ void cPlayer::MoveDown(int * map)
 	int xaux;
 
 	//Whats next tile?
-	if ((y % TILE_SIZE) <= 1)
+	if ((y % TILE_SIZE) <= 0)
 	{
 		xaux = y;
 		y -= STEP_LENGTH;
 
-		if (CollidesMapWall(map, false))
+		if (CollidesMapFloor(map))
 		{
 			y = xaux;
 			state = STATE_CENTER;
@@ -67,7 +67,7 @@ void cPlayer::MoveLeft(int *map)
 		if (!endLevel) x -= STEP_LENGTH + STEP_LENGTH;
 		else x -= STEP_LENGTH;
 
-		if (CollidesMapWall(map, true))
+		if (CollidesMapWall(map, false))
 		{
 			x = xaux;
 		}

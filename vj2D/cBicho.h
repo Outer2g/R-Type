@@ -57,7 +57,7 @@ public:
 	int  GetState();
 	void SetState(int s);
 
-	void NextFrame(int max);
+	virtual void NextFrame(int max);
 	int  GetFrame();
 	virtual void Draw(cData *dat);
 

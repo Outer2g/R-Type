@@ -22,6 +22,7 @@ public:
 	~cPlayer();
 
 	virtual void Draw(cData *dat);
+	void DrawRectangleShield(int tex_id, float xo, float yo, float xf, float yf);
 
 	virtual void MoveRight(int *map);
 	//virtual void MoveHalfRight(int *map);
@@ -52,6 +53,7 @@ public:
 	bool getShield();
 	bool isjustOutShield();
 	void setjustOutShield(bool b);
+
 private:
 	void drawNormal(cData* dat);
 	void drawShield(cData* dat);

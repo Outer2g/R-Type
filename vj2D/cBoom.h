@@ -6,7 +6,10 @@ class cBoom :
 public:
 	cBoom();
 	~cBoom();
+
 	virtual void Draw(cData* dat);
+	virtual void NextFrame(int max);
+
 	double getCreationTime();
 	void resetCreationTime();
 private:

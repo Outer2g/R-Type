@@ -19,8 +19,30 @@ cPlayer::~cPlayer(){}
 
 void cPlayer::Draw(cData *dat)
 {
+	drawNormal(dat);
 	if (shield) drawShield(dat);
-	else drawNormal(dat);	
+}
+
+void cPlayer::DrawRectangleShield(int tex_id, float xo, float yo, float xf, float yf)
+{
+	int screen_x, screen_y;
+	int wa = w + 10;
+	int ha = h + 10;
+
+	screen_x = x + SCENE_Xo - 5;
+	screen_y = y + SCENE_Yo + (BLOCK_SIZE - TILE_SIZE) - 5;
+
+	glEnable(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+	glBegin(GL_QUADS);
+	glTexCoord2f(xo, yo);	glVertex2i(screen_x, screen_y);
+	glTexCoord2f(xf, yo);	glVertex2i(screen_x + wa, screen_y);
+	glTexCoord2f(xf, yf);	glVertex2i(screen_x + wa, screen_y + ha);
+	glTexCoord2f(xo, yf);	glVertex2i(screen_x, screen_y + ha);
+	glEnd();
+
+	glDisable(GL_TEXTURE_2D);
 }
 
 
@@ -307,13 +329,14 @@ inline void cPlayer::drawNormal(cData * dat)
 inline void cPlayer::drawShield(cData * dat)
 {
 	float xo, yo, xf, yf;
-	xo = 0.25f; //cada uno son 46*50 y la imagen es de 256*64
-	yo = 0.25f * 3;
+	xo = 0.5f *GetFrame(); //cada uno son 46*50 y la imagen es de 256*64
+	yo = 1.0f;
+	NextFrame(2);
 	//coord textur: xo,yo
-	xf = xo + 0.25f;//1/8 da el 0.125
-	yf = yo + 0.25f; //xk la nave ocupa toda la altura d la textura
+	xf = xo + 0.5f;//1/8 da el 0.125
+	yf = 0.f; //xk la nave ocupa toda la altura d la textura
 
-	DrawRect(dat->GetID(IMG_BUB), xo, yo, xf, yf);
+	DrawRectangleShield(dat->GetID(IMG_SHIELD), xo, yo, xf, yf);
 }
 
 void cPlayer::proyectSimple(set<cProyectil*>& pewpews)

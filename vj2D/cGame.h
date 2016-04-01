@@ -6,6 +6,7 @@
 #include "cBicho.h"
 #include "cEnemigo.h"
 #include "cPowerUp.h"
+#include "cBoom.h"
 #include <vector>
 #include <set>
 
@@ -49,6 +50,7 @@ private:
 	void enterGodMode(cPlayer* p);
 	void modificaScore(int id, int amount);
 	void monsterndBulletLogic(set<void*>& toDelete);
+	void yerDead(cBicho* bicho);
 	unsigned char keys[256];
 	unsigned char sKeys[256]; //109 se supone
 	cScene Scene;
@@ -60,6 +62,7 @@ private:
 	set<cEnemigo*> bichos;
 	set<cProyectil*>  pewpews;
 	set<cPowerUp*> powerUps;
+	set<cBoom*> explosiones;
 	int rafagaQueToca = 0, numRafagas;
 	double godModeTimer,godModeTimer2,outShieldTimer,outShieldTimer2;
 };

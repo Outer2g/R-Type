@@ -288,7 +288,7 @@ inline void cPlayer::drawNormal(cData * dat)
 			yf = yo - 1.f;
 			double t1 = glutGet(GLUT_ELAPSED_TIME);
 			//4frames invis
-			if (t1 - delayInvis > 25 * 20) { this->invis = false; this->delayInvis = NULL; }
+			if (t1 - delayInvis > 10 * 20) { this->invis = false; this->delayInvis = NULL; }
 		}
 		else {
 			xo = 0.125 * GetState();
@@ -297,7 +297,7 @@ inline void cPlayer::drawNormal(cData * dat)
 			yf = yo - 1.f;
 			double t1 = glutGet(GLUT_ELAPSED_TIME);
 			//4frames invis
-			if (t1 - delayInvis > 25 * 20) { this->invis = true; this->delayInvis = NULL; }
+			if (t1 - delayInvis > 10 * 20) { this->invis = true; this->delayInvis = NULL; }
 		}
 	}
 	if (idPlayer == 1)DrawRect(dat->GetID(IMG_PLAYER), xo, yo, xf, yf);

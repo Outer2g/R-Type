@@ -250,6 +250,7 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 				monster->dealDamage(pewpew->getDamage());
 				modificaScore(pewpew->getId(), SCORE_HIT);
 				if (monster->getHealth() <= 0) {
+					yerDead(monster);
 					toDelete.insert(monster);
 					modificaScore(pewpew->getId(), SCORE_REKT);
 					cPowerUp* powah = new cPowerUp(POWER_SHIELD);
@@ -276,6 +277,15 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 		b = monster->CollidesBicho(&Player2);
 		if (b) enterGodMode(&Player2);
 	}
+}
+
+inline void cGame::yerDead(cBicho * bicho)
+{
+	int w, h, tx, ty; bicho->GetWidthHeight(&w, &h); bicho->GetPosition(&tx, &ty);
+	cBoom* explo = new cBoom();
+	explo->SetPosition(tx, ty);
+	explo->SetWidthHeight(w+5,h+5);
+	explosiones.insert(explo);
 }
 
 
@@ -338,10 +348,18 @@ bool cGame::Process()
 			Player2.setPowerUp(bType);
 		}
 	}
+	//gestion explosiones
+	for (cBoom* boom : explosiones) {
+		//si ha passat cert temps,elimina
+		double t1 = glutGet(GLUT_ELAPSED_TIME);
+		//delay explo
+		if (t1 - boom->getCreationTime() > 20 * 5) toDelete.insert(boom);
+	}
 	for (void* x : toDelete) {
 		pewpews.erase((cProyectil*)x);
 		bichos.erase((cEnemigo*)x);
 		powerUps.erase((cPowerUp*) x);
+		explosiones.erase((cBoom*)x);
 		delete x;
 	}
 	logicToAddMonsters();
@@ -403,6 +421,8 @@ void cGame::Render()
 	//PowerUps
 	for (cPowerUp* powah : this->powerUps) powah->Draw(&Data);
 	render_info(Player.getScore(), Player2.getScore(), offsetCamera);
+	//explosiones
+	for (cBoom* boom : explosiones) boom->Draw(&Data);
 
 	glutSwapBuffers();
 }

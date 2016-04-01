@@ -26,10 +26,10 @@ void cPlayer::Draw(cData *dat)
 void cPlayer::DrawRectangleShield(int tex_id, float xo, float yo, float xf, float yf)
 {
 	int screen_x, screen_y;
-	int wa = w + 10;
+	int wa = w +30;
 	int ha = h + 10;
 
-	screen_x = x + SCENE_Xo - 5;
+	screen_x = x + SCENE_Xo - 15;
 	screen_y = y + SCENE_Yo + (BLOCK_SIZE - TILE_SIZE) - 5;
 
 	glEnable(GL_TEXTURE_2D);

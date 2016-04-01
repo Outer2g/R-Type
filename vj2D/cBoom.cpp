@@ -5,6 +5,13 @@
 cBoom::cBoom()
 {
 	boomTime = glutGet(GLUT_ELAPSED_TIME);
+	this->type = ENEMY_BOOM;
+}
+
+cBoom::cBoom(int type)
+{
+	boomTime = glutGet(GLUT_ELAPSED_TIME);
+	this->type = type;
 }
 
 
@@ -22,7 +29,8 @@ void cBoom::Draw(cData * dat)
 	xf = xo + 0.2f;//1/8 da el 0.125
 	yf = 0.f; //xk la nave ocupa toda la altura d la textura
 
-	DrawRect(dat->GetID(IMG_ENEMY_BOOM), xo, yo, xf, yf);
+	if (type == ENEMY_BOOM) DrawRect(dat->GetID(IMG_ENEMY_BOOM), xo, yo, xf, yf);
+	else DrawRect(dat->GetID(IMG_NAVE_BOOM), xo, yo, xf, yf);
 }
 
 void cBoom::NextFrame(int max)
@@ -45,4 +53,14 @@ double cBoom::getCreationTime()
 void cBoom::resetCreationTime()
 {
 	boomTime = glutGet(GLUT_ELAPSED_TIME);
+}
+
+void cBoom::setType(int type)
+{
+	this->type = type;
+}
+
+int cBoom::getType()
+{
+	return type;
 }

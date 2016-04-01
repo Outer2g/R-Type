@@ -93,6 +93,8 @@ bool cGame::Init()
 		if (!res) return false;
 		res = Data.LoadImage(IMG_SHIELD, "escudo.png", GL_RGBA);
 		if (!res) return false;
+		res = Data.LoadImage(IMG_NAVE_BOOM, "explosionNave.png", GL_RGBA);
+		if (!res) return false;
 
 		res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
 		if (!res) return false;
@@ -268,10 +270,12 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 			else if (pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player)) {
 				//si proyectil enemigo choca con nave 1, se le resta vida, entra en godmode
 				toDelete.insert(pewpew);
+				yerDead(&Player, NAVE_BOOM);
 				enterGodMode(&Player);
 			}
 			else if (pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player2)) {
 				toDelete.insert(pewpew);
+				yerDead(&Player2, NAVE_BOOM);
 				enterGodMode(&Player2);
 			}
 		}
@@ -283,10 +287,10 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 	}
 }
 
-inline void cGame::yerDead(cBicho * bicho)
+inline void cGame::yerDead(cBicho * bicho, int type)
 {
 	int w, h, tx, ty; bicho->GetWidthHeight(&w, &h); bicho->GetPosition(&tx, &ty);
-	cBoom* boom = new cBoom();
+	cBoom* boom = new cBoom(type);
 	boom->SetPosition(tx, ty);
 	boom->SetWidthHeight(w+10,h+5);
 	explosiones.insert(boom);

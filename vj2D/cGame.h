@@ -50,7 +50,7 @@ private:
 	void enterGodMode(cPlayer* p);
 	void modificaScore(int id, int amount);
 	void monsterndBulletLogic(set<void*>& toDelete);
-	void yerDead(cBicho* bicho);
+	void yerDead(cBicho* bicho,int type = ENEMY_BOOM);
 	unsigned char keys[256];
 	unsigned char sKeys[256]; //109 se supone
 	cScene Scene;

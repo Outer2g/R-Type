@@ -57,6 +57,9 @@ public:
 private:
 	void drawNormal(cData* dat);
 	void drawShield(cData* dat);
+	void drawPropulsiones(cData* dat);
+
+	void DrawRectangleProp(int tex_id, float xo, float yo, float xf, float yf);
 	//Proyectiles
 	void proyectSimple(set<cProyectil*> & pewpews);
 	void proyectDoble(set<cProyectil*> & pewpews);

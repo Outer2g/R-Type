@@ -42,31 +42,8 @@ void cProyectil::Logic(int * map)
 
 void cProyectil::Draw(cData * dat)
 {
-	float xo, yo, xf, yf;
-	switch (tipo) {
-	case 0: 
-		
-		xo = 0.1796875f * GetFrame(); //cada uno son 46*50 y la imagen es de 256*64
-		yo = 0.78125f;
-		NextFrame(4);
-		//coord textur: xo,yo
-		xf = xo + 0.1796875f;//1/8 da el 0.125
-		yf = 0.f; //xk la nave ocupa toda la altura d la textura
-
-		DrawRect(dat->GetID(IMG_ESTATIC), xo, yo, xf, yf);
-		break;
-
-	case 1:
-		xo = 0.203125f * GetFrame(); //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
-		yo = 1.f;
-		NextFrame(4);
-		//coord textur: xo,yo
-		xf = xo + 0.203125f;//1/8 da el 0.125
-		yf = 0.f; //xk la nave ocupa toda la altura d la textura
-		DrawRect(dat->GetID(IMG_BULLET_VOLADOR), xo, yo, xf, yf);
-		break;
-	}
-	
+	if (id == 3) DrawPEnemigo(dat);
+	else DrawPNave(dat);
 }
 
 void cProyectil::setSpeed(int x, int y)
@@ -94,4 +71,29 @@ int cProyectil::getId()
 int cProyectil::getDamage()
 {
 	return this->dmg;
+}
+
+inline void cProyectil::DrawPEnemigo(cData * dat)
+{
+	float xo, yo, xf, yf;
+	xo = 0.203125f * GetFrame(); //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
+	yo = 1.f;
+	NextFrame(4);
+	//coord textur: xo,yo
+	xf = xo + 0.203125f;//1/8 da el 0.125
+	yf = 0.f; //xk la nave ocupa toda la altura d la textura
+	DrawRect(dat->GetID(IMG_BULLET_VOLADOR), xo, yo, xf, yf);
+
+}
+
+inline void cProyectil::DrawPNave(cData * dat)
+{
+	float xo, yo, xf, yf;
+	xo = 0.0141509433962264f; //cada uno son 46*50 y la imagen es de 256*64
+	yo = 1.0f;
+	//coord textur: xo,yo
+	xf = xo + 0.0377358490566038f;//1/8 da el 0.125
+	yf = 0.f; //xk la nave ocupa toda la altura d la textura
+
+	DrawRect(dat->GetID(IMG_PLAYER_BULLETS), xo, yo, xf, yf);
 }

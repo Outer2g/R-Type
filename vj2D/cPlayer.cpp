@@ -339,6 +339,40 @@ inline void cPlayer::drawShield(cData * dat)
 	DrawRectangleShield(dat->GetID(IMG_SHIELD), xo, yo, xf, yf);
 }
 
+inline void cPlayer::drawPropulsiones(cData * dat)
+{
+	float xo, yo, xf, yf;
+	xo = 0.536231884057971f; //cada uno son 46*50 y la imagen es de 256*64
+	yo = 1.0f;
+	//coord textur: xo,yo
+	xf = xo + 0.463768115942029f;//1/8 da el 0.125
+	yf = 0.f; //xk la nave ocupa toda la altura d la textura
+
+	DrawRectangleProp(dat->GetID(IMG_PROPULSIONES), xo, yo, xf, yf);
+}
+
+inline void cPlayer::DrawRectangleProp(int tex_id, float xo, float yo, float xf, float yf)
+{
+	int screen_x, screen_y;
+	int wa = 32;
+	int ha = 30;
+
+	screen_x = x + SCENE_Xo - w/2+10;
+	screen_y = y + SCENE_Yo + (BLOCK_SIZE - TILE_SIZE);
+
+	glEnable(GL_TEXTURE_2D);
+
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+	glBegin(GL_QUADS);
+	glTexCoord2f(xo, yo);	glVertex2i(screen_x, screen_y);
+	glTexCoord2f(xf, yo);	glVertex2i(screen_x + wa, screen_y);
+	glTexCoord2f(xf, yf);	glVertex2i(screen_x + wa, screen_y + ha);
+	glTexCoord2f(xo, yf);	glVertex2i(screen_x, screen_y + ha);
+	glEnd();
+
+	glDisable(GL_TEXTURE_2D);
+}
+
 void cPlayer::proyectSimple(set<cProyectil*>& pewpews)
 {
  	cProyectil* pewpew = new cProyectil(this->idPlayer,1);

@@ -23,6 +23,8 @@ public:
 	int getId();
 	int getDamage();
 private:
+	void DrawPEnemigo(cData * dat);
+	void DrawPNave(cData* dat);
 	int dmg;
 	int speedX, speedY;
 	// id == 1 : player1; id == 2 : player2; id ==3 :enemy

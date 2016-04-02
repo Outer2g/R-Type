@@ -99,6 +99,10 @@ bool cGame::Init()
 		if (!res) return false;
 		res = Data.LoadImage(IMG_BULLET_POWER, "bulletPower.png", GL_RGBA);
 		if (!res) return false;
+		res = Data.LoadImage(IMG_PLAYER_BULLETS, "proyectilesNave.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_PROPULSIONES, "propulsiones.png", GL_RGBA);
+		if (!res) return false;
 
 		res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
 		if (!res) return false;

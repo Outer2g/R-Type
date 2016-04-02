@@ -145,6 +145,9 @@ bool cGame::Init()
 	Player2.SetWidthHeight(64, 32);
 	Player2.SetTile(1, 10);
 	Player2.SetState(STATE_CENTER);
+
+	//PlaySound(TEXT("forest.mid"), NULL, SND_FILENAME);
+
 	return res;
 }
 

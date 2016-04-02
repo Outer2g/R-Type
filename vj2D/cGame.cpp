@@ -97,6 +97,8 @@ bool cGame::Init()
 		if (!res) return false;
 		res = Data.LoadImage(IMG_SHIELD_POWER, "shieldPower.png", GL_RGBA);
 		if (!res) return false;
+		res = Data.LoadImage(IMG_BULLET_POWER, "bulletPower.png", GL_RGBA);
+		if (!res) return false;
 
 		res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
 		if (!res) return false;
@@ -261,11 +263,7 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 					yerDead(monster);
 					toDelete.insert(monster);
 					modificaScore(pewpew->getId(), SCORE_REKT);
-					cPowerUp* powah = new cPowerUp(POWER_SHIELD);
-					int tx, ty; monster->GetPosition(&tx, &ty);
-					powah->SetPosition(tx, ty);
-					powah->SetWidthHeight(32, 32);
-					this->powerUps.insert(powah);
+					monster->dropPowerup(powerUps);
 				}
 			}
 			//si choca con una de las dos naves
@@ -297,9 +295,6 @@ inline void cGame::yerDead(cBicho * bicho, int type)
 	boom->SetWidthHeight(w+10,h+5);
 	explosiones.insert(boom);
 }
-
-
-
 
 
 

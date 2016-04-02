@@ -85,3 +85,10 @@ bool cEnemigo::getShootable()
 {
 	return shoot;
 }
+
+void cEnemigo::dropPowerup(set<cPowerUp*>& powerups)
+{
+
+}
+
+

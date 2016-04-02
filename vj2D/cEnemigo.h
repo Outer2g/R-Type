@@ -1,6 +1,7 @@
 #pragma once
 #include "cBicho.h"
 #include "cProyectil.h"
+#include "cPowerUp.h"
 #include <set>
 #include <ctime>
 using namespace std;
@@ -23,6 +24,7 @@ public:
 	virtual void setShootChance(int shootingChance);
 	virtual int getShootChance();
 	virtual bool getShootable();
+	virtual void dropPowerup(set<cPowerUp*>& powerups);
 protected:
 	double lastShootTime;
 	int delayShoot, shootChance;

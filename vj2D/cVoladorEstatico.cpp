@@ -40,6 +40,13 @@ int cVoladorEstatico::getShootChance()
 	return this->shootChance;
 }
 
+void cVoladorEstatico::dropPowerup(set<cPowerUp*>& powerups)
+{
+	cPowerUp* powah = new cPowerUp(BULLET_DOBLE);
+	powah->SetPosition(x, y);
+	powah->SetWidthHeight(32, 32);
+	powerups.insert(powah);
+}
 
 void cVoladorEstatico::Stop()
 {

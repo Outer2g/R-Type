@@ -27,6 +27,7 @@ public:
 
 	virtual void setShootChance(int shootingChance);
 	virtual int getShootChance();
+	virtual void dropPowerup(set<cPowerUp*>& powerups);
 	
 private:
 	int speed, random_variable;

@@ -28,6 +28,14 @@ void cVoladorMariposa::Draw(cData *dat) {
 	DrawRect(dat->GetID(IMG_ESTATIC), xo, yo, xf, yf);
 }
 
+void cVoladorMariposa::dropPowerup(set<cPowerUp*>& powerups)
+{
+	cPowerUp* powah = new cPowerUp(POWER_SHIELD);
+	powah->SetPosition(x,y);
+	powah->SetWidthHeight(32, 32);
+	powerups.insert(powah);
+}
+
 
 void cVoladorMariposa::Stop()
 {

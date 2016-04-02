@@ -11,6 +11,7 @@
 #define STATE_CENTER		4
 #define PI 3.14159265
 
+using namespace std;
 class cVoladorMariposa : public cVolador
 {
 public:
@@ -20,6 +21,8 @@ public:
 	virtual void Stop();
 	virtual void Logic(int *map);
 	virtual void Draw(cData *dat);
+
+	virtual void dropPowerup(set<cPowerUp*>& powerups);
 
 private:
 	int speed;

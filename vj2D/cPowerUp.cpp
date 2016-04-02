@@ -28,7 +28,8 @@ void cPowerUp::Draw(cData * dat)
 	xf = xo + 0.25f;//1/8 da el 0.125
 	yf = 0.f; //xk la nave ocupa toda la altura d la textura
 
-	DrawRect(dat->GetID(IMG_SHIELD_POWER), xo, yo, xf, yf);
+	if (type == POWER_SHIELD) DrawRect(dat->GetID(IMG_SHIELD_POWER), xo, yo, xf, yf);
+	else if(type == BULLET_DOBLE) DrawRect(dat->GetID(IMG_BULLET_POWER), xo, yo, xf, yf);
 }
 
 void cPowerUp::setType(int type)

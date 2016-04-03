@@ -24,6 +24,7 @@ public:
 	virtual void Stop();
 	virtual void Logic(int *map);
 
+	virtual void NextFrame(int max);
 	virtual void setShootChance(int shootingChance);
 	virtual int getShootChance();
 

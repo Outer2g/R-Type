@@ -85,7 +85,7 @@ bool cGame::Init()
 		if (!res) return false;
 		res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
 		if (!res) return false;
-		res = Data.LoadImage(IMG_MARIP, "enemyEstatico.png", GL_RGBA);
+		res = Data.LoadImage(IMG_MARIP, "enemigoMariposa.png", GL_RGBA);
 		if (!res) return false;
 		res = Data.LoadImage(IMG_BULLET_VOLADOR, "bulletVolador.png", GL_RGBA);
 		if (!res) return false;
@@ -110,12 +110,13 @@ bool cGame::Init()
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
 		//[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
-		numRafagas = 4;
+		numRafagas = 5;
 		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
-		rafagasBichos[0] = { 10, 10, 0, 2 }; //primera rafaga
-		rafagasBichos[1] = { 15, 10, 1, 2 }; //3 rafaga
-		rafagasBichos[2] = { 30, 10, 0, 2 }; //2a rafaga
-		rafagasBichos[3] = { 50, 10, 0, 2 }; //3 rafaga
+		rafagasBichos[0] = { 25, 10, 0, 2 }; //primera rafaga
+		rafagasBichos[1] = { 33, 10, 1, 3 }; //3 rafaga
+		rafagasBichos[2] = { 45, 10, 0, 2 }; //2a rafaga
+		rafagasBichos[3] = { 55, 8, 1, 5 }; //3 rafaga
+		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga
 	}
 	else if (level != 1) {
 		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
@@ -508,7 +509,7 @@ inline void cGame::logicToAddMonsters() {
 			for (int i = 0; i < rafagasBichos[rafagaQueToca][3]; i++) {
 				bicho = new cVoladorMariposa();
 				bicho->SetWidthHeight(46, 50);
-				bicho->SetTile(rafagasBichos[rafagaQueToca][0] + i, rafagasBichos[rafagaQueToca][1]);
+				bicho->SetTile(rafagasBichos[rafagaQueToca][0] + i*2, rafagasBichos[rafagaQueToca][1]);
 				bichos.insert(bicho);
 			}
 			break;

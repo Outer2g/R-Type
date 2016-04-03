@@ -150,6 +150,17 @@ void cVolador::Logic(int *map)
 {
 }
 
+void cVolador::NextFrame(int max)
+{
+	delay++;
+	if (delay == FRAME_DELAY)
+	{
+		seq++;
+		seq %= max;
+		delay = 0;
+	}
+}
+
 void cVolador::setShootChance(int shootingChance)
 {
 }

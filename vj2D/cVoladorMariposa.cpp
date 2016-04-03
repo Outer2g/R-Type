@@ -18,14 +18,14 @@ cVoladorMariposa::~cVoladorMariposa() {}
 
 void cVoladorMariposa::Draw(cData *dat) {
 	float xo, yo, xf, yf;
-	xo = 0.1796875f * GetFrame(); //cada uno son 46*50 y la imagen es de 256*64
-	yo = 0.78125f;
-	NextFrame(4);
+	xo = 0.08984375f * GetFrame(); //cada uno son 46*50 y la imagen es de 256*64
+	yo = 0.71875f;
+	NextFrame(6);
 	//coord textur: xo,yo
-	xf = xo + 0.1796875f;//1/8 da el 0.125
+	xf = xo + 0.08984375f;//1/8 da el 0.125
 	yf = 0.f; //xk la nave ocupa toda la altura d la textura
 
-	DrawRect(dat->GetID(IMG_ESTATIC), xo, yo, xf, yf);
+	DrawRect(dat->GetID(IMG_MARIP), xo, yo, xf, yf);
 }
 
 void cVoladorMariposa::dropPowerup(set<cPowerUp*>& powerups)
@@ -34,6 +34,18 @@ void cVoladorMariposa::dropPowerup(set<cPowerUp*>& powerups)
 	powah->SetPosition(x,y);
 	powah->SetWidthHeight(32, 32);
 	powerups.insert(powah);
+}
+
+
+void cVoladorMariposa::NextFrame(int max)
+{
+	delay++;
+	if (delay == FRAME_DELAY-2)
+	{
+		seq++;
+		seq %= max;
+		delay = 0;
+	}
 }
 
 

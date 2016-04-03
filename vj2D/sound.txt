@@ -1,2 +1,6 @@
 openAl -> sonido
 fmod (sonido)
+
+
+http://glasnost.itcarlow.ie/~powerk/audio/AddFMODtoaproject.html
+http://stackoverflow.com/questions/8989826/simple-sound-play-in-fmod

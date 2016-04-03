@@ -119,13 +119,44 @@ bool cGame::Init()
 		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga
 	}
 	else if (level != 1) {
-		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
+		res = Data.LoadImage(IMG_PARED, "backTiles2.png", GL_RGBA);
 		if (!res) return false;
 		res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
 		if (!res) return false;
-		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
+		res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_MARIP, "enemigoMariposa.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_BULLET_VOLADOR, "bulletVolador.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_ENEMY_BOOM, "explosionBicho.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_SHIELD, "escudo.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_NAVE_BOOM, "explosionNave.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_SHIELD_POWER, "shieldPower.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_BULLET_POWER, "bulletPower.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_PLAYER_BULLETS, "proyectilesNave.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_PROPULSIONES, "propulsiones.png", GL_RGBA);
+		if (!res) return false;
+
+		res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
+		if (!res) return false;
+		Scene.tilesFila = 12; //porque el texture mide 512 y caben 16 tiles de 32
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
+									  //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
+		numRafagas = 5;
+		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
+		rafagasBichos[0] = { 25, 10, 0, 2 }; //primera rafaga
+		rafagasBichos[1] = { 33, 10, 1, 3 }; //3 rafaga
+		rafagasBichos[2] = { 45, 10, 0, 2 }; //2a rafaga
+		rafagasBichos[3] = { 55, 8, 1, 5 }; //3 rafaga
+		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga
 	}
 
 

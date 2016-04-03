@@ -73,7 +73,7 @@ bool cGame::Init()
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
 
-	int level = 1; //nos lo pasaran desde el menu de escoger partida
+	level = 2; //nos lo pasaran desde el menu de escoger partida
 
 	//Scene initialization
 	//res = Data.LoadImage(IMG_BLOCKS,"blocks.png",GL_RGBA);
@@ -121,7 +121,7 @@ bool cGame::Init()
 	else if (level != 1) {
 		res = Data.LoadImage(IMG_PARED, "backTiles2.png", GL_RGBA);
 		if (!res) return false;
-		res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
+		res = Data.LoadImage(IMG_BACK, "back2.png", GL_RGBA);
 		if (!res) return false;
 		res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
 		if (!res) return false;
@@ -146,9 +146,9 @@ bool cGame::Init()
 
 		res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
 		if (!res) return false;
-		Scene.tilesFila = 12; //porque el texture mide 512 y caben 16 tiles de 32
+		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
 		Scene.BACK_HEIGHT = 512;
-		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
+		Scene.BACK_WIDTH_DRAW = 2880; //tamano en horizontal dl background
 									  //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
 		numRafagas = 5;
 		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
@@ -288,7 +288,7 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 			int xBicho, yBicho; monster->GetPosition(&xBicho,&yBicho);
 			if (xBicho >= tx+TILE_SIZE) monster->shootBoi(pewpews, tx, ty);
 		}
-		monster->Logic(Scene.GetMap());
+		monster->Logic(Scene.GetMap(level));
 		for (cProyectil* pewpew : this->pewpews) {
 			//luz fuego destruccion al irse de la pantalla
 			int tx, ty; pewpew->GetPosition(&tx, &ty);
@@ -368,7 +368,7 @@ bool cGame::Process()
 	res = tratarKeys();
 	//Logica proyectiles + colisiones Proyectiles
 	for (cProyectil* pewpew : this->pewpews)
-		pewpew->Logic(Scene.GetMap());
+		pewpew->Logic(Scene.GetMap(level));
 	set<void*> toDelete;
 	monsterndBulletLogic(toDelete);
 	
@@ -416,26 +416,26 @@ bool cGame::Process()
 	int cameraTile = offsetCamera / TILE_SIZE;
 	int windowTile = (GAME_WIDTH + offsetCamera) / TILE_SIZE;
 	if (cameraTile >= playerTileX) {
-		Player.MoveRight(Scene.GetMap());
-		Player.MoveRight(Scene.GetMap());
-		Player.MoveHalfRight(Scene.GetMap());
+		Player.MoveRight(Scene.GetMap(level));
+		Player.MoveRight(Scene.GetMap(level));
+		Player.MoveHalfRight(Scene.GetMap(level));
 	}
 	else if (windowTile-2 <= playerTileX) {
-		Player.MoveLeft(Scene.GetMap());
+		Player.MoveLeft(Scene.GetMap(level));
 	}
-	else Player.Logic(Scene.GetMap());
+	else Player.Logic(Scene.GetMap(level));
 
 	//Logic player2
 	Player2.GetTile(&playerTileX, &playerTileY);
 	if (cameraTile >= playerTileX) {
-		Player2.MoveRight(Scene.GetMap());
-		Player2.MoveRight(Scene.GetMap());
-		Player2.MoveHalfRight(Scene.GetMap());
+		Player2.MoveRight(Scene.GetMap(level));
+		Player2.MoveRight(Scene.GetMap(level));
+		Player2.MoveHalfRight(Scene.GetMap(level));
 	}
 	else if (windowTile - 2 <= playerTileX) {
-		Player2.MoveLeft(Scene.GetMap());
+		Player2.MoveLeft(Scene.GetMap(level));
 	}
-	else Player2.Logic(Scene.GetMap());
+	else Player2.Logic(Scene.GetMap(level));
 	//si choca con enemigo hazte pupa por eficiencia, esta con los proyectiles
 
 	return res;
@@ -481,11 +481,11 @@ inline bool cGame::tratarKeys()
 	/////////////////////////////////////////////
 	//Process Input
 	if (sKeys[27])	res = false;
-	if (sKeys[GLUT_KEY_UP])			Player.Jump(Scene.GetMap());
-	else if (sKeys[GLUT_KEY_DOWN])	Player.MoveDown(Scene.GetMap());
+	if (sKeys[GLUT_KEY_UP])			Player.Jump(Scene.GetMap(level));
+	else if (sKeys[GLUT_KEY_DOWN])	Player.MoveDown(Scene.GetMap(level));
 	else Player.setMoving(false);
-	if (sKeys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap());
-	else if (sKeys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap());
+	if (sKeys[GLUT_KEY_LEFT])			Player.MoveLeft(Scene.GetMap(level));
+	else if (sKeys[GLUT_KEY_RIGHT])	Player.MoveRight(Scene.GetMap(level));
 	//Si no hay nada aparetado, para el player
 	if (!sKeys[GLUT_KEY_UP]
 		&& !sKeys[GLUT_KEY_DOWN]
@@ -496,11 +496,11 @@ inline bool cGame::tratarKeys()
 		Player.shoot(this->pewpews);
 	//Player 2 controls
 	//w = 119, a = 97, s = 115, d= 100, D =68, q= 113
-	if (keys[KEY_W])			Player2.Jump(Scene.GetMap());
-	else if (keys[KEY_S])	Player2.MoveDown(Scene.GetMap());
+	if (keys[KEY_W])			Player2.Jump(Scene.GetMap(level));
+	else if (keys[KEY_S])	Player2.MoveDown(Scene.GetMap(level));
 	else Player2.setMoving(false);
-	if (keys[KEY_A])			Player2.MoveLeft(Scene.GetMap());
-	else if (keys[KEY_D])	Player2.MoveRight(Scene.GetMap());
+	if (keys[KEY_A])			Player2.MoveLeft(Scene.GetMap(level));
+	else if (keys[KEY_D])	Player2.MoveRight(Scene.GetMap(level));
 	//Si no hay nada aparetado, para el player
 	if (!keys[KEY_W]
 		&& !keys[KEY_S]

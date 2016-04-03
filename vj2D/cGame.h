@@ -65,4 +65,5 @@ private:
 	set<cBoom*> explosiones;
 	int rafagaQueToca = 0, numRafagas;
 	double godModeTimer,godModeTimer2,outShieldTimer,outShieldTimer2;
+	int level;
 };

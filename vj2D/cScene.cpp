@@ -26,6 +26,8 @@ bool cScene::LoadLevel(int level)
 	fd=fopen(file,"r");
 	if(fd==NULL) return false;
 
+	int width = (level == 1) ? SCENE_WIDTH : SCENE_WIDTH_2;
+
 	id_DL=glGenLists(1);
 	glNewList(id_DL,GL_COMPILE);
 		glBegin(GL_QUADS);
@@ -35,25 +37,28 @@ bool cScene::LoadLevel(int level)
 				px=SCENE_Xo;
 				py=SCENE_Yo+(j*TILE_SIZE);
 
-				for(i=0;i<SCENE_WIDTH;i++)
+				for(i=0;i<width;i++)
 				{
 					fscanf(fd,"%d",&tile);
 					if (tile == 0)
 					{
-						map[(j*SCENE_WIDTH)+i]=0;
+						if (level == 1) map[(j*width)+i]=0;
+						else map2[(j*width) + i] = 0;
 					}
 					else
 					{
 						//PODRIAMOS COMPROBAR ALGUNA TILE EN CONCRETO SI QUEREMOS QUE CIERTOS ID TENGAN ANIMACION
 						//TODO
 						//Tiles = 1,2,3,...
-						map[(j*SCENE_WIDTH)+i] = tile;
-						coordy_tile = (tile - 1) / tilesFila * 0.25f;
+						float divY = (level == 1) ? 0.25f : 0.125f;
+						if (level == 1) map[(j*width)+i] = tile;
+						else map2[(j*width) + i] = tile;
+						coordy_tile = (tile - 1) / tilesFila * divY;
 						
 						coordx_tile = ((tile-1) % (tilesFila)) * (float)(1.0f / (float)tilesFila);
 
-						glTexCoord2f(coordx_tile       ,coordy_tile+0.25f);	glVertex2i(px           ,py           );
-						glTexCoord2f(coordx_tile+ (1.0f/(float)tilesFila),coordy_tile+0.25f);	glVertex2i(px+BLOCK_SIZE,py           );
+						glTexCoord2f(coordx_tile       ,coordy_tile+ divY);	glVertex2i(px           ,py           );
+						glTexCoord2f(coordx_tile+ (1.0f/(float)tilesFila),coordy_tile+ divY);	glVertex2i(px+BLOCK_SIZE,py           );
 						glTexCoord2f(coordx_tile+ (1.0f / (float)tilesFila),coordy_tile       );	glVertex2i(px+BLOCK_SIZE,py+BLOCK_SIZE);
 						glTexCoord2f(coordx_tile       ,coordy_tile       );	glVertex2i(px           ,py+BLOCK_SIZE);
 					}
@@ -91,7 +96,7 @@ void cScene::DrawBackground(int tex_id)
 	glDisable(GL_TEXTURE_2D);
 }
 
-int* cScene::GetMap()
+int* cScene::GetMap(int level)
 {
-	return map;
+	return (level == 1) ? map : map2;
 }

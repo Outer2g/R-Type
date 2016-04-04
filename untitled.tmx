@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="90" height="16" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="backTiles2" tilewidth="32" tileheight="32">
+  <image source="vj2D/backTiles2.png" width="512" height="256"/>
+ </tileset>
+ <layer name="Capa de Patrones 1" width="90" height="16">
+  <data encoding="base64" compression="zlib">
+   eJztmMlOw0AQRDssCYRcWA+BCzuCKxCu7OuFHUz+/zuoVqZFqzUOM5EdR7ZLepI9U65MxiXZSYOIpsA0mAGzoAlaYA7Mm+MYb2OI314j7IMDx54592VJRhssgI6HppkXtVOu02Mh+SEsgiWwDFbAKlgjv2K8o/hDtQN2aXAftNbBhqHjPrOr5kVdMy6keX35IfAaNsEW2B6yflGMdxR/FrKd4++Zxb1Nyw+lbLKdkz7nlR/a5zJKdy7rPvvyq9hnlu6cPE/zyg+lVv56LHoBFRDv8VPRi6iAfkC/6EVUQLzHdZ/zV5/qPo9DdZ/Ho9g+H0d6T8Bp1IrKqdg+X/0zfw4uwKXzXoMbcAvuwD14oGzfcyY9j8W/UXivn8ELeKVBB/W5Pn7zeLmvPXDm8b6DD/AJvsA3SOjvPecQHLmxRM3J/4+J8yTKa5n0PMlifgF4iDTy
+  </data>
+ </layer>
+</map>

@@ -4,7 +4,7 @@
 
 #define SCENE_Xo		0//(2*TILE_SIZE)
 #define SCENE_Yo		0//TILE_SIZE
-#define SCENE_WIDTH		90 //640 width / 64 tamano //TODO ACTUALIZAR SIZE
+#define SCENE_WIDTH		80 //640 width / 64 tamano //TODO ACTUALIZAR SIZE
 #define SCENE_WIDTH_2	90 //640 width / 64 tamano //TODO ACTUALIZAR SIZE
 #define SCENE_HEIGHT	16
 

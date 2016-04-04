@@ -1,0 +1,9 @@
+explosiones:
+33*30
+
+boss: 48x57 cada uno
+ pero la imagen en si es multiplo de 2 (128 * 64)
+
+escudo: 64*32 pero has de indicarle como si tuviese en plan 68 * 36 para k ocupe mas k la nave
+
+Efecto cargar nave: 12*12 cada efecto, la imagen son 32*16

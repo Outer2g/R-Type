@@ -73,7 +73,7 @@ bool cGame::Init()
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
 
-	level = 2; //nos lo pasaran desde el menu de escoger partida
+	level = 1; //nos lo pasaran desde el menu de escoger partida
 
 	//Scene initialization
 	//res = Data.LoadImage(IMG_BLOCKS,"blocks.png",GL_RGBA);
@@ -538,7 +538,7 @@ inline void cGame::logicToAddMonsters() {
 			break;
 		case 1:
 			for (int i = 0; i < rafagasBichos[rafagaQueToca][3]; i++) {
-				bicho = new cVoladorMariposa();
+				bicho = new cVoladorMariposa(i);
 				bicho->SetWidthHeight(46, 50);
 				bicho->SetTile(rafagasBichos[rafagaQueToca][0] + i*2, rafagasBichos[rafagaQueToca][1]);
 				bichos.insert(bicho);

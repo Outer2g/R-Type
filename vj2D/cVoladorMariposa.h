@@ -16,6 +16,7 @@ class cVoladorMariposa : public cVolador
 {
 public:
 	cVoladorMariposa();
+	cVoladorMariposa(int pos);
 	~cVoladorMariposa();
 
 	virtual void Stop();

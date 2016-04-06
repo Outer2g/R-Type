@@ -121,4 +121,21 @@ inline void cProyectil::DrawRayo(cData * dat)
 	xf = xo + 0.21875f;//1/8 da el 0.125
 	yf = yo + 0.09375; //xk la nave ocupa toda la altura d la textura
 	DrawRect(dat->GetID(IMG_BOSS_RAYO), xo, yo, xf, yf);
+	if (w >= 128) DrawCirculo(dat, x - 128);
+}
+
+void cProyectil::DrawCirculo(cData * dat, int posx)
+{
+	int xaux = x; 
+	x -= posx;
+	float xo, yo, xf, yf;
+	xo = 0.375f; //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
+	yo = 0.f ;
+	if (h < 22 && GetFrame() == 0) ++h;
+	w += 10;
+	//coord textur: xo,yo
+	xf = xo + 0.21875f;//1/8 da el 0.125
+	yf = yo + 0.09375; //xk la nave ocupa toda la altura d la textura
+	DrawRect(dat->GetID(IMG_BOSS_RAYO), xo, yo, xf, yf);
+	x = xaux;
 }

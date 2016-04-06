@@ -253,14 +253,15 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 		for (cProyectil* pewpew : this->pewpews) {
 			//luz fuego destruccion al irse de la pantalla
 			int tx, ty; pewpew->GetPosition(&tx, &ty);
-			if (pewpew->getType() == RAYO_BOSS) {
+			bool b = pewpew->getType() == RAYO_BOSS;
+			if (b) {
 				double t1 = glutGet(GLUT_ELAPSED_TIME);
 				if (t1 - boss->getrayoShotTimer() > 20 * boss->getDelayRayo()) {
 					toDelete.insert(pewpew);
 
 				}
 			}
-			else if (tx < offsetCamera || tx > GAME_WIDTH + offsetCamera) toDelete.insert(pewpew);
+			if (!b && (tx < offsetCamera || tx > GAME_WIDTH + offsetCamera)) toDelete.insert(pewpew);
 			else if (pewpew->getId() != 3 && pewpew->CollidesBicho(monster)) {
 				pewpew->SetPosition(tx+10,ty);
 				int w, h; pewpew->GetWidthHeight(&w, &h);
@@ -280,12 +281,12 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 			//si choca con una de las dos naves
 			else if (pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player)) {
 				//si proyectil enemigo choca con nave 1, se le resta vida, entra en godmode
-				toDelete.insert(pewpew);
+				if (!b) toDelete.insert(pewpew);
 				yerDead(&Player, NAVE_BOOM);
 				enterGodMode(&Player);
 			}
 			else if (pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player2)) {
-				toDelete.insert(pewpew);
+				if (!b) toDelete.insert(pewpew);
 				yerDead(&Player2, NAVE_BOOM);
 				enterGodMode(&Player2);
 			}

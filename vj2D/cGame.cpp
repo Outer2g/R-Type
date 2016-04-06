@@ -73,43 +73,18 @@ bool cGame::Init()
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
 
-	level = 1; //nos lo pasaran desde el menu de escoger partida
+	level = 2; //nos lo pasaran desde el menu de escoger partida
 
 	//Scene initialization
 	//res = Data.LoadImage(IMG_BLOCKS,"blocks.png",GL_RGBA);
 	//if(!res) return false;
 	if (level == 1) {
-		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_MARIP, "enemigoMariposa.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_BULLET_VOLADOR, "bulletVolador.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_ENEMY_BOOM, "explosionBicho.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_SHIELD, "escudo.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_NAVE_BOOM, "explosionNave.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_SHIELD_POWER, "shieldPower.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_BULLET_POWER, "bulletPower.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_PLAYER_BULLETS, "proyectilesNave.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_PROPULSIONES, "propulsiones.png", GL_RGBA);
-		if (!res) return false;
-
-		res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
+		res =  loadResources(1);
 		if (!res) return false;
 		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
-		//[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
+		//[numRafaga][0-3], 0 = tile x, 1 = y, 2 = tipo, 3 = numBichos
 		numRafagas = 5;
 		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
 		rafagasBichos[0] = { 25, 10, 0, 2 }; //primera rafaga
@@ -119,44 +94,20 @@ bool cGame::Init()
 		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga
 	}
 	else if (level != 1) {
-		res = Data.LoadImage(IMG_PARED, "backTiles2.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_BACK, "back2.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_MARIP, "enemigoMariposa.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_BULLET_VOLADOR, "bulletVolador.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_ENEMY_BOOM, "explosionBicho.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_SHIELD, "escudo.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_NAVE_BOOM, "explosionNave.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_SHIELD_POWER, "shieldPower.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_BULLET_POWER, "bulletPower.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_PLAYER_BULLETS, "proyectilesNave.png", GL_RGBA);
-		if (!res) return false;
-		res = Data.LoadImage(IMG_PROPULSIONES, "propulsiones.png", GL_RGBA);
-		if (!res) return false;
-
-		res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
+		res = loadResources(2);
 		if (!res) return false;
 		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2880; //tamano en horizontal dl background
-									  //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos
-		numRafagas = 5;
+									  //[numRafaga][0-3], 0 = tile x, 1 = y, 2 = tipo, 3 = numBichos
+		numRafagas = 1;
 		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
-		rafagasBichos[0] = { 25, 10, 0, 2 }; //primera rafaga
+		/*rafagasBichos[0] = { 25, 10, 0, 2 }; //primera rafaga
 		rafagasBichos[1] = { 33, 10, 1, 3 }; //3 rafaga
 		rafagasBichos[2] = { 45, 10, 0, 2 }; //2a rafaga
 		rafagasBichos[3] = { 55, 8, 1, 5 }; //3 rafaga
-		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga
+		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga*/
+		rafagasBichos[0] = { 10, 10, 2,1 }; 
 	}
 
 
@@ -333,6 +284,40 @@ inline void cGame::yerDead(cBicho * bicho, int type)
 	boom->SetPosition(tx-7, ty); // offset of the sprite
 	boom->SetWidthHeight(w+10,h+5);
 	explosiones.insert(boom);
+}
+
+inline bool cGame::loadResources(int level)
+{
+	bool res = true;
+	res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_MARIP, "enemigoMariposa.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_BULLET_VOLADOR, "bulletVolador.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_ENEMY_BOOM, "explosionBicho.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_SHIELD, "escudo.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_NAVE_BOOM, "explosionNave.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_SHIELD_POWER, "shieldPower.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_BULLET_POWER, "bulletPower.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_PLAYER_BULLETS, "proyectilesNave.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_PROPULSIONES, "propulsiones.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_BOSS_ENTITY, "boss1.png", GL_RGBA);
+	if (!res) return false;
+
+	res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
+	if (!res) return false;
 }
 
 
@@ -544,6 +529,11 @@ inline void cGame::logicToAddMonsters() {
 				bichos.insert(bicho);
 			}
 			break;
+		case 2:
+			bicho = new cBoss();
+			bicho->SetWidthHeight(48, 57);
+			bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
+			bichos.insert(bicho);
 		}
 
 		++rafagaQueToca;

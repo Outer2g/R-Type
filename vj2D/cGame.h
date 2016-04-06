@@ -7,6 +7,7 @@
 #include "cEnemigo.h"
 #include "cPowerUp.h"
 #include "cBoom.h"
+#include "cBoss.h"
 #include <vector>
 #include <set>
 
@@ -51,6 +52,7 @@ private:
 	void modificaScore(int id, int amount);
 	void monsterndBulletLogic(set<void*>& toDelete);
 	void yerDead(cBicho* bicho,int type = ENEMY_BOOM);
+	bool loadResources(int level);
 	unsigned char keys[256];
 	unsigned char sKeys[256]; //109 se supone
 	cScene Scene;

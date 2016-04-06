@@ -6,6 +6,7 @@
 #define BULLET_SIMPLE 1
 #define BULLET_DOBLE 2
 #define POWER_SHIELD 5
+#define RAYO_BOSS 10
 class cProyectil :	public cBicho
 {
 public:
@@ -25,6 +26,7 @@ public:
 private:
 	void DrawPEnemigo(cData * dat);
 	void DrawPNave(cData* dat);
+	void DrawRayo(cData* dat);
 	int dmg;
 	int speedX, speedY;
 	// id == 1 : player1; id == 2 : player2; id ==3 :enemy

@@ -117,7 +117,7 @@ bool cGame::Init()
 		rafagasBichos[2] = { 45, 10, 0, 2 }; //2a rafaga
 		rafagasBichos[3] = { 55, 8, 1, 5 }; //3 rafaga
 		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga*/
-		rafagasBichos[0] = { 10, 10, 2,1 }; 
+		rafagasBichos[0] = { 10, 10, 2, 1 }; 
 	}
 
 
@@ -156,9 +156,9 @@ bool cGame::Loop()
 	double t1, t2;
 
 	t1 = glutGet(GLUT_ELAPSED_TIME);
-	if (offsetCamera < Scene.BACK_WIDTH_DRAW - GAME_WIDTH) ++offsetCamera;
-	else { Player.endLevel = true; Player2.endLevel = true; }
-	
+	//if (offsetCamera < Scene.BACK_WIDTH_DRAW - GAME_WIDTH) ++offsetCamera;
+	//else { Player.endLevel = true; Player2.endLevel = true; }
+	Player.endLevel = true; Player2.endLevel = true;
 	res = Process();
 	if(res) Render();
 
@@ -255,6 +255,10 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 			int tx, ty; pewpew->GetPosition(&tx, &ty);
 			if (tx < offsetCamera || tx > GAME_WIDTH + offsetCamera) toDelete.insert(pewpew);
 			else if (pewpew->getId() != 3 && pewpew->CollidesBicho(monster)) {
+				pewpew->SetPosition(tx+10,ty);
+				int w, h; pewpew->GetWidthHeight(&w, &h);
+				pewpew->SetWidthHeight(w + 8, h + 8);
+				yerDead(pewpew);
 				//luz fuego destruccion si un proyectil de nave choca con un monstruo
 				toDelete.insert(pewpew);
 				monster->dealDamage(pewpew->getDamage());
@@ -320,6 +324,8 @@ inline bool cGame::loadResources(int level)
 	res = Data.LoadImage(IMG_PROPULSIONES, "propulsiones.png", GL_RGBA);
 	if (!res) return false;
 	res = Data.LoadImage(IMG_BOSS_ENTITY, "boss1.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(IMG_BOSS_RAYO, "balasBoss.png", GL_RGBA);
 	if (!res) return false;
 
 	res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
@@ -537,8 +543,8 @@ inline void cGame::logicToAddMonsters() {
 			}
 			break;
 		case 2:
-			bicho = new cBoss();
-			bicho->SetWidthHeight(48, 57);
+			bicho = new cBoss(pewpews);
+			bicho->SetWidthHeight(48*2, 57*2);
 			bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
 			bichos.insert(bicho);
 		}

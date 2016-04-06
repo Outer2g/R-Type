@@ -121,21 +121,63 @@ inline void cProyectil::DrawRayo(cData * dat)
 	xf = xo + 0.21875f;//1/8 da el 0.125
 	yf = yo + 0.09375; //xk la nave ocupa toda la altura d la textura
 	DrawRect(dat->GetID(IMG_BOSS_RAYO), xo, yo, xf, yf);
-	if (w >= 128) DrawCirculo(dat, x - 128);
+	if (w >= 32) DrawCirculo1(dat, x+w-32);
+	if (w >= 64) DrawCirculo2(dat, x + w - 64);
+	if (w >= 96) DrawCirculo3(dat, x + w - 96);
 }
 
-void cProyectil::DrawCirculo(cData * dat, int posx)
+inline void cProyectil::DrawCirculo1(cData * dat, int posx)
 {
-	int xaux = x; 
-	x -= posx;
+	int xaux = x,waux = w,haux = h,yaux = y; 
+	w = 20;
+	y -= h / 2;
+	h = 40;
+
+
+	x = posx;
 	float xo, yo, xf, yf;
-	xo = 0.375f; //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
-	yo = 0.f ;
+	xo = 0.25f; //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
+	yo = 0.15625f;
 	if (h < 22 && GetFrame() == 0) ++h;
-	w += 10;
 	//coord textur: xo,yo
-	xf = xo + 0.21875f;//1/8 da el 0.125
-	yf = yo + 0.09375; //xk la nave ocupa toda la altura d la textura
+	xf = 0.359375f;//1/8 da el 0.125
+	yf = 0.53125f; //xk la nave ocupa toda la altura d la textura
 	DrawRect(dat->GetID(IMG_BOSS_RAYO), xo, yo, xf, yf);
-	x = xaux;
+	x = xaux, w = waux, h = haux, y = yaux;
+}
+
+void cProyectil::DrawCirculo2(cData * dat, int posx)
+{
+	int xaux = x, waux = w, haux = h, yaux = y;
+	w = 20;
+	y = y - h +3 ;
+	h = 60;
+	x = posx;
+	float xo, yo, xf, yf;
+	xo = 0.125f; //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
+	yo = 0.09375f;
+	if (h < 22 && GetFrame() == 0) ++h;
+	//coord textur: xo,yo
+	xf = 0.25f;//1/8 da el 0.125
+	yf = 0.578125f; //xk la nave ocupa toda la altura d la textura
+	DrawRect(dat->GetID(IMG_BOSS_RAYO), xo, yo, xf, yf);
+	x = xaux, w = waux, h = haux, y = yaux;
+}
+
+void cProyectil::DrawCirculo3(cData * dat, int posx)
+{
+	int xaux = x, waux = w, haux = h, yaux = y;
+	w = 20;
+	y = y - h -8;
+	h = 80;
+	x = posx;
+	float xo, yo, xf, yf;
+	xo = 0.0f; //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
+	yo = 0.0f;
+	if (h < 22 && GetFrame() == 0) ++h;
+	//coord textur: xo,yo
+	xf = 0.125f;//1/8 da el 0.125
+	yf = 0.6875f; //xk la nave ocupa toda la altura d la textura
+	DrawRect(dat->GetID(IMG_BOSS_RAYO), xo, yo, xf, yf);
+	x = xaux, w = waux, h = haux, y = yaux;
 }

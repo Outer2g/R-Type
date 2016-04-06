@@ -29,7 +29,9 @@ private:
 	void DrawPEnemigo(cData * dat);
 	void DrawPNave(cData* dat);
 	void DrawRayo(cData* dat);
-	void DrawCirculo(cData* dat, int posx);
+	void DrawCirculo1(cData* dat, int posx);
+	void DrawCirculo2(cData* dat, int posx);
+	void DrawCirculo3(cData* dat, int posx);
 	int dmg;
 	int speedX, speedY;
 	// id == 1 : player1; id == 2 : player2; id ==3 :enemy

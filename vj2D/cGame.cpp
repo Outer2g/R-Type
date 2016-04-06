@@ -79,6 +79,11 @@ bool cGame::Init()
 	//res = Data.LoadImage(IMG_BLOCKS,"blocks.png",GL_RGBA);
 	//if(!res) return false;
 	if (level == 1) {
+		bool res = true;
+		res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
+		if (!res) return false;
 		res =  loadResources(1);
 		if (!res) return false;
 		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
@@ -94,6 +99,11 @@ bool cGame::Init()
 		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga
 	}
 	else if (level != 1) {
+		bool res = true;
+		res = Data.LoadImage(IMG_PARED, "backTiles2.png", GL_RGBA);
+		if (!res) return false;
+		res = Data.LoadImage(IMG_BACK, "back2.png", GL_RGBA);
+		if (!res) return false;
 		res = loadResources(2);
 		if (!res) return false;
 		Scene.tilesFila = 16; //porque el texture mide 512 y caben 16 tiles de 32
@@ -289,10 +299,6 @@ inline void cGame::yerDead(cBicho * bicho, int type)
 inline bool cGame::loadResources(int level)
 {
 	bool res = true;
-	res = Data.LoadImage(IMG_PARED, "backTiles1.png", GL_RGBA);
-	if (!res) return false;
-	res = Data.LoadImage(IMG_BACK, "back1.png", GL_RGBA);
-	if (!res) return false;
 	res = Data.LoadImage(IMG_ESTATIC, "enemyEstatico.png", GL_RGBA);
 	if (!res) return false;
 	res = Data.LoadImage(IMG_MARIP, "enemigoMariposa.png", GL_RGBA);
@@ -318,6 +324,7 @@ inline bool cGame::loadResources(int level)
 
 	res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
 	if (!res) return false;
+	return res;
 }
 
 

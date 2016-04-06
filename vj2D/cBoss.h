@@ -20,12 +20,16 @@ public:
 	void shootSomething(set<cProyectil*>& pewpews, cPlayer* Player);
 
 	virtual void Logic(int *map);
+
+	double getrayoShotTimer();
+	int getDelayRayo();
 	
 private:
 	void moveToPosition(int x, int y);
 	set<cProyectil*> * pewpews;
-	double stateTimer; //lastShoot viene de cEnemigo
-	int delayState1, delayState2;
+	cProyectil* rayo;
+	double stateTimer,rayoShotTimer; //lastShoot viene de cEnemigo
+	int delayState1, delayState2,delayRayo;
 	bool rayoShot;
 };
 

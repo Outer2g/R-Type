@@ -6,6 +6,7 @@ cBoss::cBoss()
 {
 	delayState1 = 100;
 	delayState2 = 1000;
+	delayRayo = 150;
 	health = 10000;//10ks
 	srand(time(0));
 	state = STATE_MOVING_RAYO;
@@ -15,6 +16,7 @@ cBoss::cBoss()
 cBoss::cBoss(set<cProyectil*> & pewpews)
 {
 	delayState1 = 100;
+	delayRayo = 150;
 	rayoShot = false;
 	delayState2 = 1000;
 	health = 10000;//10ks
@@ -53,9 +55,10 @@ void cBoss::shootRayo()
 {
 	//Rayo magico de la muerte
 	cProyectil* pewpew = new cProyectil(3, RAYO_BOSS);
-	pewpew->SetWidthHeight(28, 16);
+	pewpew->SetWidthHeight(76, 12);
 	pewpew->SetPosition(x-w/2, y+h/2);
 	pewpew->setSpeed(-STEP_LENGTH, 0);
+	rayo = pewpew;
 	pewpews->insert(pewpew);
 }
 
@@ -71,9 +74,23 @@ void cBoss::Logic(int * map)
 		int scene_height = SCENE_HEIGHT * TILE_SIZE;
 		int scene_width = SCENE_WIDTH * TILE_SIZE;
 		moveToPosition(x+20, scene_height / 4 );
-		if (!rayoShot) { shootRayo(); rayoShot = true; }
+		if (!rayoShot) { shootRayo(); rayoShot = true; rayoShotTimer = glutGet(GLUT_ELAPSED_TIME); }
 		if (t1 - stateTimer > delayState1 * 20) state = STATE_STACIONARY;
 	}
+	if (rayo != NULL) {
+		int wh, hh; rayo->GetWidthHeight(&wh, &hh);
+		rayo->SetPosition(x - wh, y + h / 2);
+	}
+}
+
+double cBoss::getrayoShotTimer()
+{
+	return rayoShotTimer;
+}
+
+int cBoss::getDelayRayo()
+{
+	return delayRayo;
 }
 
 void cBoss::moveToPosition(int x, int y)

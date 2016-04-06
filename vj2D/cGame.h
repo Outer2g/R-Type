@@ -62,6 +62,7 @@ private:
 	long int offsetCamera;
 	//vector<cBicho*> bichos;
 	set<cEnemigo*> bichos;
+	cBoss* boss;
 	set<cProyectil*>  pewpews;
 	set<cPowerUp*> powerUps;
 	set<cBoom*> explosiones;

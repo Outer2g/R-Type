@@ -42,9 +42,6 @@ void cProyectil::Logic(int * map)
 
 void cProyectil::Draw(cData * dat)
 {
-	w = 76;
-	h = 6;
-	speedX = -1;
 	if (id == 3 && tipo != RAYO_BOSS) DrawPEnemigo(dat);
 	else if (tipo == RAYO_BOSS) DrawRayo(dat);
 	else DrawPNave(dat);
@@ -77,6 +74,16 @@ int cProyectil::getDamage()
 	return this->dmg;
 }
 
+int cProyectil::getType()
+{
+	return tipo;
+}
+
+void cProyectil::setType(int tipo)
+{
+	this->tipo = tipo;
+}
+
 inline void cProyectil::DrawPEnemigo(cData * dat)
 {
 	float xo, yo, xf, yf;
@@ -107,7 +114,8 @@ inline void cProyectil::DrawRayo(cData * dat)
 	float xo, yo, xf, yf;
 	xo = 0.375f; //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
 	yo = 0.f + GetFrame()* 0.09375f;
-	
+	if (h < 22 && GetFrame() == 0) ++h;
+	w += 10;
 	NextFrame(2);
 	//coord textur: xo,yo
 	xf = xo + 0.21875f;//1/8 da el 0.125

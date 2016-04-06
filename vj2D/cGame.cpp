@@ -253,7 +253,14 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 		for (cProyectil* pewpew : this->pewpews) {
 			//luz fuego destruccion al irse de la pantalla
 			int tx, ty; pewpew->GetPosition(&tx, &ty);
-			if (tx < offsetCamera || tx > GAME_WIDTH + offsetCamera) toDelete.insert(pewpew);
+			if (pewpew->getType() == RAYO_BOSS) {
+				double t1 = glutGet(GLUT_ELAPSED_TIME);
+				if (t1 - boss->getrayoShotTimer() > 20 * boss->getDelayRayo()) {
+					toDelete.insert(pewpew);
+
+				}
+			}
+			else if (tx < offsetCamera || tx > GAME_WIDTH + offsetCamera) toDelete.insert(pewpew);
 			else if (pewpew->getId() != 3 && pewpew->CollidesBicho(monster)) {
 				pewpew->SetPosition(tx+10,ty);
 				int w, h; pewpew->GetWidthHeight(&w, &h);
@@ -454,12 +461,12 @@ void cGame::Render()
 
 	Scene.DrawBackground(Data.GetID(IMG_BACK));
 	Scene.Draw(Data.GetID(IMG_PARED));
+	//Proyectiles
+	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
 	for (cEnemigo* b : bichos) b->Draw(&Data);
 	//bichos[0]->Draw(&Data);
 	Player.Draw(&Data);
 	Player2.Draw(&Data);
-	//Proyectiles
-	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
 	//PowerUps
 	for (cPowerUp* powah : this->powerUps) powah->Draw(&Data);
 	render_info(Player.getScore(), Player2.getScore(), offsetCamera);
@@ -543,7 +550,8 @@ inline void cGame::logicToAddMonsters() {
 			}
 			break;
 		case 2:
-			bicho = new cBoss(pewpews);
+			boss = new cBoss(pewpews);
+			bicho = boss;
 			bicho->SetWidthHeight(48*2, 57*2);
 			bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);
 			bichos.insert(bicho);

@@ -23,6 +23,8 @@ public:
 	void setId(int id);
 	int getId();
 	int getDamage();
+	int getType();
+	void setType(int tipo);
 private:
 	void DrawPEnemigo(cData * dat);
 	void DrawPNave(cData* dat);

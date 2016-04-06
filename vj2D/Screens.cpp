@@ -4,6 +4,7 @@
 
 Screens::Screens()
 {
+	screenToRender = 3;//0 = main, 1 = instr, 2 = credits, 3 = game, 4 = gameover
 }
 
 
@@ -22,37 +23,27 @@ bool Screens::Init()
 
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
-
+	
 	bool res = true;
-	res = Data.LoadImage(IMG_BACK_MAIN, "startBack.png", GL_RGBA);
+	res = Data.LoadImage(IMG_BACK_MAIN, "startBackground.png", GL_RGBA);
 	if (!res) return false;
-}
-
-
-bool Screens::Loop()
-{
-	bool res = true;
-	double t1, t2;
-
-	t1 = glutGet(GLUT_ELAPSED_TIME);
-	//if (offsetCamera < Scene.BACK_WIDTH_DRAW - GAME_WIDTH) ++offsetCamera;
-	//else { Player.endLevel = true; Player2.endLevel = true; }
-	res = Process();
-	if (res) Render();
-
-	//1000/20 = 50fps
-	do {
-		t2 = glutGet(GLUT_ELAPSED_TIME);
-	} while (t2 - t1 < 20);
-
+	res = Data.LoadImage(BT_PLAY1, "btnPlay1.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(BT_PLAY2, "btnPlay2.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(BT_HELP, "btnHelp.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(BT_CREDITS, "credits.png", GL_RGBA);
+	if (!res) return false;
 	return res;
 }
+
+
 
 
 bool Screens::Process()
 {
 	bool res = true;
-	res = tratarKeys();
 	return res;
 }
 
@@ -64,42 +55,32 @@ void Screens::Render()
 	glOrtho(0, GAME_WIDTH, 0, GAME_HEIGHT, 0, 1);
 	glMatrixMode(GL_MODELVIEW);//no s para que sirve pero no hace falta
 
-	//Scene.DrawBackground(Data.GetID(IMG_BACK));
-	//Scene.Draw(Data.GetID(IMG_PARED));
+	Scene.DrawBackgroundNormal(Data.GetID(IMG_BACK_MAIN));
+	if (screenToRender == 0) {
+		DrawRect(BT_PLAY1, 250, 380);
+		DrawRect(BT_PLAY2, 250, 320);
+		DrawRect(BT_HELP, 250, 260);
+		DrawRect(BT_CREDITS, 250, 200);
+	}
 	//render_info();
 	glutSwapBuffers();
 }
 
 
-inline bool Screens::tratarKeys()
+void Screens::DrawRect(int tex_id, int xo, int yo)
 {
-	bool res = true;
 
-	return res;
-}
+	glEnable(GL_TEXTURE_2D);
 
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);	glVertex2i(xo,yo);
+	glTexCoord2f(0, 1);	glVertex2i(xo , yo-47);
+	glTexCoord2f(1, 1);	glVertex2i(xo+144, yo-47);
+	glTexCoord2f(1, 0);	glVertex2i(xo+144, yo );
+	glEnd();
 
-//Input
-void Screens::ReadKeyboard(unsigned char key, int x, int y, bool press)
-{
-	keys[key] = press;
-}
-
-
-
-
-
-void Screens::ReadKeySpecialBoard(unsigned char key, int x, int y, bool press)
-{
-	sKeys[key] = press;
-}
-
-
-
-
-
-void Screens::ReadMouse(int button, int state, int x, int y)
-{
+	glDisable(GL_TEXTURE_2D);
 }
 
 

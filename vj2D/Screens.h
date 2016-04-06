@@ -1,6 +1,10 @@
 #pragma once
 #include "cData.h"
-#include "cGame.h"
+#include <string>
+#include "cScene.h"
+
+#define GAME_WIDTH	640
+#define GAME_HEIGHT 512
 
 
 class Screens
@@ -10,19 +14,15 @@ public:
 	~Screens();
 
 	bool Init();
-	bool Loop();
 	//Process
 	bool Process();
 	//Output
 	void Render();
-	void ReadKeyboard(unsigned char key, int x, int y, bool press);
-	void ReadKeySpecialBoard(unsigned char key, int x, int y, bool press);
-	void ReadMouse(int button, int state, int x, int y);
+	int screenToRender;
+	void DrawRect(int tex_id, int xo, int yo);
 
 private:
 	cData Data;
-	bool tratarKeys();
-	unsigned char keys[256];
-	unsigned char sKeys[256]; //109 se supone
+	cScene Scene;
 };
 

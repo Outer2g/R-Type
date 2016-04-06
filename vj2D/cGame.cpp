@@ -58,6 +58,7 @@ inline void render_info(int p1, int p2, int offset) //dberiamos pasarle el strin
 
 bool cGame::Init()
 {
+	
 	bool res=true;
 	offsetCamera = 0;
 	rafagaQueToca = 0;
@@ -72,7 +73,7 @@ bool cGame::Init()
 	
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
-
+	
 	level = 2; //nos lo pasaran desde el menu de escoger partida
 
 	//Scene initialization
@@ -139,8 +140,9 @@ bool cGame::Init()
 	Player2.SetTile(1, 10);
 	Player2.SetState(STATE_CENTER);
 
+	
 	//PlaySound(TEXT("forest.mid"), NULL, SND_FILENAME);
-
+	res = Screen.Init();
 	return res;
 }
 
@@ -152,15 +154,20 @@ bool cGame::Init()
 
 bool cGame::Loop()
 {
+
 	bool res=true;
 	double t1, t2;
 
 	t1 = glutGet(GLUT_ELAPSED_TIME);
 	//if (offsetCamera < Scene.BACK_WIDTH_DRAW - GAME_WIDTH) ++offsetCamera;
 	//else { Player.endLevel = true; Player2.endLevel = true; }
-	Player.endLevel = true; Player2.endLevel = true;
-	res = Process();
-	if(res) Render();
+	
+	if (Screen.screenToRender == 3) {
+		Player.endLevel = true; Player2.endLevel = true;
+		res = Process();
+	}
+	else Screen.Process();
+	if (res) Render();
 
 	//1000/20 = 50fps
 	do {
@@ -454,27 +461,31 @@ bool cGame::Process()
 //Output
 void cGame::Render()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(offsetCamera, GAME_WIDTH + offsetCamera, 0, GAME_HEIGHT, 0, 1);
-	glMatrixMode(GL_MODELVIEW);//no s para que sirve pero no hace falta
+	if (Screen.screenToRender == 3) {
+		glClear(GL_COLOR_BUFFER_BIT);
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(offsetCamera, GAME_WIDTH + offsetCamera, 0, GAME_HEIGHT, 0, 1);
+		glMatrixMode(GL_MODELVIEW);//no s para que sirve pero no hace falta
 
-	Scene.DrawBackground(Data.GetID(IMG_BACK));
-	Scene.Draw(Data.GetID(IMG_PARED));
-	//Proyectiles
-	for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
-	for (cEnemigo* b : bichos) b->Draw(&Data);
-	//bichos[0]->Draw(&Data);
-	Player.Draw(&Data);
-	Player2.Draw(&Data);
-	//PowerUps
-	for (cPowerUp* powah : this->powerUps) powah->Draw(&Data);
-	render_info(Player.getScore(), Player2.getScore(), offsetCamera);
-	//explosiones
-	for (cBoom* boom : explosiones) boom->Draw(&Data);
-
-	glutSwapBuffers();
+		Scene.DrawBackground(Data.GetID(IMG_BACK));
+		Scene.Draw(Data.GetID(IMG_PARED));
+		//Proyectiles
+		for (cProyectil* pewpew : this->pewpews) pewpew->Draw(&Data);
+		for (cEnemigo* b : bichos) b->Draw(&Data);
+		//bichos[0]->Draw(&Data);
+		Player.Draw(&Data);
+		Player2.Draw(&Data);
+		//PowerUps
+		for (cPowerUp* powah : this->powerUps) powah->Draw(&Data);
+		render_info(Player.getScore(), Player2.getScore(), offsetCamera);
+		//explosiones
+		for (cBoom* boom : explosiones) boom->Draw(&Data);
+		glutSwapBuffers();
+	}
+	else {
+		Screen.Render();
+	}
 }
 
 

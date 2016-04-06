@@ -96,6 +96,21 @@ void cScene::DrawBackground(int tex_id)
 	glDisable(GL_TEXTURE_2D);
 }
 
+
+void cScene::DrawBackgroundNormal(int tex_id)
+{
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, tex_id);
+	// Draw a textured quad
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0); glVertex3f(0, 512, 0);
+	glTexCoord2f(0, 1); glVertex3f(0, 0, 0);
+	glTexCoord2f(1, 1); glVertex3f(640, 0, 0);
+	glTexCoord2f(1, 0); glVertex3f(640, 512, 0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+}
+
 int* cScene::GetMap(int level)
 {
 	return (level == 1) ? map : map2;

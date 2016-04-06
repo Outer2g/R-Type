@@ -1,11 +1,13 @@
 
 #include "Globals.h"
 #include "cGame.h"
+#include "Screens.h"
 
 //Delete console
 #pragma comment(linker, "/subsystem:\"windows\" /entry:\"mainCRTStartup\"")
 
 cGame Game;
+Screens Screen;
 
 void AppRender()
 {
@@ -54,7 +56,7 @@ void main(int argc, char** argv)
 	
 	glutInitWindowPosition(pos_x,pos_y);
 	glutInitWindowSize(GAME_WIDTH,GAME_HEIGHT);
-	glutCreateWindow("Bubble returns!");
+	glutCreateWindow("R-Type GAME!");
 
 	/*glutGameModeString("800x600:32");
 	glutEnterGameMode();*/
@@ -73,6 +75,7 @@ void main(int argc, char** argv)
 
 	//Game initializations
 	Game.Init();
+	//Screen.Init();
 
 	//Application loop
 	glutMainLoop();	

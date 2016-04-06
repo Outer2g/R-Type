@@ -10,9 +10,7 @@
 #include "cBoss.h"
 #include <vector>
 #include <set>
-
-#define GAME_WIDTH	640
-#define GAME_HEIGHT 512
+#include "Screens.h"
 
 //Score defines
 #define SCORE_HIT 10
@@ -56,6 +54,7 @@ private:
 	unsigned char keys[256];
 	unsigned char sKeys[256]; //109 se supone
 	cScene Scene;
+	Screens Screen;
 	cPlayer Player, Player2;
 	cData Data;
 	vector<vector<int> > rafagasBichos; //[numRafaga][0-3], 0 = x, 1 = y, 2 = tipo, 3 = numBichos

@@ -42,6 +42,9 @@ void cProyectil::Logic(int * map)
 
 void cProyectil::Draw(cData * dat)
 {
+	w = 76;
+	h = 6;
+	speedX = -1;
 	if (id == 3 && tipo != RAYO_BOSS) DrawPEnemigo(dat);
 	else if (tipo == RAYO_BOSS) DrawRayo(dat);
 	else DrawPNave(dat);
@@ -103,11 +106,11 @@ inline void cProyectil::DrawRayo(cData * dat)
 {
 	float xo, yo, xf, yf;
 	xo = 0.375f; //cada uno son 13*12, la imagen util 52*12 y la imagen es de 64*16
-	yo = 1.f - GetFrame()* 0.09375f;
+	yo = 0.f + GetFrame()* 0.09375f;
 	
 	NextFrame(2);
 	//coord textur: xo,yo
 	xf = xo + 0.21875f;//1/8 da el 0.125
-	yf = yo - 0.75; //xk la nave ocupa toda la altura d la textura
+	yf = yo + 0.09375; //xk la nave ocupa toda la altura d la textura
 	DrawRect(dat->GetID(IMG_BOSS_RAYO), xo, yo, xf, yf);
 }

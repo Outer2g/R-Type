@@ -14,18 +14,23 @@ cBoss::cBoss()
 	stateTimer = glutGet(GLUT_ELAPSED_TIME);
 }
 
-cBoss::cBoss(set<cProyectil*> & pewpews)
+cBoss::cBoss(set<cProyectil*> & pewpews,int tipo)
 {
 	delayState1 = 100;
 	delayState2 = 200;
 	delayState3 = 100;
 	delayState4 = 200;
 	delayRayo = 150;
+	delayShoot = 50;
+	type = tipo;
+	numeroRafagas = 3;
+	rafaga = 0;
 	rayoShot = false;
 	health = 10000;//10ks
 	srand(time(0));
 	state = STATE_MOVING_RAYO;
 	stateTimer = glutGet(GLUT_ELAPSED_TIME);
+	lastShootTime = glutGet(GLUT_ELAPSED_TIME);
 	this->pewpews = &pewpews;
 }
 
@@ -89,6 +94,10 @@ void cBoss::Logic(int * map)
 			state = STATE_MOVING_RAYO2;
 			stateTimer = glutGet(GLUT_ELAPSED_TIME);
 		}
+		if (t1 - lastShootTime > delayShoot * 20 ) {
+			shootEverything();
+			lastShootTime = glutGet(GLUT_ELAPSED_TIME);
+		}
 	}
 	else if (state == STATE_MOVING_RAYO2) {
 		int scene_height = SCENE_HEIGHT * TILE_SIZE;
@@ -105,6 +114,11 @@ void cBoss::Logic(int * map)
 			rayoShot = false;
 			state = STATE_MOVING_RAYO;
 			stateTimer = glutGet(GLUT_ELAPSED_TIME);
+		}
+		if (t1 - lastShootTime > delayShoot * 20) {
+			shootEverything();
+			if (type == 0) shootEverythingFromAbove();
+			lastShootTime = glutGet(GLUT_ELAPSED_TIME);
 		}
 	}
 	if (rayo != NULL) {
@@ -129,4 +143,30 @@ void cBoss::moveToPosition(int x, int y)
 	else this->x -= STEP_LENGTH;
 	if (this->y - y > 0) this->y -= STEP_LENGTH; //mueve abajo
 	else this->y += STEP_LENGTH;
+}
+
+inline void cBoss::shootEverything()
+{
+	for (int i = 0; i < numeroRafagas; ++i) {
+		for (int j = 0; j < 11; ++j) {
+			cProyectil* pewpew = new cProyectil(3,1);
+			pewpew->SetWidthHeight(13, 12);
+			pewpew->SetPosition(x, y + h / 2);
+			pewpew->setSpeed(-3,j-3);
+			pewpews->insert(pewpew);
+		}
+	}
+}
+
+inline void cBoss::shootEverythingFromAbove()
+{
+	for (int i = 0; i < numeroRafagas; ++i) {
+		for (int j = 0; j < 11; ++j) {
+			cProyectil* pewpew = new cProyectil(3,1);
+			pewpew->SetWidthHeight(13, 12);
+			pewpew->SetPosition(x, y + h / 2);
+			pewpew->setSpeed(j-3,-3);
+			pewpews->insert(pewpew);
+		}
+	}
 }

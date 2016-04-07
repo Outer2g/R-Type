@@ -13,7 +13,7 @@ class cBoss :
 {
 public:
 	cBoss();
-	cBoss(set<cProyectil*> & pewpews);
+	cBoss(set<cProyectil*> & pewpews,int tipo = 0);
 	~cBoss();
 	virtual void Draw(cData* dat);
 	void attackBasic(set<cProyectil*>& pewpews,cPlayer * Player);
@@ -27,10 +27,13 @@ public:
 	
 private:
 	void moveToPosition(int x, int y);
+	void shootEverything();
+	void shootEverythingFromAbove();
 	set<cProyectil*> * pewpews;
 	cProyectil* rayo;
 	double stateTimer,rayoShotTimer; //lastShoot viene de cEnemigo
 	int delayState1, delayState2,delayState3,delayState4,delayRayo,bossState;
+	int delayShoot,numeroRafagas,rafaga,type;
 	bool rayoShot;
 };
 

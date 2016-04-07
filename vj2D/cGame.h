@@ -51,7 +51,7 @@ private:
 	void enterGodMode(cPlayer* p);
 	void modificaScore(int id, int amount);
 	void monsterndBulletLogic(set<void*>& toDelete);
-	void yerDead(cBicho* bicho,int type = ENEMY_BOOM);
+	void yerDead(cBicho* bicho,int type = ENEMY_BOOM,int delay = 10);
 	bool loadResources(int level);
 	unsigned char keys[256];
 	unsigned char sKeys[256]; //109 se supone
@@ -67,8 +67,6 @@ private:
 	set<cProyectil*>  pewpews;
 	set<cPowerUp*> powerUps;
 	set<cBoom*> explosiones;
-	set<cHeart*> corazones1;
-	set<cHeart*> corazones2;
 	int rafagaQueToca = 0, numRafagas;
 	double godModeTimer,godModeTimer2,outShieldTimer,outShieldTimer2;
 	int level;

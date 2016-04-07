@@ -11,6 +11,7 @@ cGame::cGame(int type)
 	Player.setID(1);
 	if (type == 1)Player2.setID(2);
 	srand(time(0));
+	level = 1;
 }
 
 cGame::~cGame(void)
@@ -64,10 +65,6 @@ bool cGame::Init()
 	offsetCamera = 0;
 	rafagaQueToca = 0;
 	Player.setID(1);
-	for (int i = 0; i < Player.getVidas(); ++i) {
-		cHeart* cor = new cHeart(1, i);
-		corazones1.insert(cor);
-	}
 	if (type == 1) Player2.setID(2);
 	//Graphics initialization
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
@@ -79,7 +76,7 @@ bool cGame::Init()
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
 	
-	level = 2; //nos lo pasaran desde el menu de escoger partida
+	level ; //nos lo pasaran desde el menu de escoger partida
 
 	//Scene initialization
 	//res = Data.LoadImage(IMG_BLOCKS,"blocks.png",GL_RGBA);
@@ -96,13 +93,14 @@ bool cGame::Init()
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2560; //tamano en horizontal dl background
 		//[numRafaga][0-3], 0 = tile x, 1 = y, 2 = tipo, 3 = numBichos
-		numRafagas = 5;
+		numRafagas = 6;
 		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
 		rafagasBichos[0] = { 25, 10, 0, 2 }; //primera rafaga
 		rafagasBichos[1] = { 33, 10, 1, 3 }; //3 rafaga
 		rafagasBichos[2] = { 45, 10, 0, 2 }; //2a rafaga
 		rafagasBichos[3] = { 55, 8, 1, 5 }; //3 rafaga
 		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga
+		rafagasBichos[5] = { 70,8,2,1 };
 	}
 	else if (level != 1) {
 		bool res = true;
@@ -207,8 +205,6 @@ void cGame::Finalize()
 	bichos = set<cEnemigo*>();
 	pewpews = set<cProyectil*>();
 	powerUps = set<cPowerUp*>();
-	corazones1 = set<cHeart*>();
-	corazones2 = set<cHeart*>();
 }
 
 
@@ -265,10 +261,9 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 	for (cEnemigo* monster : this->bichos) {
 		
 		if (monster->getShootable()) {
-			int tx, ty; 
+			int tx, ty; Player.GetPosition(&tx, &ty);
 			int aux = rand();
-			if (aux % 2 == 0) Player.GetPosition(&tx, &ty);
-			else if (aux%2 == 1 && type==1) Player2.GetPosition(&tx, &ty);
+			if (aux%2 == 1 && type==1) Player2.GetPosition(&tx, &ty);
 			int xBicho, yBicho; monster->GetPosition(&xBicho,&yBicho);
 			if (xBicho >= tx+TILE_SIZE) monster->shootBoi(pewpews, tx, ty);
 		}
@@ -324,12 +319,13 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 	}
 }
 
-inline void cGame::yerDead(cBicho * bicho, int type)
+inline void cGame::yerDead(cBicho * bicho, int type,int delay)
 {
 	int w, h, tx, ty; bicho->GetWidthHeight(&w, &h); bicho->GetPosition(&tx, &ty);
 	cBoom* boom = new cBoom(type);
 	boom->SetPosition(tx-7, ty); // offset of the sprite
 	boom->SetWidthHeight(w+10,h+5);
+	boom->setDelayBoom(delay);
 	explosiones.insert(boom);
 }
 
@@ -376,6 +372,8 @@ inline void cGame::enterGodMode(cPlayer* p) {
 			p->enableGodMode();
 			//si entramos en godmode es porque nos han dado => perdemos vida y boosts
 			p->modifyVidas(-1);
+			yerDead(p, 0, 30);
+			if (p->getVidas() <= 0) p->SetPosition(0, 0);
 			p->losePowers();
 			if (p->getID() == 1) godModeTimer = glutGet(GLUT_ELAPSED_TIME);
 			else godModeTimer2 = glutGet(GLUT_ELAPSED_TIME);
@@ -397,6 +395,20 @@ inline void cGame::enterGodMode(cPlayer* p) {
 //Process
 bool cGame::Process()
 {
+	if (type == 1 && Player.getVidas() <= 0 && Player2.getVidas() <= 0) {
+		reset(); 
+		Screen.t1 = glutGet(GLUT_ELAPSED_TIME);
+		Screen.screenToRender = 4;
+	}
+	else if (type == 0 && Player.getVidas()<=0) {
+		reset();
+		Screen.t1 = glutGet(GLUT_ELAPSED_TIME);
+		Screen.screenToRender = 4;
+	}
+	if (Player.endLevel && boss->getHealth() <= 0) {
+		level = 2;
+		reset();
+	}
 	bool res = true;
 	res = tratarKeys();
 	//Logica proyectiles + colisiones Proyectiles
@@ -430,7 +442,8 @@ bool cGame::Process()
 		//si ha passat cert temps,elimina
 		double t1 = glutGet(GLUT_ELAPSED_TIME);
 		//delay explo
-		if (t1 - boom->getCreationTime() > 20 * 10) toDelete.insert(boom);
+		if (t1 - boom->getCreationTime() > 20 * boom->getDelayBoom()) 
+			toDelete.insert(boom);
 	}
 	for (void* x : toDelete) {
 		pewpews.erase((cProyectil*)x);
@@ -507,8 +520,6 @@ void cGame::Render()
 		//explosiones
 		for (cBoom* boom : explosiones) boom->Draw(&Data);
 		glutSwapBuffers();
-		//corazones
-		for (cHeart* cor : corazones1) cor->Draw(&Data);
 	}
 	else {
 		Screen.Render();
@@ -591,7 +602,8 @@ inline void cGame::logicToAddMonsters() {
 			}
 			break;
 		case 2:
-			boss = new cBoss(pewpews);
+			if (level != 1) boss = new cBoss(pewpews);
+			else boss = new cBoss(pewpews, 1);
 			bicho = boss;
 			bicho->SetWidthHeight(48*2, 57*2);
 			bicho->SetTile(rafagasBichos[rafagaQueToca][0], rafagasBichos[rafagaQueToca][1]);

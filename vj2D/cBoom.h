@@ -17,9 +17,12 @@ public:
 	double getCreationTime();
 	void resetCreationTime();
 	void setType(int type);
+
 	int getType();
+	int getDelayBoom();
+	void setDelayBoom(int delay);
 private:
 	double boomTime;
-	int type;
+	int type,delayBoom;
 };
 

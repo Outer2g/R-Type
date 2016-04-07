@@ -4,7 +4,6 @@
 
 cVoladorEstatico::cVoladorEstatico()
 {
-	this->health = 100;
 	this->speed = 7;
 	srand(time(0)); // use current time as seed for random generator
 	double t = glutGet(GLUT_ELAPSED_TIME);
@@ -42,10 +41,13 @@ int cVoladorEstatico::getShootChance()
 
 void cVoladorEstatico::dropPowerup(set<cPowerUp*>& powerups)
 {
-	cPowerUp* powah = new cPowerUp(BULLET_DOBLE);
-	powah->SetPosition(x, y);
-	powah->SetWidthHeight(32, 32);
-	powerups.insert(powah);
+	int aux = rand();
+	if (aux % 2 == 0) {
+		cPowerUp* powah = new cPowerUp(BULLET_DOBLE);
+		powah->SetPosition(x, y);
+		powah->SetWidthHeight(32, 32);
+		powerups.insert(powah);
+	}
 }
 
 void cVoladorEstatico::Stop()

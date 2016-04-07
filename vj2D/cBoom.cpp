@@ -6,12 +6,14 @@ cBoom::cBoom()
 {
 	boomTime = glutGet(GLUT_ELAPSED_TIME);
 	this->type = ENEMY_BOOM;
+	delayBoom = 10;
 }
 
 cBoom::cBoom(int type)
 {
 	boomTime = glutGet(GLUT_ELAPSED_TIME);
 	this->type = type;
+	delayBoom = 10;
 }
 
 
@@ -63,4 +65,14 @@ void cBoom::setType(int type)
 int cBoom::getType()
 {
 	return type;
+}
+
+int cBoom::getDelayBoom()
+{
+	return delayBoom;
+}
+
+void cBoom::setDelayBoom(int delay)
+{
+	delayBoom = delay;
 }

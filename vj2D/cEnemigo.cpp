@@ -5,6 +5,7 @@
 
 cEnemigo::cEnemigo()
 {
+	health = 300;
 	this->lastShootTime = glutGet(GLUT_ELAPSED_TIME);
 	this->delayShoot = 40;
 	shoot = false;

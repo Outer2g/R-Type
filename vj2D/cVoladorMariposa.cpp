@@ -4,7 +4,6 @@
 
 cVoladorMariposa::cVoladorMariposa(void)
 {
-	this->health = 100;
 	this->speed = 7;
 	moveDelay = glutGet(GLUT_ELAPSED_TIME);
 	angle = 0.0;
@@ -41,10 +40,13 @@ void cVoladorMariposa::Draw(cData *dat) {
 
 void cVoladorMariposa::dropPowerup(set<cPowerUp*>& powerups)
 {
-	cPowerUp* powah = new cPowerUp(POWER_SHIELD);
-	powah->SetPosition(x,y);
-	powah->SetWidthHeight(32, 32);
-	powerups.insert(powah);
+	int aux = rand();
+	if (rand() % 4 == 0) {
+		cPowerUp* powah = new cPowerUp(POWER_SHIELD);
+		powah->SetPosition(x, y);
+		powah->SetWidthHeight(32, 32);
+		powerups.insert(powah);
+	}
 }
 
 

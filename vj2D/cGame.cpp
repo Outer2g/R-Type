@@ -392,6 +392,7 @@ inline void cGame::enterGodMode(cPlayer* p) {
 		}
 		else {
 			p->setShield(false); 
+			p->setPowerUp(BULLET_SIMPLE);
 			p->setjustOutShield(true);
 			if (p->getID() == 1) outShieldTimer = glutGet(GLUT_ELAPSED_TIME);
 			else outShieldTimer2 = glutGet(GLUT_ELAPSED_TIME);

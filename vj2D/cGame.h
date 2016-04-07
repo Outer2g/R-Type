@@ -28,7 +28,7 @@ class cGame
 public:
 	cGame(int type =0);
 	virtual ~cGame(void);
-
+	int type;
 	bool Init();
 	bool Loop();
 	void Finalize();
@@ -46,7 +46,7 @@ public:
 
 private:
 	bool tratarKeys();
-	int type;
+	
 	void enterGodMode(cPlayer* p);
 	void modificaScore(int id, int amount);
 	void monsterndBulletLogic(set<void*>& toDelete);

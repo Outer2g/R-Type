@@ -4,7 +4,11 @@
 
 Screens::Screens()
 {
-	screenToRender = 3;//0 = main, 1 = instr, 2 = credits, 3 = game, 4 = gameover
+	play1 = 19;
+	play2 = 21;
+	help = 23;
+	credits = 25;
+	screenToRender = 0;//0 = main, 1 = instr, 2 = credits, 3 = game, 4 = gameover
 }
 
 
@@ -13,7 +17,7 @@ Screens::~Screens()
 }
 
 
-bool Screens::Init()
+bool Screens::Init(int* gam)
 {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glMatrixMode(GL_PROJECTION);
@@ -23,28 +27,51 @@ bool Screens::Init()
 
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
-	
+	this->gam = gam;
 	bool res = true;
 	res = Data.LoadImage(IMG_BACK_MAIN, "startBackground.png", GL_RGBA);
 	if (!res) return false;
 	res = Data.LoadImage(BT_PLAY1, "btnPlay1.png", GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(BT_PLAY1_FOC, "btnPlay1Focus.png", GL_RGBA);
+	if (!res) return false;
 	res = Data.LoadImage(BT_PLAY2, "btnPlay2.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(BT_PLAY2_FOC, "btnPlay2Focus.png", GL_RGBA);
 	if (!res) return false;
 	res = Data.LoadImage(BT_HELP, "btnHelp.png", GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(BT_HELP_FOC, "btnHelpFocus.png", GL_RGBA);
+	if (!res) return false;
 	res = Data.LoadImage(BT_CREDITS, "credits.png", GL_RGBA);
+	if (!res) return false;
+	res = Data.LoadImage(BT_CREDITS_FOC, "creditsFocus.png", GL_RGBA);
 	if (!res) return false;
 	return res;
 }
 
 
-inline bool Collides(int x, int y)
+inline void Screens::Collides(int state, int x, int y)
 {
 	//check if it is on buttons bounds
 	if (x > 250 && x < 250 + 144 &&
 		y < 380 && y > 200 - 47) {
-		//if ()
+		if ((y < 380) && (y > 380 - 47)) {
+			if (state == 0) play1 = 20;
+			else {
+				//*gam = 0;
+				screenToRender = 3;
+			}
+			//else play1--;
+		}
+		/*else if ((y < 320) && (y > 320 - 47)) {
+			if (state == 0) play2 = 22;
+			else {
+				*gam = 1;
+				screenToRender = 3;
+			}
+			//else play1--;
+		}*/
 	}
 }
 
@@ -54,7 +81,13 @@ bool Screens::Process(int state, int x, int y)
 {
 	bool res = true;
 	if (state != -1) {
-		
+		Collides(state, x, 512-y);
+		if (state == 1) {
+			play1 = 19;
+			play2 = 21;
+			help = 23;
+			credits = 25;
+		}
 		
 	}
 	return res;
@@ -70,10 +103,10 @@ void Screens::Render()
 
 	Scene.DrawBackgroundNormal(Data.GetID(IMG_BACK_MAIN));
 	if (screenToRender == 0) {
-		DrawRect(BT_PLAY1, 250, 380);
-		DrawRect(BT_PLAY2, 250, 320);
-		DrawRect(BT_HELP, 250, 260);
-		DrawRect(BT_CREDITS, 250, 200);
+		DrawRect(play1, 250, 380);
+		DrawRect(play2, 250, 320);
+		DrawRect(help, 250, 260);
+		DrawRect(credits, 250, 200);
 	}
 	//render_info();
 	glutSwapBuffers();

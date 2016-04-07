@@ -143,7 +143,7 @@ bool cGame::Init()
 	}
 	
 	//PlaySound(TEXT("forest.mid"), NULL, SND_FILENAME);
-	res = Screen.Init(&this);
+	res = Screen.Init(&type);
 	return res;
 }
 

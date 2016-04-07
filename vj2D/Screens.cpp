@@ -44,7 +44,7 @@ inline bool Collides(int x, int y)
 	//check if it is on buttons bounds
 	if (x > 250 && x < 250 + 144 &&
 		y < 380 && y > 200 - 47) {
-		if ()
+		//if ()
 	}
 }
 

@@ -20,11 +20,12 @@ cGame::~cGame(void)
 
 
 
-inline void render_info(int p1, int p2, int offset,int type =0) //dberiamos pasarle el string
+inline void cGame::render_info(int p1, int p2, int offset,int type) //dberiamos pasarle el string
 {
 	//glEnable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_2D);
-
+	std::string vida = "";
+	vida += "<3";
 	std::string pl1 = "";
 	char str[20];
 	pl1 += "PLAYER 1 - ";
@@ -37,6 +38,11 @@ inline void render_info(int p1, int p2, int offset,int type =0) //dberiamos pasa
 	for (int i = 0; i < j; i++) {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl1[i]);
 	}
+	glRasterPos2f(40 + offset, 460);
+	for (int i = 0; i < Player.getVidas(); i++) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, vida[0]);
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, vida[1]);
+	}
 	if (type == 1) {
 		std::string pl2 = "";
 		pl2 += "PLAYER 2 - ";
@@ -46,6 +52,11 @@ inline void render_info(int p1, int p2, int offset,int type =0) //dberiamos pasa
 		glRasterPos2f(480 + offset, 480); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
 		for (int i = 0; i < j; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl2[i]);
+		}
+		glRasterPos2f(480 + offset, 460);
+		for (int i = 0; i < Player2.getVidas(); i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, vida[0]);
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, vida[1]);
 		}
 	}
 
@@ -119,9 +130,9 @@ bool cGame::Init()
 		rafagasBichos[0] = { 20, 10, 0, 6 }; //primera rafaga
 		rafagasBichos[1] = { 27, 10, 1, 6 }; //3 rafaga
 		rafagasBichos[2] = { 31, 10, 0, 7 }; //2a rafaga
-		rafagasBichos[3] = { 35, 8, 1, 17 }; //3 rafaga
+		rafagasBichos[3] = { 35, 8, 1, 12 }; //3 rafaga
 		rafagasBichos[4] = { 42, 10, 0, 4 }; //primera rafaga
-		rafagasBichos[5] = { 50, 10, 1, 16 }; //3 rafaga
+		rafagasBichos[5] = { 50, 10, 1, 11 }; //3 rafaga
 		rafagasBichos[6] = { 54, 10, 0, 3 }; //2a rafaga
 		rafagasBichos[7] = { 60, 8, 0, 6 }; //3 rafaga*/
 		rafagasBichos[8] = { 63, 8, 1, 4 }; //3 rafaga*/
@@ -250,8 +261,9 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 
 
 inline void cGame::modificaScore(int id, int amount) {
-	if (id == 1) Player.modifyScore(amount);
-	else if(id == 2 && type ==1) Player2.modifyScore(amount);
+	if (id == 1) { Player.modifyScore(amount); Screen.punt1 += amount; }
+	else if (id == 2 && type == 1) { Player2.modifyScore(amount); Screen.punt2 += amount;
+	}
 }
 
 
@@ -406,6 +418,10 @@ bool cGame::Process()
 		Screen.screenToRender = 4;
 	}
 	if (Player.endLevel && boss->getHealth() <= 0) {
+		if (level == 2) {
+			Screen.t1 = glutGet(GLUT_ELAPSED_TIME);
+			Screen.screenToRender = 4;
+		}
 		level = 2;
 		reset();
 	}

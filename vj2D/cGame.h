@@ -47,7 +47,7 @@ public:
 
 private:
 	bool tratarKeys();
-	
+	void render_info(int p1, int p2, int offset, int type = 0);
 	void enterGodMode(cPlayer* p);
 	void modificaScore(int id, int amount);
 	void monsterndBulletLogic(set<void*>& toDelete);

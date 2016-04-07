@@ -22,6 +22,7 @@ public:
 	void DrawRect(int tex_id, int xo, int yo);
 	void Collides(int state, int x, int y);
 	double t1;
+	int punt1, punt2;
 
 private:
 	bool difuminar;

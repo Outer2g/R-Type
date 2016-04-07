@@ -25,7 +25,8 @@ bool Screens::Init(int* gam)
 	glLoadIdentity();
 	glOrtho(0, GAME_WIDTH, 0, GAME_HEIGHT, 0, 1);
 	glMatrixMode(GL_MODELVIEW);
-
+	punt1 = 0;
+	punt2 = 0;
 	glAlphaFunc(GL_GREATER, 0.05f);
 	glEnable(GL_ALPHA_TEST);
 	this->gam = gam;
@@ -212,6 +213,25 @@ inline void Screens::render_info() //dberiamos pasarle el string
 		for (int i = 0; i < jj; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, pl1[i]);
 		}
+
+		std::string pl3 = "";
+		char str[20];
+		pl3 += "PLAYER 1 - ";
+		pl3 += _itoa(punt1, str, 10);
+		int j = pl3.length();
+
+		glRasterPos2f(40, 480); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+		for (int i = 0; i < j; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl3[i]);
+		}
+			std::string pl2 = "";
+			pl2 += "PLAYER 2 - ";
+			pl2 += _itoa(punt2, str, 10);
+			j = pl2.length();
+			glRasterPos2f(480, 480); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+			for (int i = 0; i < j; i++) {
+				glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl2[i]);
+			}
 	}
 	glColor3f(1, 1, 1);
 	glEnable(GL_TEXTURE_2D);

@@ -21,7 +21,7 @@ cBoss::cBoss(set<cProyectil*> & pewpews,int tipo)
 	delayState3 = 100;
 	delayState4 = 200;
 	delayRayo = 150;
-	delayShoot = 50;
+	delayShoot = 70;
 	type = tipo;
 	numeroRafagas = 3;
 	rafaga = 0;
@@ -144,6 +144,7 @@ void cBoss::moveToPosition(int x, int y)
 	if (this->y - y > 0) this->y -= STEP_LENGTH; //mueve abajo
 	else this->y += STEP_LENGTH;
 }
+
 
 inline void cBoss::shootEverything()
 {

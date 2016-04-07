@@ -4,11 +4,12 @@
 #include "cVoladorMariposa.h"
 
 
-cGame::cGame(void)
+cGame::cGame(int type)
 {
 	offsetCamera = 0;
+	this->type = type;
 	Player.setID(1);
-	Player2.setID(2);
+	if (type == 1)Player2.setID(2);
 	srand(time(0));
 }
 
@@ -18,7 +19,7 @@ cGame::~cGame(void)
 
 
 
-inline void render_info(int p1, int p2, int offset) //dberiamos pasarle el string
+inline void render_info(int p1, int p2, int offset,int type =0) //dberiamos pasarle el string
 {
 	//glEnable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_2D);
@@ -35,16 +36,16 @@ inline void render_info(int p1, int p2, int offset) //dberiamos pasarle el strin
 	for (int i = 0; i < j; i++) {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl1[i]);
 	}
-
-	std::string pl2 = "";
-	pl2 += "PLAYER 2 - ";
-	pl2 += _itoa(p2, str, 10);
-	j = pl2.length();
-
-	glColor3f(0, 1, 1);
-	glRasterPos2f(400 + offset, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
-	for (int i = 0; i < j; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl2[i]);
+	if (type == 1) {
+		std::string pl2 = "";
+		pl2 += "PLAYER 2 - ";
+		pl2 += _itoa(p2, str, 10);
+		j = pl2.length();
+		glColor3f(0, 1, 1);
+		glRasterPos2f(400 + offset, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+		for (int i = 0; i < j; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl2[i]);
+		}
 	}
 
 	glColor3f(1, 1, 1);
@@ -63,7 +64,7 @@ bool cGame::Init()
 	offsetCamera = 0;
 	rafagaQueToca = 0;
 	Player.setID(1);
-	Player2.setID(2);
+	if (type == 1)Player2.setID(2);
 	//Graphics initialization
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glMatrixMode(GL_PROJECTION);
@@ -133,16 +134,16 @@ bool cGame::Init()
 	Player.SetTile(1,8);
 	Player.SetState(STATE_CENTER);
 
-
-	res = Data.LoadImage(IMG_PLAYER2, "navesp2.png", GL_RGBA);
-	if (!res) return false;
-	Player2.SetWidthHeight(64, 32);
-	Player2.SetTile(1, 10);
-	Player2.SetState(STATE_CENTER);
-
+	if (type == 1) {
+		res = Data.LoadImage(IMG_PLAYER2, "navesp2.png", GL_RGBA);
+		if (!res) return false;
+		Player2.SetWidthHeight(64, 32);
+		Player2.SetTile(1, 10);
+		Player2.SetState(STATE_CENTER);
+	}
 	
 	//PlaySound(TEXT("forest.mid"), NULL, SND_FILENAME);
-	res = Screen.Init();
+	res = Screen.Init(&this);
 	return res;
 }
 
@@ -163,7 +164,7 @@ bool cGame::Loop()
 	//else { Player.endLevel = true; Player2.endLevel = true; }
 	
 	if (Screen.screenToRender == 3) {
-		Player.endLevel = true; Player2.endLevel = true;
+		Player.endLevel = true; if(type ==1)Player2.endLevel = true;
 		res = Process();
 	}
 	else Screen.Process(-1,0,0);
@@ -186,7 +187,7 @@ void cGame::Finalize()
 {
 	//version cutre
 	Player =cPlayer();
-	Player2 = cPlayer();
+	if (type ==1)Player2 = cPlayer();
 	for (void* x : bichos) delete x;
 	for (void* x : pewpews) delete x;
 	for (void* x : powerUps) delete x;
@@ -240,7 +241,7 @@ void cGame::ReadMouse(int button, int state, int x, int y)
 
 inline void cGame::modificaScore(int id, int amount) {
 	if (id == 1) Player.modifyScore(amount);
-	else Player2.modifyScore(amount);
+	else if(id == 2 && type ==1) Player2.modifyScore(amount);
 }
 
 
@@ -253,7 +254,7 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 			int tx, ty; 
 			int aux = rand();
 			if (aux % 2 == 0) Player.GetPosition(&tx, &ty);
-			else Player2.GetPosition(&tx, &ty);
+			else if (aux%2 == 1 && type==1) Player2.GetPosition(&tx, &ty);
 			int xBicho, yBicho; monster->GetPosition(&xBicho,&yBicho);
 			if (xBicho >= tx+TILE_SIZE) monster->shootBoi(pewpews, tx, ty);
 		}
@@ -293,7 +294,7 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 				yerDead(&Player, NAVE_BOOM);
 				enterGodMode(&Player);
 			}
-			else if (pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player2)) {
+			else if (type == 1 && pewpew->getId() == 3 && pewpew->CollidesBicho(&(cBicho)Player2)) {
 				if (!b) toDelete.insert(pewpew);
 				yerDead(&Player2, NAVE_BOOM);
 				enterGodMode(&Player2);
@@ -302,8 +303,10 @@ inline void cGame::monsterndBulletLogic(set<void*>& toDelete) {
 		//si bicho choca con las naves
 		bool b = monster->CollidesBicho(&Player);
 		if (b) enterGodMode(&Player);
-		b = monster->CollidesBicho(&Player2);
-		if (b) enterGodMode(&Player2);
+		if (type == 1) {
+			b = monster->CollidesBicho(&Player2);
+			if (b) enterGodMode(&Player2);
+		}
 	}
 }
 
@@ -390,9 +393,9 @@ bool cGame::Process()
 	double t1 = glutGet(GLUT_ELAPSED_TIME);
 	//si ha pasado 200 frames, desactiva el godmode
 	if (t1 - godModeTimer > 200 * 20) Player.disableGodMode();
-	if (t1 - godModeTimer2 > 200 * 20) Player2.disableGodMode();
+	if (type == 1 && t1 - godModeTimer2 > 200 * 20) Player2.disableGodMode();
 	if (t1 - outShieldTimer > 100 * 20) Player.setjustOutShield(false);
-	if (t1 - outShieldTimer2 > 100 * 20) Player2.setjustOutShield(false);
+	if (type == 1 && t1 - outShieldTimer2 > 100 * 20) Player2.setjustOutShield(false);
 	//Gestion powers
 	for (cPowerUp* powah : this->powerUps) {
 		if (Player.CollidesBicho((cBicho*)powah)) {
@@ -400,7 +403,7 @@ bool cGame::Process()
 			int bType = powah->getType();
 			Player.setPowerUp(bType);
 		}
-		if (Player2.CollidesBicho((cBicho*)powah)) {
+		if (type == 1 && Player2.CollidesBicho((cBicho*)powah)) {
 			toDelete.insert(powah);
 			int bType = powah->getType();
 			Player2.setPowerUp(bType);
@@ -440,16 +443,18 @@ bool cGame::Process()
 	else Player.Logic(Scene.GetMap(level));
 
 	//Logic player2
-	Player2.GetTile(&playerTileX, &playerTileY);
-	if (cameraTile >= playerTileX) {
-		Player2.MoveRight(Scene.GetMap(level));
-		Player2.MoveRight(Scene.GetMap(level));
-		Player2.MoveHalfRight(Scene.GetMap(level));
+	if (type == 1) {
+		Player2.GetTile(&playerTileX, &playerTileY);
+		if (cameraTile >= playerTileX) {
+			Player2.MoveRight(Scene.GetMap(level));
+			Player2.MoveRight(Scene.GetMap(level));
+			Player2.MoveHalfRight(Scene.GetMap(level));
+		}
+		else if (windowTile - 2 <= playerTileX) {
+			Player2.MoveLeft(Scene.GetMap(level));
+		}
+		else Player2.Logic(Scene.GetMap(level));
 	}
-	else if (windowTile - 2 <= playerTileX) {
-		Player2.MoveLeft(Scene.GetMap(level));
-	}
-	else Player2.Logic(Scene.GetMap(level));
 	//si choca con enemigo hazte pupa por eficiencia, esta con los proyectiles
 
 	return res;
@@ -476,10 +481,13 @@ void cGame::Render()
 		for (cEnemigo* b : bichos) b->Draw(&Data);
 		//bichos[0]->Draw(&Data);
 		Player.Draw(&Data);
-		Player2.Draw(&Data);
+		if (type == 1)Player2.Draw(&Data);
 		//PowerUps
 		for (cPowerUp* powah : this->powerUps) powah->Draw(&Data);
+		if (type == 0)
 		render_info(Player.getScore(), Player2.getScore(), offsetCamera);
+		else
+			render_info(Player.getScore(), Player2.getScore(), offsetCamera,1);
 		//explosiones
 		for (cBoom* boom : explosiones) boom->Draw(&Data);
 		glutSwapBuffers();
@@ -514,19 +522,21 @@ inline bool cGame::tratarKeys()
 		Player.shoot(this->pewpews);
 	//Player 2 controls
 	//w = 119, a = 97, s = 115, d= 100, D =68, q= 113
-	if (keys[KEY_W])			Player2.Jump(Scene.GetMap(level));
-	else if (keys[KEY_S])	Player2.MoveDown(Scene.GetMap(level));
-	else Player2.setMoving(false);
-	if (keys[KEY_A])			Player2.MoveLeft(Scene.GetMap(level));
-	else if (keys[KEY_D])	Player2.MoveRight(Scene.GetMap(level));
-	//Si no hay nada aparetado, para el player
-	if (!keys[KEY_W]
-		&& !keys[KEY_S]
-		&& !keys[KEY_A]
-		&& !keys[KEY_D]) Player2.Stop();
-	// enter = 13, shooting for player 1
-	if (keys[KEY_Q])
-		Player2.shoot(this->pewpews);
+	if (type == 1) {
+		if (keys[KEY_W])			Player2.Jump(Scene.GetMap(level));
+		else if (keys[KEY_S])	Player2.MoveDown(Scene.GetMap(level));
+		else Player2.setMoving(false);
+		if (keys[KEY_A])			Player2.MoveLeft(Scene.GetMap(level));
+		else if (keys[KEY_D])	Player2.MoveRight(Scene.GetMap(level));
+		//Si no hay nada aparetado, para el player
+		if (!keys[KEY_W]
+			&& !keys[KEY_S]
+			&& !keys[KEY_A]
+			&& !keys[KEY_D]) Player2.Stop();
+		// enter = 13, shooting for player 1
+		if (keys[KEY_Q])
+			Player2.shoot(this->pewpews);
+	}
 	//TESTING BUTTONS
 	if (sKeys[GLUT_KEY_F1]) Player.setPowerUp(BULLET_SIMPLE);
 	if (sKeys[GLUT_KEY_F2]) Player.setPowerUp(BULLET_DOBLE);

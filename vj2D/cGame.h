@@ -26,7 +26,7 @@ using namespace std;
 class cGame
 {
 public:
-	cGame(void);
+	cGame(int type =0);
 	virtual ~cGame(void);
 
 	bool Init();
@@ -46,6 +46,7 @@ public:
 
 private:
 	bool tratarKeys();
+	int type;
 	void enterGodMode(cPlayer* p);
 	void modificaScore(int id, int amount);
 	void monsterndBulletLogic(set<void*>& toDelete);

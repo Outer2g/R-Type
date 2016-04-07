@@ -109,10 +109,10 @@ void Screens::Render()
 
 	Scene.DrawBackgroundNormal(Data.GetID(IMG_BACK_MAIN));
 	if (screenToRender == 0) {
-		DrawRect(play1, 250, 380);
-		DrawRect(play2, 250, 320);
-		DrawRect(help, 250, 260);
-		DrawRect(credits, 250, 200);
+		DrawRect(play1+2, 250, 380);
+		DrawRect(play2 + 2, 250, 320);
+		DrawRect(help +2, 250, 260);
+		DrawRect(credits + 2, 250, 200);
 	}
 	if (help == 22 || credits == 24) {
 		render_info();
@@ -149,12 +149,22 @@ inline void Screens::render_info() //dberiamos pasarle el string
 	if (help == 22) {
 		std::string pl1 = "";
 		//char str[20];
-		pl1 += "PLAYER 1 - ";
+		pl1 += "PLAYER 1 - ARROWS TO MOVE, ENTER TO SHOOT";
 		int j = pl1.length();
 
 
 		glColor3f(0, 1, 1);
 		glRasterPos2f(80, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+		for (int i = 0; i < j; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl1[i]);
+		}
+
+		pl1 = "PLAYER 2 - (A,W,D,S) TO MOVE, Q TO SHOOT";
+		j = pl1.length();
+
+
+		glColor3f(0, 1, 1);
+		glRasterPos2f(80, 410); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
 		for (int i = 0; i < j; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl1[i]);
 		}

@@ -4,7 +4,7 @@
 #include "Globals.h"
 
 //Image array size
-#define NUM_IMG		27
+#define NUM_IMG		28
 
 //Image identifiers
 #define IMG_BLOCKS	0
@@ -34,6 +34,7 @@
 #define BT_HELP_FOC 24
 #define BT_CREDITS 25
 #define BT_CREDITS_FOC 26
+#define IMG_PLAYER_HEARTS 27
 /*
 #define IMG_ENEMY1	2
 #define IMG_ENEMY2	3

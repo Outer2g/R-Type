@@ -7,7 +7,7 @@
 cGame::cGame(int type)
 {
 	offsetCamera = 0;
-	this->type = type;
+	this->type = 1;
 	Player.setID(1);
 	if (type == 1)Player2.setID(2);
 	srand(time(0));
@@ -32,7 +32,7 @@ inline void render_info(int p1, int p2, int offset,int type =0) //dberiamos pasa
 
 
 	glColor3f(0, 1, 1);
-	glRasterPos2f(80 + offset, 480); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+	glRasterPos2f(40 + offset, 480); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
 	for (int i = 0; i < j; i++) {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl1[i]);
 	}
@@ -42,7 +42,7 @@ inline void render_info(int p1, int p2, int offset,int type =0) //dberiamos pasa
 		pl2 += _itoa(p2, str, 10);
 		j = pl2.length();
 		glColor3f(0, 1, 1);
-		glRasterPos2f(400 + offset, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+		glRasterPos2f(480 + offset, 480); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
 		for (int i = 0; i < j; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl2[i]);
 		}
@@ -349,6 +349,8 @@ inline bool cGame::loadResources(int level)
 	if (!res) return false;
 	res = Data.LoadImage(IMG_BOSS_RAYO, "balasBoss.png", GL_RGBA);
 	if (!res) return false;
+	res = Data.LoadImage(IMG_PLAYER_HEARTS, "corazon.png", GL_RGBA);
+	if (!res) return false;
 
 	res = Data.LoadImage(IMG_BUB, "bub.png", GL_RGBA);
 	if (!res) return false;
@@ -494,6 +496,9 @@ void cGame::Render()
 		//explosiones
 		for (cBoom* boom : explosiones) boom->Draw(&Data);
 		glutSwapBuffers();
+		//corazones
+		cHeart cor = cHeart(1, 0);
+		cor.Draw(&Data);
 	}
 	else {
 		Screen.Render();

@@ -39,11 +39,24 @@ bool Screens::Init()
 }
 
 
+inline bool Collides(int x, int y)
+{
+	//check if it is on buttons bounds
+	if (x > 250 && x < 250 + 144 &&
+		y < 380 && y > 200 - 47) {
+		if ()
+	}
+}
 
 
-bool Screens::Process()
+
+bool Screens::Process(int state, int x, int y)
 {
 	bool res = true;
+	if (state != -1) {
+		
+		
+	}
 	return res;
 }
 
@@ -65,6 +78,8 @@ void Screens::Render()
 	//render_info();
 	glutSwapBuffers();
 }
+
+
 
 
 void Screens::DrawRect(int tex_id, int xo, int yo)

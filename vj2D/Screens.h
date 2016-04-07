@@ -15,7 +15,7 @@ public:
 
 	bool Init();
 	//Process
-	bool Process();
+	bool Process(int state, int x, int y);
 	//Output
 	void Render();
 	int screenToRender;

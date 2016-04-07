@@ -166,7 +166,7 @@ bool cGame::Loop()
 		Player.endLevel = true; Player2.endLevel = true;
 		res = Process();
 	}
-	else Screen.Process();
+	else Screen.Process(-1,0,0);
 	if (res) Render();
 
 	//1000/20 = 50fps
@@ -231,6 +231,7 @@ void cGame::ReadKeySpecialBoard(unsigned char key, int x, int y, bool press)
 
 void cGame::ReadMouse(int button, int state, int x, int y)
 {
+	Screen.Process(state, x, y);
 }
 
 

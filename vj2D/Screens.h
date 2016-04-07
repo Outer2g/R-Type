@@ -23,6 +23,7 @@ public:
 	void Collides(int state, int x, int y);
 
 private:
+	inline void render_info();
 	cData Data;
 	cScene Scene;
 	int* gam;

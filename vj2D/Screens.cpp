@@ -74,19 +74,9 @@ inline void Screens::Collides(int state, int x, int y)
 		}
 		else if ((y < 260) && (y > 260 - 47)) {
 			if (state == 0) help = 22;
-			else {
-				//*gam = 1;
-				screenToRender = 1;
-			}
-			//else play1--;
 		}
 		else if ((y < 200) && (y > 200 - 47)) {
 			if (state == 0) credits = 24;
-			else {
-				//*gam = 1;
-				screenToRender = 2;
-			}
-			//else play1--;
 		}
 	}
 }
@@ -124,6 +114,9 @@ void Screens::Render()
 		DrawRect(help, 250, 260);
 		DrawRect(credits, 250, 200);
 	}
+	if (help == 22 || credits == 24) {
+		render_info();
+	}
 	//render_info();
 	glutSwapBuffers();
 }
@@ -149,35 +142,36 @@ void Screens::DrawRect(int tex_id, int xo, int yo)
 
 
 
-inline void render_info(int p1, int p2, int offset) //dberiamos pasarle el string
+inline void Screens::render_info() //dberiamos pasarle el string
 {
 	//glEnable(GL_TEXTURE_2D);
 	glDisable(GL_TEXTURE_2D);
+	if (help == 22) {
+		std::string pl1 = "";
+		//char str[20];
+		pl1 += "PLAYER 1 - ";
+		int j = pl1.length();
 
-	std::string pl1 = "";
-	char str[20];
-	pl1 += "PLAYER 1 - ";
-	pl1 += _itoa(p1, str, 10);
-	int j = pl1.length();
 
-
-	glColor3f(0, 1, 1);
-	glRasterPos2f(80 + offset, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
-	for (int i = 0; i < j; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl1[i]);
+		glColor3f(0, 1, 1);
+		glRasterPos2f(80, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+		for (int i = 0; i < j; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl1[i]);
+		}
 	}
+	else if (credits == 24) {
+		std::string pl1 = "";
+		//char str[20];
+		pl1 += "CREADO POR DANIEL ROCA Y ALEX OSES";
+		int j = pl1.length();
 
-	std::string pl2 = "";
-	pl2 += "PLAYER 2 - ";
-	pl2 += _itoa(p2, str, 10);
-	j = pl2.length();
 
-	glColor3f(0, 1, 1);
-	glRasterPos2f(400 + offset, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
-	for (int i = 0; i < j; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl2[i]);
+		glColor3f(1, 1, 1);
+		glRasterPos2f(140, 30); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+		for (int i = 0; i < j; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_9_BY_15, pl1[i]);
+		}
 	}
-
 	glColor3f(1, 1, 1);
 	glEnable(GL_TEXTURE_2D);
 	//delete sstring;

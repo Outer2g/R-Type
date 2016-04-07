@@ -64,6 +64,10 @@ bool cGame::Init()
 	offsetCamera = 0;
 	rafagaQueToca = 0;
 	Player.setID(1);
+	for (int i = 0; i < Player.getVidas(); ++i) {
+		cHeart* cor = new cHeart(1, i);
+		corazones1.insert(cor);
+	}
 	if (type == 1) Player2.setID(2);
 	//Graphics initialization
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
@@ -497,8 +501,7 @@ void cGame::Render()
 		for (cBoom* boom : explosiones) boom->Draw(&Data);
 		glutSwapBuffers();
 		//corazones
-		cHeart cor = cHeart(1, 0);
-		cor.Draw(&Data);
+		for (cHeart* cor : corazones1) cor->Draw(&Data);
 	}
 	else {
 		Screen.Render();

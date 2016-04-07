@@ -21,7 +21,7 @@ cHeart::~cHeart()
 void cHeart::Draw(cData * dat)
 {
 	float xo, yo, xf, yf;
-	xo = 0.f; //cada uno son 46*50 y la imagen es de 256*64
+	xo = 0.0f; //cada uno son 46*50 y la imagen es de 256*64
 	yo = 1.0f;
 	//coord textur: xo,yo
 	xf = 1.f;//1/8 da el 0.125

@@ -21,8 +21,11 @@ public:
 	int screenToRender;
 	void DrawRect(int tex_id, int xo, int yo);
 	void Collides(int state, int x, int y);
+	double t1;
 
 private:
+	bool difuminar;
+	double amount = 0;
 	inline void render_info();
 	cData Data;
 	cScene Scene;

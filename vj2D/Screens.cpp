@@ -8,6 +8,7 @@ Screens::Screens()
 	play2 = 21;
 	help = 23;
 	credits = 25;
+	//t1 = glutGet(GLUT_ELAPSED_TIME);
 	screenToRender = 0;//0 = main, 1 = instr, 2 = credits, 3 = game, 4 = gameover
 }
 
@@ -107,8 +108,8 @@ void Screens::Render()
 	glOrtho(0, GAME_WIDTH, 0, GAME_HEIGHT, 0, 1);
 	glMatrixMode(GL_MODELVIEW);//no s para que sirve pero no hace falta
 
-	Scene.DrawBackgroundNormal(Data.GetID(IMG_BACK_MAIN));
 	if (screenToRender == 0) {
+		Scene.DrawBackgroundNormal(Data.GetID(IMG_BACK_MAIN));
 		DrawRect(play1+2, 250, 380);
 		DrawRect(play2 + 2, 250, 320);
 		DrawRect(help +2, 250, 260);
@@ -116,6 +117,20 @@ void Screens::Render()
 	}
 	if (help == 22 || credits == 24) {
 		render_info();
+	}
+	if (screenToRender == 4) {
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		render_info();
+		double t2 = glutGet(GLUT_ELAPSED_TIME);
+		if (t2 - t1 > 1000) {
+			difuminar = true;
+			render_info();
+		}
+		if (t2 - t1 > 3000) {
+			screenToRender = 0;
+			difuminar = false;
+			amount = 0;
+		}
 	}
 	//render_info();
 	glutSwapBuffers();
@@ -180,6 +195,22 @@ inline void Screens::render_info() //dberiamos pasarle el string
 		glRasterPos2f(140, 30); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
 		for (int i = 0; i < j; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_9_BY_15, pl1[i]);
+		}
+	}
+
+
+	if (screenToRender == 4) {
+		if (difuminar) amount += 0.003;
+		std::string pl1 = "";
+		//char str[20];
+		pl1 += "GAME OVER!";
+		int jj = pl1.length();
+
+		
+		glColor4f(1-amount*2, 0.5-amount, 0,1);
+		glRasterPos2f(240, 270); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+		for (int i = 0; i < jj; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, pl1[i]);
 		}
 	}
 	glColor3f(1, 1, 1);

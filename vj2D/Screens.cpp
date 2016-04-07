@@ -57,21 +57,37 @@ inline void Screens::Collides(int state, int x, int y)
 	if (x > 250 && x < 250 + 144 &&
 		y < 380 && y > 200 - 47) {
 		if ((y < 380) && (y > 380 - 47)) {
-			if (state == 0) play1 = 20;
+			if (state == 0) play1 = 18;
 			else {
-				//*gam = 0;
+				*gam = 0;
 				screenToRender = 3;
 			}
 			//else play1--;
 		}
-		/*else if ((y < 320) && (y > 320 - 47)) {
-			if (state == 0) play2 = 22;
+		else if ((y < 320) && (y > 320 - 47)) {
+			if (state == 0) play2 = 20;
 			else {
 				*gam = 1;
 				screenToRender = 3;
 			}
 			//else play1--;
-		}*/
+		}
+		else if ((y < 260) && (y > 260 - 47)) {
+			if (state == 0) help = 22;
+			else {
+				//*gam = 1;
+				screenToRender = 1;
+			}
+			//else play1--;
+		}
+		else if ((y < 200) && (y > 200 - 47)) {
+			if (state == 0) credits = 24;
+			else {
+				//*gam = 1;
+				screenToRender = 2;
+			}
+			//else play1--;
+		}
 	}
 }
 

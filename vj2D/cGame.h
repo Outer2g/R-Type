@@ -8,6 +8,7 @@
 #include "cPowerUp.h"
 #include "cBoom.h"
 #include "cBoss.h"
+#include "cHeart.h"
 #include <vector>
 #include <set>
 #include "Screens.h"
@@ -66,6 +67,8 @@ private:
 	set<cProyectil*>  pewpews;
 	set<cPowerUp*> powerUps;
 	set<cBoom*> explosiones;
+	set<cHeart*> corazones1;
+	set<cHeart*> corazones2;
 	int rafagaQueToca = 0, numRafagas;
 	double godModeTimer,godModeTimer2,outShieldTimer,outShieldTimer2;
 	int level;

@@ -32,7 +32,7 @@ inline void render_info(int p1, int p2, int offset,int type =0) //dberiamos pasa
 
 
 	glColor3f(0, 1, 1);
-	glRasterPos2f(80 + offset, 450); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
+	glRasterPos2f(80 + offset, 480); //mientras el texto este visible en pantalla, se muestra, si se va a cortar un trozo deja de pintarlo
 	for (int i = 0; i < j; i++) {
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, pl1[i]);
 	}
@@ -64,7 +64,7 @@ bool cGame::Init()
 	offsetCamera = 0;
 	rafagaQueToca = 0;
 	Player.setID(1);
-	if (type == 1)Player2.setID(2);
+	if (type == 1) Player2.setID(2);
 	//Graphics initialization
 	glClearColor(0.0f,0.0f,0.0f,0.0f);
 	glMatrixMode(GL_PROJECTION);
@@ -164,8 +164,10 @@ bool cGame::Loop()
 	//else { Player.endLevel = true; Player2.endLevel = true; }
 	
 	if (Screen.screenToRender == 3) {
+		int auxt = type;
 		Player.endLevel = true; if(type ==1)Player2.endLevel = true;
 		res = Process();
+		if (auxt != type) reset();
 	}
 	else Screen.Process(-1,0,0);
 	if (res) Render();
@@ -185,7 +187,6 @@ bool cGame::Loop()
 
 void cGame::Finalize()
 {
-	//version cutre
 	Player =cPlayer();
 	if (type ==1)Player2 = cPlayer();
 	for (void* x : bichos) delete x;
@@ -195,6 +196,8 @@ void cGame::Finalize()
 	bichos = set<cEnemigo*>();
 	pewpews = set<cProyectil*>();
 	powerUps = set<cPowerUp*>();
+	corazones1 = set<cHeart*>();
+	corazones2 = set<cHeart*>();
 }
 
 

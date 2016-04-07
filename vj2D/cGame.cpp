@@ -116,14 +116,20 @@ bool cGame::Init()
 		Scene.BACK_HEIGHT = 512;
 		Scene.BACK_WIDTH_DRAW = 2880; //tamano en horizontal dl background
 									  //[numRafaga][0-3], 0 = tile x, 1 = y, 2 = tipo, 3 = numBichos
-		numRafagas = 1;
+		numRafagas = 12;
 		rafagasBichos.resize(numRafagas, vector<int>(4)); //3 rafagas, cada rafaga tiene 4 atributos (x,y,tipo,num)
-		/*rafagasBichos[0] = { 25, 10, 0, 2 }; //primera rafaga
-		rafagasBichos[1] = { 33, 10, 1, 3 }; //3 rafaga
-		rafagasBichos[2] = { 45, 10, 0, 2 }; //2a rafaga
-		rafagasBichos[3] = { 55, 8, 1, 5 }; //3 rafaga
-		rafagasBichos[4] = { 65, 8, 1, 3 }; //3 rafaga*/
-		rafagasBichos[0] = { 10, 10, 2, 1 }; 
+		rafagasBichos[0] = { 20, 10, 0, 6 }; //primera rafaga
+		rafagasBichos[1] = { 27, 10, 1, 6 }; //3 rafaga
+		rafagasBichos[2] = { 31, 10, 0, 7 }; //2a rafaga
+		rafagasBichos[3] = { 35, 8, 1, 17 }; //3 rafaga
+		rafagasBichos[4] = { 42, 10, 0, 4 }; //primera rafaga
+		rafagasBichos[5] = { 50, 10, 1, 16 }; //3 rafaga
+		rafagasBichos[6] = { 54, 10, 0, 3 }; //2a rafaga
+		rafagasBichos[7] = { 60, 8, 0, 6 }; //3 rafaga*/
+		rafagasBichos[8] = { 63, 8, 1, 4 }; //3 rafaga*/
+		rafagasBichos[9] = { 65, 8, 0, 4 }; //3 rafaga*/
+		rafagasBichos[10] = { 71, 8, 1, 5 }; //3 rafaga*/
+		rafagasBichos[11] = { 76, 2, 2, 1 }; 
 	}
 
 
@@ -164,12 +170,13 @@ bool cGame::Loop()
 	double t1, t2;
 
 	t1 = glutGet(GLUT_ELAPSED_TIME);
-	//if (offsetCamera < Scene.BACK_WIDTH_DRAW - GAME_WIDTH) ++offsetCamera;
-	//else { Player.endLevel = true; Player2.endLevel = true; }
+	
 	
 	if (Screen.screenToRender == 3) {
+		if (offsetCamera < Scene.BACK_WIDTH_DRAW - GAME_WIDTH) ++offsetCamera;
+		else { Player.endLevel = true; Player2.endLevel = true; }
 		int auxt = type;
-		Player.endLevel = true; if(type ==1)Player2.endLevel = true;
+		//Player.endLevel = true; if(type ==1)Player2.endLevel = true;
 		res = Process();
 		if (auxt != type) reset();
 	}

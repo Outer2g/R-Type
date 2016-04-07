@@ -13,7 +13,7 @@ cPlayer::cPlayer() {
 	this->invis = false;
 	this->score = 0;
 	this->shield = false;
-	this->vidas = 2;
+	this->vidas = 3;
 }
 cPlayer::~cPlayer(){}
 

@@ -5,7 +5,8 @@
 cBoss::cBoss()
 {
 	delayState1 = 100;
-	delayState2 = 1000;
+	delayState2 = 30;
+	delayState3 = 100;
 	delayRayo = 150;
 	health = 10000;//10ks
 	srand(time(0));
@@ -16,9 +17,11 @@ cBoss::cBoss()
 cBoss::cBoss(set<cProyectil*> & pewpews)
 {
 	delayState1 = 100;
+	delayState2 = 200;
+	delayState3 = 100;
+	delayState4 = 200;
 	delayRayo = 150;
 	rayoShot = false;
-	delayState2 = 1000;
 	health = 10000;//10ks
 	srand(time(0));
 	state = STATE_MOVING_RAYO;
@@ -75,7 +78,34 @@ void cBoss::Logic(int * map)
 		int scene_width = SCENE_WIDTH * TILE_SIZE;
 		moveToPosition(x+20, scene_height / 4 );
 		if (!rayoShot) { shootRayo(); rayoShot = true; rayoShotTimer = glutGet(GLUT_ELAPSED_TIME); }
-		if (t1 - stateTimer > delayState1 * 20) state = STATE_STACIONARY;
+		if (t1 - stateTimer > delayState1 * 20) { 
+			state = STATE_STACIONARY; 
+			stateTimer = glutGet(GLUT_ELAPSED_TIME);
+		}
+	}
+	else if (state == STATE_STACIONARY) {
+		rayoShot = false;
+		if (t1 - stateTimer > delayState2 * 20) {
+			state = STATE_MOVING_RAYO2;
+			stateTimer = glutGet(GLUT_ELAPSED_TIME);
+		}
+	}
+	else if (state == STATE_MOVING_RAYO2) {
+		int scene_height = SCENE_HEIGHT * TILE_SIZE;
+		int scene_width = SCENE_WIDTH * TILE_SIZE;
+		moveToPosition(x - 20, scene_height* 3/ 4);
+		if (!rayoShot) { shootRayo(); rayoShot = true; rayoShotTimer = glutGet(GLUT_ELAPSED_TIME); }
+		if (t1 - stateTimer > delayState3 * 20) {
+			state = STATE_STACIONARY2;
+			stateTimer = glutGet(GLUT_ELAPSED_TIME);
+		}
+	}
+	else if (state == STATE_STACIONARY2) {
+		if (t1 - stateTimer > delayState4 * 20) {
+			rayoShot = false;
+			state = STATE_MOVING_RAYO;
+			stateTimer = glutGet(GLUT_ELAPSED_TIME);
+		}
 	}
 	if (rayo != NULL) {
 		int wh, hh; rayo->GetWidthHeight(&wh, &hh);

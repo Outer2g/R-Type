@@ -7,7 +7,7 @@ cPlayer::cPlayer() {
 	moving = false;
 	endLevel = false;
 	//cuanto menos, mas
-	this->shootingDelay = 30;
+	this->shootingDelay = 15;
 	this->bulletType = BULLET_SIMPLE;
 	this->godMode = false;
 	this->invis = false;

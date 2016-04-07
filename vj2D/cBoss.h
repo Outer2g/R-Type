@@ -6,6 +6,7 @@
 #define STATE_MOVING_RAYO 0
 #define STATE_STACIONARY 1
 #define STATE_MOVING_RAYO2 2
+#define STATE_STACIONARY2 3
 using namespace std;
 class cBoss :
 	public cEnemigo
@@ -29,7 +30,7 @@ private:
 	set<cProyectil*> * pewpews;
 	cProyectil* rayo;
 	double stateTimer,rayoShotTimer; //lastShoot viene de cEnemigo
-	int delayState1, delayState2,delayRayo;
+	int delayState1, delayState2,delayState3,delayState4,delayRayo,bossState;
 	bool rayoShot;
 };
 

@@ -26,7 +26,7 @@ cBoss::cBoss(set<cProyectil*> & pewpews,int tipo)
 	numeroRafagas = 3;
 	rafaga = 0;
 	rayoShot = false;
-	health = 10000;//10ks
+	health = 3000;//3ks
 	srand(time(0));
 	state = STATE_MOVING_RAYO;
 	stateTimer = glutGet(GLUT_ELAPSED_TIME);
